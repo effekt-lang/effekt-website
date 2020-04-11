@@ -14,4 +14,4 @@ Licensed under Apache License. See [LICENSE](LICENSE) for terms.
 ```
 
 ### Original License
-See the MICROSITE-LICENSE.md file for the original sbt-microsite license.
+See the MICROSITE-LICENSE file for the original sbt-microsite license.
