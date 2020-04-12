@@ -1,5 +1,6 @@
 name: Effekt Language
 baseurl: ''
+githuburl: https://github.com/effekt-lang/effekt
 description: A research language with effect handlers and lightweight effect polymorphism
 highlighter: rouge
 docs: true

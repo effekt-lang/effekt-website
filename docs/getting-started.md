@@ -30,7 +30,7 @@ Both ways, however rely on a jar file that contains the Effekt implementation. A
 Either download the `effekt.jar` or build it by running `sbt deploy`. The latter will generate the jar in the folder `bin/effekt.jar`. Remember the absolute path to the jar file, we need it later.
 
 #### Downloading the VSCode Extension
-Download the VSCode extension from the [latest release](https://github.com/b-studios/effekt/releases/latest). It should include a `vsix` file. In VSCode select "extensions / From VSIX ...".
+Download the VSCode extension from the [latest release](https://github.com/effekt-lang/effekt-vscode/releases/latest). It should include a `vsix` file. In VSCode select "extensions / From VSIX ...".
 
 #### Building the VSCode Extension
 You first install the dependencies:

@@ -29,12 +29,12 @@ and [npm](https://www.npmjs.com) installed.
 
 The recommended way to install Effekt is by running:
 ```
-npm install -g https://github.com/b-studios/effekt/releases/latest/download/effekt.tgz
+npm install -g https://github.com/effekt-lang/effekt/releases/latest/download/effekt.tgz
 ```
 This will download the compiler and install the `effekt` command.
 
 Alternatively, you can also download a specific release on the
-[release page on Github](https://github.com/b-studios/effekt/releases).
+[release page on Github](https://github.com/effekt-lang/effekt/releases).
 
 And then install it with
 ```
@@ -68,4 +68,4 @@ Here, you can define functions, import modules and enter expressions to evaluate
 Executing commands in the REPL compiles the corresponding Effekt-programs
 to Javascript (you can find them in `./out/`) and runs them with Node.js.
 
-You can find example programs in the [examples folder](https://github.com/b-studios/effekt/tree/master/examples/pos).
+You can find example programs in the [examples folder](https://github.com/effekt-lang/effekt/tree/master/examples/pos).
