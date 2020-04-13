@@ -1,5 +1,5 @@
 name: Effekt Language
-url: 'https://effekt-lang.github.io/effekt-website'
+url: 'https://effekt-lang.github.io/effekt-website/'
 baseurl: ''
 githuburl: https://github.com/effekt-lang/effekt
 description: A research language with effect handlers and lightweight effect polymorphism
