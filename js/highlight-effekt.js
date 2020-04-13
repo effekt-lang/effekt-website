@@ -109,7 +109,7 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
     name: 'Scala',
     keywords: {
       literal: 'true false null',
-      keyword: 'module effect type def with val var if for while import return else break case try match resume do'
+      keyword: 'module effect type def with val var if for while import return else break case try match resume do record'
     },
     contains: [
       hljs.C_LINE_COMMENT_MODE,

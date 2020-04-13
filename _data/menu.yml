@@ -1,10 +1,10 @@
 
 options:
-  - title: Guides and Examples
-    url: docs
-
   - title: Getting Started
     url: docs/getting-started
+
+  - title: Introduction to Effekt
+    url: docs
 
   - title: Core Concepts
     url: docs/concepts
