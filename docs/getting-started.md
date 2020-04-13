@@ -75,6 +75,29 @@ be found in `%APPDATA%/Roaming/npm`).
 
 With this setup the extension should start the server when an Effekt file is opened.
 
+## Effekt on Windows
+If you want to use Effekt with Microsoft's [PowerShell](https://docs.microsoft.com/en-us/powershell/),
+there is a few things you need to look out for.
+
+1. The Effekt executable is unsigned at the moment. So running it in PowerShell
+   raises an error. You can work around this issue by disabling the check for
+   the current sessions. Please be aware that this is a rather drastic
+   work around and should be used with care.
+   ```
+   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+   ```
+   This only works for the current session and needs to be repeated every
+   time you start a new terminal.
+
+2. Ansi colors are not enabled out of the box. There is a Stackoverflow post
+   describing how to enable them. The easiest way is to set `VirtualTerminalLevel`
+   in the registry to `true`.
+   As always, be careful when tempering with the registry and only do it
+   when you know what you are doing!
+
+If you are an experienced Windows user, we are happy to receive your feedback
+on how to improve the user experience.
+
 ## Recommended Workflow
 At the moment, the recommended workflow is to open your files in VSCode and then
 run them using the terminal and `effekt path/to/my/file.effekt`.
