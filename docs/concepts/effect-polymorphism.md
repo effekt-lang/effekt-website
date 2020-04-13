@@ -5,3 +5,5 @@ permalink: docs/concepts/effect-polymorphism
 ---
 
 # Effect Polymorphism
+
+TODO
