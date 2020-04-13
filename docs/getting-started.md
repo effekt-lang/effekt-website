@@ -6,61 +6,101 @@ permalink: docs/getting-started
 
 # Getting Started
 
+### Installing Effekt
+{% include install.md %}
+
+## Your first Effekt Program
+Now let's get started. We create a file called `hello.effekt` and fill it
+with the following contents:
+
+```
+module hello
+
+def main() = {
+  println("Hello world!")
+}
+
+```
+We can execute this example by compiling and running it with effekt.
+
+```bash
+$ effekt hello.effekt
+Hello world!
+```
+You can notice that this created a `./out` directory containing the compiled
+JavaScript files. We can also run the program (without compiling it again)
+by directly using `node`:
+```bash
+$ node
+Welcome to Node.js v13.6.0.
+Type ".help" for more information.
+> hello = require('./out/hello.js')
+{ main: [Function: main] }
+> hello.main().run()
+Hello world!
+```
+
 ### Compiling Programs with Effekt
-To compile Effekt sources to JavaScript, provide the `--compile` flag. For example:
+To only compile Effekt sources to JavaScript without running them,
+ provide the `--compile` flag. For example:
 
 ```
-effekt --compile myfile.effekt
+effekt --compile hello.effekt
 ```
-This will generate JavaScript files in `./out`, the output folder can be configured by providing arguments `--out ./otherdir`.
+Again, this will generate JavaScript files in `./out`. This output folder can
+be configured by providing arguments `--out ./otherdir`.
 
-To run the generated JavaScript files you need to have a recent (> 10.0) version of Node.
 
-```
-node
-> require("out/MY_FILE.js").main().run()
-```
+## Setting Up VSCode
+Effekt comes with a basic language server implementation (LSP).
+The [effekt-vscode repository](https://github.com/effekt-lang/effekt-vscode)
+The extension is currently not published, so you will have to install it
+manually by downloading a `vsix` file.
+You can download the extension of the latest release on Github:
 
-### Language Server
-Effekt comes with a basic language server implementation (LSP). The `dist/vscode` folder contains a VSCode extension.
-There are at least two ways to setup VSCode. You can either download the `.vsix` file from the latest release, or build the VSCode editor extension yourself.
-Both ways, however rely on a jar file that contains the Effekt implementation. Again, you can either download the `jar`, or build it yourself.
+> <https://github.com/effekt-lang/effekt-vscode/releases/latest>
 
-#### Downloading or Building the Jar File
-Either download the `effekt.jar` or build it by running `sbt deploy`. The latter will generate the jar in the folder `bin/effekt.jar`. Remember the absolute path to the jar file, we need it later.
+Then in VSCode select
 
-#### Downloading the VSCode Extension
-Download the VSCode extension from the [latest release](https://github.com/effekt-lang/effekt-vscode/releases/latest). It should include a `vsix` file. In VSCode select "extensions / From VSIX ...".
+1. `Preferences / Extensions` in the menu,
+2. `...` on the top right corner of the extensions menu, and
+3. `Install from VSIX ...` selecting the file you downloaded.
 
-#### Building the VSCode Extension
-You first install the dependencies:
-```
-cd dist/vscode
-npm install
-```
-To build the `vsix` file, you also need to install [`vsce`](https://code.visualstudio.com/api/working-with-extensions/publishing-extension):
-```
-npm install -g vsce
-```
-Building the extension then amounts to running
-```
-vsce package
-```
-This will generate a `vsix` file that you can install as described above. You need to repeat this step everytime the extension changes.
+After installing the `vsix` file, you might need to set the path to
+the `effekt` binary. For Mac OS and Unix users this probably works out of the
+box after installing `effekt` with npm
+(that is, once the `effekt` command is in your path). For Windows users, you
+might need to double check the path (it defaults to `effekt.cmd`, which can
+be found in `%APPDATA%/Roaming/npm`).
 
-#### Starting VSCode in Developer Mode
-To automatically get latest updates (at the moment), you need to pretend you are a extension developer.
-Again, first install the dependencies:
+With this setup the extension should start the server when an Effekt file is opened.
+
+## Recommended Workflow
+At the moment, the recommended workflow is to open your files in VSCode and then
+run them using the terminal and `effekt path/to/my/file.effekt`.
+
+You can also use the Effekt REPL by omitting the file name:
+
+```bash
+  _____     ______  __  __     _    _
+ (_____)   |  ____|/ _|/ _|   | |  | |
+   ___     | |__  | |_| |_ ___| | _| |_
+  (___)    |  __| |  _|  _/ _ \ |/ / __|
+  _____    | |____| | | ||  __/   <| |_
+ (_____)   |______|_| |_| \___|_|\_\\__|
+
+ Welcome to the Effekt interpreter. Enter a top-level definition, or
+ an expression to evaluate.
+
+ To print the available commands, enter :help
+
+> import examples/hello
+> :status
+import examples/hello
+
+> main()
+Hello world!
+()
 ```
-cd dist/vscode
-npm install
-```
-Then open VSCode from the `dist/vscode` folder.
-
-Pressing `F5` will start a new VSCode instance with the extension loaded.
-
-#### Configuring VSCode
-To get the full language server support, you need to point the extension to the `effekt.jar` file
-of the Effekt compiler.
-
-Open `settings` and search for `Effekt`. Under the setting `compiler` provide the absolute path to the `jar` file.
+However, currently files are cached and importing them again will not update
+them.
