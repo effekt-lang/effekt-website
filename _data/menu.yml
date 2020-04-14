@@ -5,6 +5,26 @@ options:
 
   - title: Introduction to Effekt
     url: docs
+    
+  - title: User Guides
+    url: #
+    nested_options:
+      - title: Getting Started
+        url: user-guides/getting-started
+      
+      - title: Hello, Effekt!
+        url: user-guides/hello-effekt
+      
+      - title: Function
+      
+      - title: List
+      
+      - title: Algebraic datatypes
+      
+      - title: "Let's do Effekt"
+      
+  - title: Language Specification
+    url: docs/lang-spec
 
   - title: Core Concepts
     url: docs/concepts

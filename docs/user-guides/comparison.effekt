@@ -1,0 +1,11 @@
+module comparison
+
+def max(n: Int, m: Int) : Int = 
+	if (n > m) 
+		n
+	else
+		m
+		
+def main() = {
+	println(max(12, 17))
+}
