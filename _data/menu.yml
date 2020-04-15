@@ -14,14 +14,26 @@ options:
       
       - title: Hello, Effekt!
         url: user-guides/hello-effekt
+        
+      - title: REPL
+        url: user-guides/repl
+        
+      - title: Variable
+        url: user-guides/variable
       
       - title: Function
+        url: user-guides/function
       
       - title: List
       
       - title: Algebraic datatypes
       
       - title: "Let's do Effekt"
+
+  - title: Effekt by Example!
+    url: #
+    nested_options:
+      - title: ADT
       
   - title: Language Specification
     url: docs/lang-spec
