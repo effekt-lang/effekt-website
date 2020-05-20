@@ -27,7 +27,9 @@ export function load(path: string) {
 
   let module = { exports: null }
   let compiled = Effekt.compileFile(path)
+
   // console.log(compiled)
+
   eval("(function() { " + compiled + "}).apply(this)")
   return module.exports
 }
@@ -37,6 +39,9 @@ export function evaluate(content: string) {
   let require = load
   let module = { exports: null }
   let compiled = Effekt.compileString(content)
+
+  // console.log(compiled)
+
   eval("(function() { " + compiled + "}).apply(this)")
   let result = module.exports.main().run()
   return result

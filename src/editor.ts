@@ -83,7 +83,6 @@ function autoBlur(editor: monaco.editor.ICodeEditor) {
 function autoResize(editor: monaco.editor.ICodeEditor) {
   editor.onDidChangeModelContent(() => {
     updateEditorHeight() // typing
-    console.log("resize")
     // requestAnimationFrame(updateEditorHeight) // folding
   })
 

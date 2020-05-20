@@ -64,7 +64,6 @@ function processCode() {
       code.setAttribute("postlude", post)
       code.setAttribute("content", code.textContent)
       prelude = prelude + "import " + moduleName + "\n"
-      //effekt.write(moduleName + ".effekt", pre + code.textContent + post)
     }
   }
 
@@ -198,23 +197,7 @@ function parseOptions(str: string): CodeOptions {
 
 
 
-
 window.addEventListener("DOMContentLoaded", () => {
-
-  // For all code blocks, copy the language from the containing div
-  // to the inner code tag (where hljs expects it to be)
-  // const langPrefix = 'language-';
-  // document.querySelectorAll(`div[class^='${langPrefix}']`).forEach(function(div) {
-  //     div.classList.forEach(function(cssClass) {
-  //         //@ts-ignore
-  //         if (cssClass.startsWith(langPrefix)) {
-  //             const lang = cssClass.substring(langPrefix.length);
-  //             div.querySelectorAll('pre code').forEach(function(code) {
-  //                 code.classList.add(lang);
-  //             });
-  //         }
-  //     });
-  // });
 
   processCode()
 
