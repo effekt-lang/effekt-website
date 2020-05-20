@@ -1,3 +1,6 @@
 _site/
 .jekyll-cache/
 artwork/
+node_modules/
+.jekyll-metadata
+

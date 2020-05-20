@@ -3,8 +3,8 @@ url: 'https://effekt-lang.github.io'
 baseurl: '/effekt-website'
 githuburl: https://github.com/effekt-lang/effekt
 description: A research language with effect handlers and lightweight effect polymorphism
-highlighter: rouge
 docs: true
+highlighter: none
 collections:
   tut:
     output: true
@@ -20,5 +20,6 @@ include:
 - css/custom.scss
 - css/fontawesome.min.css
 - webfonts
+- dist
 org: docs
 markdown: kramdown

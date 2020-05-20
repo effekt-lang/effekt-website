@@ -136,8 +136,10 @@ function linkifyAllLevels() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  activateToggle();
-  activateMenuNesting();
-  linkifyAllLevels();
-});
+export function init() {
+  if (document.body.classList.contains('docs')) {
+    activateToggle();
+    activateMenuNesting();
+    linkifyAllLevels();
+  }
+}

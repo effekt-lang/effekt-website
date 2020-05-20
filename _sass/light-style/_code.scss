@@ -1,0 +1,149 @@
+pre {
+  padding: 1em;
+  font-size: ($font-size-base - 2);
+  margin-top: 20px;
+  position: relative;
+  border-radius: 2px;
+  overflow: visible;
+
+  code {
+    font-family: $code-font-family;
+    font-size: inherit;
+    white-space: pre-wrap;
+    overflow: visible;
+  }
+
+  .monaco-editor  {
+    overflow: unsert;
+  }
+
+  code.hidden { display: none }
+}
+
+// page specific settings
+.docs pre {
+  background: #f8f8f8;
+
+  > nav.code-menu {
+    background: #f8f8f8;
+  }
+}
+
+.page pre {
+  background: #ffffff;
+
+  > nav.code-menu {
+    background: #ffffff;
+  }
+}
+
+pre {
+  > nav.code-menu {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    z-index: 999;
+
+    a {
+      display: inline-block;
+      margin-right: 0.5em;
+      font-family: "Open Sans", sans-serif;
+      text-decoration: none !important;
+      color: #a3a3a3;
+    }
+    a.button-run:before, a.button-edit:before {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      padding-right: 0.5em;
+    }
+    a.button-run:before {
+      content: "\f144";
+    }
+    a.button-edit:before {
+      content: "\f044";
+    }
+    a.disabled {
+      display: none;
+      color: #aaa;
+      cursor: auto;
+      border-bottom: none;
+    }
+  }
+}
+
+pre.editor {
+  border: 1px solid #aaaaaa;
+  overflow: visible;
+
+  .hover-contents {
+    h4 {
+      margin-block-start: 0.1em;
+      margin-block-end: -1em;
+      font-size: 1.2em;
+    }
+  }
+}
+
+pre.repl {
+  padding-left: 1.5em;
+
+  &:before {
+    content: ">";
+    opacity: 0.5;
+    font-weight: bold;
+    position: absolute;
+    top: 1.1em;
+    left: 0.6em;
+    z-index: 9;
+  }
+}
+
+pre.repl.editor {
+  padding-left: 0.8em;
+}
+
+pre.editor-loading {
+  opacity: 0.4;
+}
+
+ul.repl-output {
+  background: #766b77;
+  color: #efefef;
+  font-family: monospace;
+  padding: 1.8em 1em 1em;
+  position: relative;
+
+  &:before {
+    content: "output";
+    position: absolute;
+    top: 0.5em;
+    left: 1em;
+    font-size: 0.8em;
+    opacity: 0.5;
+  }
+
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.3em;
+  }
+
+  &.cleared {
+    opacity: 0.5;
+  }
+}
+
+.hljs-addition,
+.hljs-meta,
+.hljs-string,
+.hljs-symbol,
+.hljs-template-tag,
+.hljs-template-variable {
+  line-height: $base-point-grid * 3;
+}
+
+.window-contents pre {
+  padding: 0;
+  margin: 0;
+}

@@ -1,7 +1,11 @@
 Currently, the Effekt language is implemented in Scala and compiles to JavaScript.
-To use the Effekt compiler and run the resulting programs, you need to have a
-Java (>= 1.8), [Node.js](https://nodejs.org/en/) (>= 10)
-and [npm](https://www.npmjs.com) installed.
+To use the Effekt compiler and run the resulting programs, you need to have
+
+- Java (>= 1.8),
+- [Node.js](https://nodejs.org/en/) (>= 10), and
+- [npm](https://www.npmjs.com)
+
+installed.
 
 The recommended way to install Effekt is by running:
 ```

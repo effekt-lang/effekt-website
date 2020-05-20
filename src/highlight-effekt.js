@@ -124,3 +124,5 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
     ]
   };
 })
+
+module.exports = hljs

@@ -254,39 +254,6 @@
       a:focus {
         outline: 0;
       }
-      // Code
-      // -----------------------------------------------------
-      code {
-        padding: 2px 4px;
-        border-radius: 2px;
-      }
-
-      pre {
-        padding: 0;
-        font-size: ($font-size-base - 2);
-        margin-top: 20px;
-
-        code {
-          font-family: $code-font-family;
-          font-size: inherit;
-          white-space: pre-wrap;
-          border-radius: 2px;
-          border: solid 1px rgba(1, 1, 1, 0.2);
-        }
-
-        .hljs {
-          padding: $base-point-grid * 3;
-        }
-      }
-
-      .hljs-addition,
-      .hljs-meta,
-      .hljs-string,
-      .hljs-symbol,
-      .hljs-template-tag,
-      .hljs-template-variable {
-        line-height: $base-point-grid * 3;
-      }
     }
 
     .header-link {

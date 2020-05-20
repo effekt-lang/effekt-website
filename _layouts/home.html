@@ -21,7 +21,7 @@ pagetype: home
               <div class="button-maximize"></div>
             </div>
             <div class="window-contents">
-          <pre><code class="language-effekt">def eager[R] { p: R / { Flip, Fail, Error } } = try {
+          <pre><code class="language-effekt:sketch">def eager[R] { p: R / { Flip, Fail, Error } } = try {
   Success(p())
 } with Flip { () =>
   resume(true) match {
