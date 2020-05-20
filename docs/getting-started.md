@@ -14,20 +14,27 @@ Now let's get started. We create a file called `hello.effekt` and fill it
 with the following contents:
 
 ```
-module hello
-
 def main() = {
   println("Hello world!")
 }
-
 ```
-We can execute this example by compiling and running it with effekt.
+On this page, you can execute the above example, by clicking "run" on the right:
+```effekt:repl
+main()
+```
+Feel free to edit the above program and try to run it again.
+
+You can also install Effekt locally and then
+execute the example by compiling and running it with effekt.
 
 ```bash
 $ effekt hello.effekt
 Hello world!
 ```
-You can notice that this created a `./out` directory containing the compiled
+
+### Compiling Programs with Effekt
+Running the above command, you can
+notice that this created a `./out` directory containing the compiled
 JavaScript files. We can also run the program (without compiling it again)
 by directly using `node`:
 ```bash
@@ -40,16 +47,61 @@ Type ".help" for more information.
 Hello world!
 ```
 
-### Compiling Programs with Effekt
 To only compile Effekt sources to JavaScript without running them,
  provide the `--compile` flag. For example:
 
-```
+```bash
 effekt --compile hello.effekt
 ```
 Again, this will generate JavaScript files in `./out`. This output folder can
 be configured by providing arguments `--out ./otherdir`.
 
+
+
+## Recommended Workflow
+The recommended workflow is to open your files in VSCode and then
+run them using the Effekt REPL.
+The Effekt REPL is started by just invoking `effekt` (without any arguments):
+
+```bash
+$ effekt
+
+  _____     ______  __  __     _    _
+ (_____)   |  ____|/ _|/ _|   | |  | |
+   ___     | |__  | |_| |_ ___| | _| |_
+  (___)    |  __| |  _|  _/ _ \ |/ / __|
+  _____    | |____| | | ||  __/   <| |_
+ (_____)   |______|_| |_| \___|_|\_\\__|
+
+ Welcome to the Effekt interpreter. Enter a top-level definition, or
+ an expression to evaluate.
+
+ To print the available commands, enter :help
+
+> import hello
+> :status
+import hello
+
+> main()
+Hello world!
+()
+```
+If you change the contents of the `hello.effekt` file to
+```sketch
+module hello
+
+def main() = {
+  println("Hello")
+}
+```
+and simply enter `main()` in the open REPL,
+you can notice that all necessary dependencies are automatically
+recompiled:
+```bash
+> main()
+Hello
+()
+```
 
 ## Setting Up VSCode
 Effekt comes with a basic language server implementation (LSP).
@@ -60,22 +112,37 @@ You can download the extension of the latest release on Github:
 
 > <https://github.com/effekt-lang/effekt-vscode/releases/latest>
 
-Then in VSCode select
+In VSCode select
 
 1. `Preferences / Extensions` in the menu,
 2. `...` on the top right corner of the extensions menu, and
-3. `Install from VSIX ...` selecting the file you downloaded.
+3. `Install from VSIX ...` selecting the vsix-file.
 
-After installing the `vsix` file, you might need to set the path to
-the `effekt` binary. For Mac OS and Unix users this probably works out of the
-box after installing `effekt` with npm
-(that is, once the `effekt` command is in your path). For Windows users, you
-might need to double check the path (it defaults to `effekt.cmd`, which can
-be found in `%APPDATA%/Roaming/npm`).
+> #### Note
+> After installing the `vsix` file, you might be faced with the error
+>
+> "Couldn't start client Effekt Language Server"
+>
+> and need to set the path to the `effekt` binary.
+>
+> For Mac OS users this probably works out of the box after installing `effekt`
+> with npm (that is, once the `effekt` command is in your path). For Windows users,
+> you might need to double check the path (it defaults to `effekt.cmd`, which can
+> be found in `%APPDATA%/Roaming/npm`). Linux users should point VSCode to the
+> `effekt.sh` shell script, located in the npm install path.
+>
+> You might need to restart VSCode after changing the settings.
 
 With this setup the extension should start the server when an Effekt file is opened.
 
+### Workspace Folder
+For the language services to work, you need to open the project's root-folder in VSCode.
+In the case of this artifact, the supplementary material folder is the project-folder.
+Similarly, we recommend to start the `effekt` command (`effekt.sh` on Linux) in a terminal
+in the project's root folder.
+
 ## Effekt on Windows
+Generally, we recommend using `cmd` at the moment.
 If you want to use Effekt with Microsoft's [PowerShell](https://docs.microsoft.com/en-us/powershell/),
 there is a few things you need to look out for.
 
@@ -89,41 +156,12 @@ there is a few things you need to look out for.
    This only works for the current session and needs to be repeated every
    time you start a new terminal.
 
-2. Ansi colors are not enabled out of the box. There is a Stackoverflow post
-   describing how to enable them. The easiest way is to set `VirtualTerminalLevel`
-   in the registry to `true`.
+2. Ansi colors are not enabled out of the box.
+   The easiest way is to set `VirtualTerminalLevel` in the registry to `true`.
    As always, be careful when tempering with the registry and only do it
    when you know what you are doing!
 
-If you are an experienced Windows user, we are happy to receive your feedback
-on how to improve the user experience.
-
-## Recommended Workflow
-At the moment, the recommended workflow is to open your files in VSCode and then
-run them using the terminal and `effekt path/to/my/file.effekt`.
-
-You can also use the Effekt REPL by omitting the file name:
-
-```bash
-  _____     ______  __  __     _    _
- (_____)   |  ____|/ _|/ _|   | |  | |
-   ___     | |__  | |_| |_ ___| | _| |_
-  (___)    |  __| |  _|  _/ _ \ |/ / __|
-  _____    | |____| | | ||  __/   <| |_
- (_____)   |______|_| |_| \___|_|\_\\__|
-
- Welcome to the Effekt interpreter. Enter a top-level definition, or
- an expression to evaluate.
-
- To print the available commands, enter :help
-
-> import examples/hello
-> :status
-import examples/hello
-
-> main()
-Hello world!
-()
-```
-However, currently files are cached and importing them again will not update
-them.
+## Effekt on Linux
+Instead of using the `effekt` command, on linux for now the shell-script
+`effekt.sh` has to be used. It is installed alongside `effekt` using
+`npm install ...`.

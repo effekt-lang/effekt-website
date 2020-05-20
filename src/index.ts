@@ -103,7 +103,14 @@ function processCode() {
 
     let opts = classToOptions(code)
 
-    if (opts.hidden) { code.classList.add('hidden') }
+    if (opts.reset) {
+      prelude = ""
+    }
+
+    if (opts.hidden) {
+      code.classList.add('hidden')
+      code.parentElement.classList.add('hidden')
+    }
 
     if (opts.language != "effekt") return;
 
@@ -146,7 +153,10 @@ interface CodeOptions {
   readOnly: boolean,
 
   // do not typecheck
-  sketch: boolean
+  sketch: boolean,
+
+  // reset the prelude
+  reset: boolean
 }
 
 const defaultLang = "effekt"
@@ -156,6 +166,7 @@ const defaultOpts = {
   prelude: false,
   repl: false,
   readOnly: false,
+  reset: false,
   sketch: false
 }
 
@@ -188,6 +199,7 @@ function parseOptions(str: string): CodeOptions {
     prelude: has("prelude"),
     repl: has("repl"),
     readOnly: has("read-only"),
+    reset: has("reset"),
     sketch: has("sketch")
   }
 }

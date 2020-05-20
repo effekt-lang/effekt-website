@@ -50,6 +50,10 @@ export function create(container: HTMLElement, run: HTMLElement, out: HTMLElemen
     renderFinalNewline: false,
     renderLineHighlight: "none",
     fixedOverflowWidgets: true,
+    lightbulb: {
+      enabled: false
+    },
+    quickSuggestions: false,
     scrollbar: {
       handleMouseWheel: false,
       alwaysConsumeMouseWheel: false,

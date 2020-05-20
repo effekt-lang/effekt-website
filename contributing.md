@@ -26,6 +26,7 @@ You need to have the following software installed to build and use Effekt:
 - JDK >= 1.8 and [Maven](https://maven.apache.org/)
 - sbt (<https://www.scala-sbt.org>)
 - Node.js (>= 10) and npm
+- Maven
 
 Why three package management tools? The main build tool we use is Effekt,
 but we use Maven to extract dependencies and aggregate license files of the
@@ -39,7 +40,7 @@ you also need a Scala.js compatible fork of
 - the Kiama library <https://github.com/b-studios/kiama>
 
 Once you have sbt installed, you can obtain and build the fork as follows:
-```
+```bash
 git clone git@github.com:b-studios/kiama.git
 cd kiama
 git checkout scala-js
@@ -49,7 +50,7 @@ sbt publishLocal
 Great, you made it so far! We can finally compile the Effekt project. For
 this enter the sbt terminal:
 
-```
+```bash
 sbt
 sbt:root> project effektJVM
 sbt:effekt> test
@@ -60,33 +61,39 @@ also as a Scala program. Hence, we need a slightly complicate
 [Cross-build setup](https://www.scala-js.org/doc/project/cross-build.html)
 with two projects `effektJVM` and `effektJS`.
 
+### Locally Installing your Compiler Build
+The easiest way to install your version of Effekt is by running
+```bash
+sbt
+sbt:root> project effektJVM
+sbt:effekt> install
+...
+```
+Please note that this also requires `mvn` to generate license files.
+
 ### Generating the Effekt Binary
 The Effekt binary is actually just a simple wrapper that invokes `java -jar effekt.jar`.
 To generate the jar-file and assembly everything simply run:
 
-```
+```bash
 sbt deploy
 ```
 Afterwards, you can find the `effekt.jar` in the `bin/` folder.
 
 ### Working on the "Standard Library"
 The Effekt standard library is still in its infancy. If you want to work on
-it, we recommend the following workflow:
+it, we recommend the following workflow: Check out the effekt repository
+and start the repl in the project directory. This will enable using the
+library in folder `lib` instead of the bundled one.
 
-Create a test file in `examples` that uses your new / improved library module, like
-```
+You can now go ahead and create a test file in `examples` that uses
+your new / improved library module, like
+```effekt:sketch
 module examples/mynewmoduletester
 
 import io/mynewmodule
 
 def main() = mynewfunction()
-```
-Open `sbt` and run
-```
-sbt
-sbt:root> project effektJVM
-sbt:effekt> run examples/mynewmoduletester.effekt
-...
 ```
 
 This makes sure that you are always interacting with the most up-to-date version
