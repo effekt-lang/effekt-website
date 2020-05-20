@@ -8,8 +8,7 @@ position: 2
 # Try Effekt Online
 You can immediately experiment with the Effekt language, without [installing](docs/getting-started) it.
 
-Compared to other languages with effect handlers (and support for polymorphic effects)
-the Effekt language aims to be more lightweight in its concepts.
+Effekt is a research language, we recommend reading [the paper](http://ps.informatik.uni-tuebingen.de/publications/brachthaeuser20effekt/) describing important design decisions and the inner workings of Effekt.
 
 ```effekt:prelude:hide
 import immutable/list
