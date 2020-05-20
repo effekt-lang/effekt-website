@@ -4,7 +4,6 @@ baseurl: '/effekt-website'
 githuburl: https://github.com/effekt-lang/effekt
 description: A research language with effect handlers and lightweight effect polymorphism
 docs: true
-highlighter: rouge
 collections:
   tut:
     output: true
@@ -23,3 +22,6 @@ include:
 - dist
 org: docs
 markdown: kramdown
+kramdown:
+   syntax_highlighter_opts:
+      disable : true
