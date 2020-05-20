@@ -28,11 +28,11 @@ features:
 
 After making sure you satisfy all requirements and installed Effekt, you
 can run the Effekt REPL by entering the following command:
-```
+```bash
 effekt
 ```
 Running Effekt without any additional arguments will bring you into the REPL:
-```
+```bash
   _____     ______  __  __     _    _
  (_____)   |  ____|/ _|/ _|   | |  | |
    ___     | |__  | |_| |_ ___| | _| |_

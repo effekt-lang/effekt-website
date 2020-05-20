@@ -21,7 +21,7 @@ effect FileNotFound(path: String): Unit
 ```
 and then use it in some function
 
-```
+```effekt
 def trySomeFile(f: String) = {
   println("Trying to open file " ++ f);
   do FileNotFound(f);
@@ -32,13 +32,13 @@ Here we use our `FileNotFound` effect with the syntax `do FileNotFound(f)`
 passing the file as a string argument to the effect operation.
 The inferred type of `trySomeFile` is
 
-```
+```effekt:sketch
 def trySomeFile(f: String): Unit / { Console, FileNotFound } = ...
 ```
 That is, it communicates that the context needs to handle `Console` and
 `FileNotFound`.
 
->**Remark**
+> **Remark**
 > Builtin effects like `Console` are actually only tracked,
 > but never handled. That is, the `main` function can still have unhandled
 > builtin effects.
@@ -50,18 +50,16 @@ our function `trySomeFile` and handle the exception:
 ```
 def handled() =
   try { trySomeFile("myFile.txt") }
-  with FileNotFound { (path: String) => println("Error" ++ path) }
+  with FileNotFound { (path: String) => println("Error " ++ path) }
 ```
-Running `handled` now prints:
-```bash
-> handled()
-Trying to open file myFile.txt
-Error myFile.txt
+You can try running `handled`:
+```effekt:repl
+handled()
 ```
 The inferred type of `handled` communicates that it only has the requirement
 of the `Console` effect left:
 ```
-def handled(): Unit / { Console }
+def handledType(): Unit / { Console } = handled()
 ```
 #### Resuming Exceptions
 Tracking effects and handling them is great, but it is fairly standard.
@@ -71,23 +69,20 @@ to the handler (e.g. `try {... } with FileNotFound { ... }`).
 What might come with surprise is that in Effekt the handler can also resume
 to the original call-site:
 
-```
+```effekt
 def handledResume() =
   try { trySomeFile("myFile.txt") }
   with FileNotFound { (path: String) =>
-    println("Error" ++ path);
+    println("Error " ++ path);
     resume(())
 }
 ```
 Here the keyword `resume` expresses that the execution should proceed at the
 original call to the effect operation `FileNotFound`.
 
-Running `handledResume()` now gives:
-```bash
-> handledResume()
-Trying to open file myFile.txt
-Error myFile.txt
-Unreachable
+Running `handledResume()` now prints `Unreachable`:
+```effekt:repl
+handledResume()
 ```
 Since the return type of the effect operation is `Unit` the argument to
 `resume` is a unit-value (e.g. `()`).
@@ -103,11 +98,9 @@ or backtracking search.
 Here, we repeat a small example that performs an exhaustive search for
 three distinct numbers below `n` that add up to a given number `s`.
 
-We start with the module declaration and using `immutable/list` from the
-standard library:
+We start by importing `immutable/list` from the standard library:
 
-```
-module triples
+```effekt:prelude
 import immutable/list
 ```
 
@@ -127,7 +120,7 @@ all positions. It represents a failing branch in the search tree.
 We can now write a function `choice` modelling choosing a number
 between 1 and n:
 
-```
+```effekt
 def choice(n : Int): Int / { Flip, Fail } =
   if (n < 1) { do Fail() }
   else if (do Flip()) { n }
@@ -138,7 +131,7 @@ to either return `n` or try with `n - 1`.
 
 Modeling our search problem now becomes:
 
-```
+```effekt
 def triple(n: Int, s: Int): Solution / { Flip, Fail } = {
   val i = choice(n);
   val j = choice(i - 1);
@@ -173,9 +166,8 @@ Calling `resume(true)` gives us a list since the type of the body of the
 corresponding `try` returns a list of solutions. To compute the overall result,
 we simply append the two subsolutions.
 
-Running `handledTriple` gives:
+We can run `handledTriple`:
 
-```
-> handledTriple(6, 9)
-Cons(Solution(6, 2, 1), Cons(Solution(5, 3, 1), Cons(Solution(4, 3, 2), Nil())))
+```effekt:repl
+handledTriple(6, 9)
 ```

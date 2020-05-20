@@ -29,7 +29,7 @@ pre {
   }
 }
 
-.page pre {
+.home pre, .page pre {
   background: #ffffff;
 
   > nav.code-menu {
@@ -73,6 +73,7 @@ pre {
 
 pre.editor {
   border: 1px solid #aaaaaa;
+  border-radius: 4px;
   overflow: visible;
 
   .hover-contents {
@@ -112,6 +113,7 @@ ul.repl-output {
   font-family: monospace;
   padding: 1.8em 1em 1em;
   position: relative;
+  border-radius: 4px;
 
   &:before {
     content: "output";
