@@ -1,5 +1,8 @@
 
 options:
+  - title: Try Online
+    url: docs/quickstart
+
   - title: Getting Started
     url: docs/getting-started
 
