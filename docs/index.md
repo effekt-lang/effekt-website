@@ -33,7 +33,7 @@ lists in the [standard library]({{ githuburl }}/effekt/tree/master/lib/immutable
 
 #### Module Declarations
 All Effekt files start with a module declaration
-```effekt
+```effekt:sketch
 module immutable/list
 ```
 It is important that the qualified module name coincides with the path from
@@ -42,7 +42,7 @@ under `./immutable/list.effekt`.
 
 #### Datatype Declarations
 The algebraic datatype for lists is declared as follows:
-```
+```effekt
 type List[A] {
   Nil();
   Cons(head: A, tail: List[A])
@@ -56,7 +56,7 @@ val l: List[Int] = Cons(1, Cons(2, Cons(3, Nil())))
 
 For lists, there is syntactic sugar and the same list can also be written as
 ```
-val l: List[Int] = [1, 2, 3]
+val l2: List[Int] = [1, 2, 3]
 ```
 
 #### Pattern Matching
@@ -78,10 +78,10 @@ call the same function as `l.size`. This only works if the function takes
 exactly one value argument. However, Effekt allows multiple argument
 sections and we can define a function like
 ```
-def append[A](self: List[A])(other: List[A]): List[A] = ...
+def append[A](self: List[A])(other: List[A]): List[A] = <>
 ```
 and call it:
-```
+```effekt:repl
 [1, 2, 3].append([4, 5, 6])
 ```
 Functions have to be always applied fully! There is no currying / uncurrying
@@ -91,22 +91,20 @@ in Effekt. As we will see, this is important to reason about (side) effects.
 You can define a record as follows:
 ```
 record Queue[A](front: List[A], back: List[A])
+val q = Queue([1, 2], [3, 4])
 ```
 Like constructors, records can be created with function application syntax:
 
-```
-> val q = Queue(Nil(), [1, 2, 3])
-Queue[Int]
+```effekt:repl
+Queue(Nil(), [1, 2, 3])
 ```
 However, records also admit direct access to their components:
-```
-> front(q)
-Nil()
+```effekt:repl
+front(q)
 ```
 ... or in method application style:
-```
-> q.back
-Cons(1, Cons(2, Cons(3, Nil())))
+```effekt:repl
+q.back
 ```
 #### Blocks
 Functions can take other functions as arguments. Following Ruby-jargon,
@@ -137,18 +135,13 @@ is constructed only to apply `f`.
 
 Using method-application syntax, we can call `map` as follows:
 
-```
-> [1,2,3].map { x => println(x) }
-1
-2
-3
-Cons((), Cons((), Cons((), Nil())))
+```effekt:repl
+[1,2,3].map { x => println(x) }
 ```
 
 #### Variables: Local Mutable State
 While Effekt has its heritage in functional programming, it offers convient
 imperative style features like mutable variables:
-
 ```
 def vars() = {
   var x = 10;
