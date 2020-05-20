@@ -66,6 +66,10 @@ export function create(container: HTMLElement, run: HTMLElement, out: HTMLElemen
   // type check once for hover
   IDE.typecheck(model)
 
+  // remove some keybindings
+  //@ts-ignore
+  editor._standaloneKeybindingService.addDynamicKeybinding('-expandLineSelection');
+
   addRunAction(editor, run, out)
 
   return editor;
@@ -102,6 +106,7 @@ function autoResize(editor: monaco.editor.ICodeEditor) {
   }
   updateEditorHeight();
 }
+
 
 function registerTypechecking(editor: monaco.editor.ICodeEditor) {
   var timeout;

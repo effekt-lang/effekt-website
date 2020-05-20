@@ -31,8 +31,6 @@ async function enableEditing(code: HTMLElement, run: HTMLElement) {
       output.classList.add("repl-output")
       parent.insertAdjacentElement("afterend", output)
     }
-    console.log(output)
-
     // init editor
     editor.create(code, run, output, model)
 }
