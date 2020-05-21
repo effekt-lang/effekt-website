@@ -171,3 +171,49 @@ html {
     }
   }
 }
+
+#getting-started {
+  div {
+    background: #fff;
+    border: #efefef;
+    padding: 1em 1em 1em 6.5em;
+    min-height: 4em;
+    margin-bottom: 1em;
+    position: relative;
+
+    &:before {
+      font-family: "Font Awesome 5 Free";
+      color: $brand-primary;
+      opacity: 0.2;
+      font-size: 4em;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    > * {
+      font-size: 1em;
+      margin: 0;
+    }
+  }
+  #start-guide {
+    &:before {
+      content: "\f135"
+    }
+  }
+  #start-try {
+    &:before {
+      content: "\f2d2"
+    }
+  }
+  #start-install {
+    &:before {
+      content: "\f019"
+    }
+  }
+  #start-read {
+    &:before {
+      content: "\f02d"
+    }
+  }
+}

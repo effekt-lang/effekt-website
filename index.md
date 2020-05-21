@@ -22,9 +22,34 @@ features:
 ---
 
 ## Getting Started
-If you are interested in the Effekt language, there are a few things you can do to get started:
+If you are interested in the Effekt language, we have a few things to get you started:
 
-1. To get a first impression of the distinguishing features, read the quick-guides on this page ([effect handlers](#intro-handlers), [effect safety](#intro-safety), [effect polymorphism](#intro-polymorphism)).
-2. To play around with the language, you can use the [online editor](quickstart).
-3. To install Effekt and try the examples on your own computer you can follow the [installation instructions](docs/getting-started).
-4. To understand the theory and concepts behind Effekt, you can read about [design considerations](design-considerations), or read the [academic papers](publications).
+<section id="getting-started">
+
+<div id="start-guide">
+<h3>Quick Guides</h3>
+<p>To get a first impression of the distinguishing features, read the quick-guides on this page (
+  <a href="#intro-handlers">effect handlers</a>,
+  <a href="#intro-safety">effect safety</a>,
+  <a href="#intro-polymorphism">effect polymorphism</a>).
+</p>
+</div>
+
+<div id="start-try">
+<h3>Try Online</h3>
+<p>To play around with the language, you can use the <a href="quickstart">online editor</a>.</p>
+</div>
+
+<div id="start-install">
+<h3>Try Online</h3>
+<p>To install Effekt and try the examples on your own computer you can follow the <a href="docs/getting-started">installation instructions</a>.</p>
+</div>
+
+<div id="start-read">
+<h3>Read the Papers</h3>
+<p>To understand the theory and concepts behind Effekt, you can read about
+<a href="design-considerations">design considerations</a>, or read the
+<a href="publications">academic papers</a>.</p>
+</div>
+
+</section>

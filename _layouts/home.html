@@ -89,7 +89,7 @@ pagetype: home
 transfers the control-flow to the handler that catches (or "handles") the effect. We can also
 send values to the handler (here <code class="language-effekt">n</code>).</p>
 </div>
-<aside>
+<div>
 <pre><code class="language-effekt">effect Yield(n: Int): Boolean
 
 def example() = {
@@ -102,7 +102,7 @@ def example() = {
   println("done")
 }
 </code></pre>
-</aside>
+</div>
 </div>
 
 <div class="container">
@@ -121,12 +121,12 @@ def example() = {
 
 <a class="learn-more-button" href="docs/concepts/effect-handlers"><span class="learn-more">Learn More</span></a>
 </div>
-<aside>
+<div>
 <pre><code class="language-effekt:repl">try { example() } with Yield { n =>
   println(n); resume(n < 3)
 }
 </code></pre>
-</aside>
+</div>
 </div>
 </section>
 
@@ -159,7 +159,7 @@ seen in the return type of <code>divide</code>:</p>
 to be handled at the call-site! We use curly braces to say that it is a <emph>set of effects</emph>.</p>
 
 </div>
-<aside>
+<div>
 <pre><code class="language-effekt">effect Raise(msg: String): Unit
 
 def divide(n: Int, m: Int): Int / { Raise } =
@@ -169,7 +169,7 @@ def divide(n: Int, m: Int): Int / { Raise } =
     n / m
   }
 </code></pre>
-</aside>
+</div>
 </div>
 
 <div class="container">
@@ -180,12 +180,12 @@ to a static type error!</p>
 <blockquote><strong>Tipp.</strong> Click "edit" to observe the type error and try to fix it by deleting
 the type annotated on <code>typeError</code>. Hover over <code>typeError</code> to inspect the <emph>inferred</emph> type.</blockquote>
 </div>
-<aside>
+<div>
 <pre><code class="language-effekt:ignore">def typeError(): Int / {} = divide(4, 0)
 //                          ^^^^^^^^^^^^
 //                 Unhandled effects: Raise
 </code></pre>
-</aside>
+</div>
 </div>
 <div class="container">
 <div>
@@ -196,11 +196,11 @@ the message and returning <code class="language-effekt">42</code> as default val
 
 <a class="learn-more-button" href="docs/concepts/effect-safety"><span class="learn-more">Learn More</span></a>
 </div>
-<aside>
+<div>
 <pre><code class="language-effekt:repl">try { divide(4, 0)} with Raise { msg =>
   println(msg); 42
 }</code></pre>
-</aside>
+</div>
 </div>
 </section>
 
@@ -230,7 +230,7 @@ It calls the provided block with each line in the file.
 <pre><code class="language-effekt:sketch">def eachLine(file: File) { f: String => Unit / {} }: Unit / {}</code></pre>
 <p>Note that the signature does not say anything about effects.</p>
 </div>
-<aside>
+<div>
   <pre><code class="language-effekt:hide">
   import immutable/list
 
@@ -249,7 +249,7 @@ It calls the provided block with each line in the file.
       println("found an empty line, aborting!")
     }
   </code></pre>
-  </aside>
+  </div>
 </div>
 
 <div class="container">
