@@ -2,6 +2,10 @@
 // -----------------------------------------------
 // -----------------------------------------------
 
+html {
+  scroll-behavior: smooth;
+}
+
 .home {
   height: 100%;
   display: flex;
@@ -43,6 +47,127 @@
     li {
       line-height: $base-point-grid * 4;
       padding-left: $base-point-grid;
+    }
+  }
+}
+
+
+// .float-right {
+//   margin-left: 2em;
+//   margin-top: 0;
+
+//   > * {
+//     margin-top: 0;
+//   }
+// }
+
+// .float-left {
+//   margin-right: 2em;
+//   margin-top: 0;
+
+//   > * {
+//     margin-top: 0;
+//   }
+// }
+
+#site-main section.intro {
+
+  display: block;
+  clear: both;
+  margin-top: 2em;
+
+  a.learn-more-button {
+    display: block;
+    margin-top: 2em;
+  }
+
+  @media (min-width: 768px) {
+
+    &.float-left {
+      .container {
+        flex-direction: row-reverse;
+
+        > *:first-child {
+          margin-right: 2em;
+        }
+      }
+    }
+    &.float-right {
+      .container {
+        flex-direction: row;
+
+        > *:last-child {
+          margin-left: 2em;
+        }
+      }
+    }
+
+    .container {
+      display: flex;
+
+      > * {
+        flex-basis: 50%;
+        flex-grow: 1;
+      }
+
+      border-bottom: 1px solid #e4e4e4;
+    }
+    .container:last-child {
+      border: none;
+    }
+  }
+
+  header {
+    color: #fff;
+    overflow: hidden;
+
+    h2 {
+      display: block;
+      max-width: 980px;
+      margin: 1em auto 0;
+      padding: 3em 24px 0.25em;
+    }
+
+    h2:before {
+      font-family: "Font Awesome 5 Free";
+      opacity: 0.2;
+      font-size: 5em;
+      position: absolute;
+      bottom: 10px;
+      left: -20px;
+    }
+  }
+
+  h3 {
+    font-size: 1.2em;
+    margin-block-start: 1em;
+    margin-block-end: -0.75em;
+  }
+}
+
+#intro-handlers {
+  header {
+    background: $brand-primary;
+    h2:before {
+      content: "\f1b3"
+    }
+  }
+}
+
+#intro-safety {
+  header {
+    background: $brand-secondary;
+    h2:before {
+      content: "\f06d"
+    }
+  }
+}
+
+#intro-polymorphism {
+  header {
+    background: $brand-tertiary;
+    h2:before {
+      content: "\f6e8"
     }
   }
 }

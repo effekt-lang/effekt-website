@@ -32,6 +32,9 @@ $ effekt hello.effekt
 Hello world!
 ```
 
+You can find example programs in the [examples folder](https://github.com/effekt-lang/effekt/tree/master/examples).
+
+
 ### Compiling Programs with Effekt
 Running the above command, you can
 notice that this created a `./out` directory containing the compiled
@@ -86,8 +89,12 @@ import hello
 Hello world!
 ()
 ```
+Here, you can define functions, import modules and enter expressions to evaluate.
+Executing commands in the REPL compiles the corresponding Effekt-programs
+to Javascript (you can find them in `./out/`) and runs them with Node.js.
+
 If you change the contents of the `hello.effekt` file to
-```sketch
+```effekt:sketch
 module hello
 
 def main() = {
@@ -150,7 +157,7 @@ there is a few things you need to look out for.
    raises an error. You can work around this issue by disabling the check for
    the current sessions. Please be aware that this is a rather drastic
    work around and should be used with care.
-   ```
+   ```bash
    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
    ```
    This only works for the current session and needs to be repeated every

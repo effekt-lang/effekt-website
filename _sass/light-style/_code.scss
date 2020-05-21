@@ -151,3 +151,13 @@ ul.repl-output {
   padding: 0;
   margin: 0;
 }
+
+pre code.hljs {
+  display: block;
+}
+
+code.hljs {
+  display: inline;
+  padding: 0.25em;
+  border-radius: 4px;
+}

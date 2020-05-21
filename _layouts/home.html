@@ -57,7 +57,7 @@ pagetype: home
                     <h4>{{ feature[1][0] }}</h4>
                     <p>{{ feature[1][1] }}</p>
                 </div>
-                <a class="learn-more-button" href="docs/{{ feature[1][2] }}"><span class="learn-more">Learn More</span></a>
+                <a class="learn-more-button" href="{{ feature[1][2] }}"><span class="learn-more">Learn More</span></a>
             </div>
         {% endfor %} {% endfor %}
         </div>
@@ -70,6 +70,246 @@ pagetype: home
         </div>
       </div>
     </section>
+
+<section class="intro float-right" id="intro-handlers">
+<header>
+<h2>Effect Handlers</h2>
+</header>
+<div class="container">
+  <div>
+  <p>The Effekt language comes with support for <strong>effect handlers</strong> (also known as <emph>algebraic effects</emph>).</p>
+</div></div>
+<div class="container">
+  <div>
+<h3>Effects Generalize Exceptions</h3>
+<p>Effect handlers are exception handlers on steroids! Like with exceptions, we first define the type of the
+  exception. In Effekt, a declaration like <code class="language-effekt">Yield</code> is called an <emph>effect signature</emph>.</p>
+
+<p>Calling an effect operation (with <code class="language-effekt">do Yield(42)</code> is like throwing an exception. It
+transfers the control-flow to the handler that catches (or "handles") the effect. We can also
+send values to the handler (here <code class="language-effekt">n</code>).</p>
+</div>
+<aside>
+<pre><code class="language-effekt">effect Yield(n: Int): Boolean
+
+def example() = {
+  var produce = true;
+  var n = 0;
+  while (produce) {
+    produce = do Yield(n)
+    n = n + 1
+  }
+  println("done")
+}
+</code></pre>
+</aside>
+</div>
+
+<div class="container">
+<div>
+<h3>Effect Handlers Can Resume</h3>
+<p>So what's new? Effect handlers now can also <strong>resume</strong> the program that called the effect!</p>
+
+<p>
+  In our example, we handle the <code class="language-effekt">Yield</code> effect by printing the number that was sent.
+  Similar to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">generators</a>,
+  we also resume at the original call to <code class="language-effekt">Yield</code>!
+</p>
+
+<p>Our example is type-safe: By declaring <code class="language-effekt">Yield</code> to take an integer and return a boolean, at
+  the handler we know that we receive integers and have to call <code class="language-effekt">resume</code> with a boolean value.</p>
+
+<a class="learn-more-button" href="docs/concepts/effect-handlers"><span class="learn-more">Learn More</span></a>
+</div>
+<aside>
+<pre><code class="language-effekt:repl">try { example() } with Yield { n =>
+  println(n); resume(n < 3)
+}
+</code></pre>
+</aside>
+</div>
+</section>
+
+
+<section class="intro float-right" id="intro-safety">
+<header>
+<h2>Effect Safety</h2>
+</header>
+<div class="container">
+<div>
+<p>Effect handlers are great, but it easy to forget handling an effect. This is why the Effekt language
+  comes with a <strong>static effect system</strong> that tells you where you forgot to handle something.
+</p>
+</div></div>
+
+<div class="container">
+<div>
+<h3>Effects are Part of the Type</h3>
+<p>The example uses a <code class="language-effekt">Raise</code> effect to signal that something went wrong. This can be
+seen in the return type of <code>divide</code>:</p>
+
+<pre><code class="language-effekt:sketch">//      effect set
+//       vvvvvvvvv
+   Int / { Raise }
+// ^^^
+// return type
+</code></pre>
+
+<p>The type says that <code>divide</code> will produce an integer, but it also requires <code class="language-effekt">Raise</code>
+to be handled at the call-site! We use curly braces to say that it is a <emph>set of effects</emph>.</p>
+
+</div>
+<aside>
+<pre><code class="language-effekt">effect Raise(msg: String): Unit
+
+def divide(n: Int, m: Int): Int / { Raise } =
+  if (m == 0) {
+    do Raise("Cannot divide by zero"); 0
+  } else {
+    n / m
+  }
+</code></pre>
+</aside>
+</div>
+
+<div class="container">
+<div>
+<h3>Effects are Checked</h3>
+<p>Trying to define a function like <code>typeError</code> that claims it requires no effects leads
+to a static type error!</p>
+<blockquote><strong>Tipp.</strong> Click "edit" to observe the type error and try to fix it by deleting
+the type annotated on <code>typeError</code>. Hover over <code>typeError</code> to inspect the <emph>inferred</emph> type.</blockquote>
+</div>
+<aside>
+<pre><code class="language-effekt:ignore">def typeError(): Int / {} = divide(4, 0)
+//                          ^^^^^^^^^^^^
+//                 Unhandled effects: Raise
+</code></pre>
+</aside>
+</div>
+<div class="container">
+<div>
+<h3>Handling Effects</h3>
+<p>Only programs that do not have any effects left can be executed.</p>
+<p>We can for instance handle the <code class="language-effekt">Raise</code> effect by printing
+the message and returning <code class="language-effekt">42</code> as default value.</p>
+
+<a class="learn-more-button" href="docs/concepts/effect-safety"><span class="learn-more">Learn More</span></a>
+</div>
+<aside>
+<pre><code class="language-effekt:repl">try { divide(4, 0)} with Raise { msg =>
+  println(msg); 42
+}</code></pre>
+</aside>
+</div>
+</section>
+
+
+<section class="intro float-right" id="intro-polymorphism">
+<header>
+<h2>Lightweight Effect Polymorphism</h2>
+</header>
+<div class="container">
+<div>
+<p>Tracking effects statically in the type is a great way to achieve safety. However, often, as soon as
+  you start writing <emph>higher-order functions</emph> the type- and effect system starts to get
+  into your way.</p>
+</div></div>
+
+<div class="container">
+<div>
+<h3>Effect Polymorphism</h3>
+<p>Not so in Effekt! It features a new form of effect polymorphism, which we call <strong>contextual effect polymorphism</strong>.</p>
+
+<p>The higher-order function <code>eachLine</code> expects two arguments: firstly, a
+<emph>value argument</emph>, which is passed in parenthesis.
+Secondly, a <emph>block argument</emph>, which is passed in curly braces.
+It calls the provided block with each line in the file.
+</p>
+<p>The signature of <code>eachLine</code> in Effekt is:</p>
+<pre><code class="language-effekt:sketch">def eachLine(file: File) { f: String => Unit / {} }: Unit / {}</code></pre>
+<p>Note that the signature does not say anything about effects.</p>
+</div>
+<aside>
+  <pre><code class="language-effekt:hide">
+  import immutable/list
+
+  type File = List[String]
+  def eachLine(file: File) { f: String => Unit / {} }: Unit / {} =
+    file.foreach { line => f(line) }
+
+  val someFile = ["first line", "second line", "", "third line"]
+  </code></pre>
+  <pre><code class="language-effekt">def printLines(file: File) = try {
+      eachLine(file) { line =>
+        if (line == "") { do Raise("empty") }
+        else { println(line) }
+      }
+    } with Raise { msg =>
+      println("found an empty line, aborting!")
+    }
+  </code></pre>
+  </aside>
+</div>
+
+<div class="container">
+<div>
+<h3>The Traditional Reading</h3>
+<p>In traditional effect systems, this would be read is:</p>
+<blockquote>"given a block <code>f</code> that has no
+effects, <code>eachLine</code> also has no effects".</blockquote>
+
+<p>Given that reading, we couldn't use <code>eachLine</code> as in our example, since the block passed
+  to <code>eachLine</code> uses two effects <code class="language-effekt">Raise</code> and <code class="language-effekt">Console</code>
+  (due to <code>println</code>).</p>
+</div>
+<div>
+<h3>The Contextual Reading</h3>
+<p>In Effekt, we apply a different reading, which we call <strong>contextual</strong>:</p>
+<blockquote>"given a block <code>f</code> without any further requirements,
+  <code>eachLine</code> does not require any effects."</p></blockquote>
+<p>The function <code>eachLine</code> is effect polymorphic. We can call it with arbitrary
+  blocks, indepedent of the effects the block arguments use.</p>
+<p>The type ofthe block parameter <code>f</code> tells us that it does not impose any
+  <emph>requirements</emph> on its caller <emph>within</epmph> <code>eachLine</code>.
+  However, it <emph>can have</emph> effects, that simply need to be handled <emph>at the call-site</emph>
+  of <code>eachLine</code>.
+</div></div>
+
+
+<div class="container">
+<div>
+<h3>Contextual Effect Polymorphism by Example</h3>
+<p>Here are some examples of calling <code>eachLine</code>. For example, we can provide a block that does not use any effects:</p>
+<pre><code class="language-effekt:repl">eachLine(someFile) { line => () }</code></pre>
+<p>The type of the block is <code class="language-effekt">String => Unit / {}</code> and
+the overall type of the call is <code class="language-effekt">Unit / {}</code>.</p>
+
+<p>Further, we can provide a block that uses builtin effects (<code class="language-effekt">Console</code>):</p>
+<pre><code class="language-effekt:repl">eachLine(someFile) { line => println(line) }</code></pre>
+<p>The type of the block is <code class="language-effekt">String => Unit / { Console }</code> and
+the overall type of the call now becomes <code class="language-effekt">Unit / { Console }</code>.</p>
+</div>
+<div>
+<h3>&nbsp;</h3>
+<p>We can also provide a block that uses a user-defined effects:</p>
+<pre><code class="language-effekt:sketch">eachLine(someFile) { line => do Raise(line) }</code></pre>
+<p>The type of the block is <code class="language-effekt">String => Unit / { Raise }</code> and
+  the overall type of the call is <code class="language-effekt">Unit / { Raise }</code>.
+Since it still has unhandled user effects, it does not type-check and we cannot run it.</p>
+
+<p>To be able to run it, we handle the user-effect at the call-site to <code>eachLine</code>:</p>
+<pre><code class="language-effekt:repl">try {
+  eachLine(someFile) { line => do Raise(line) }
+} with Raise { line => println(line) }</code></pre>
+<p>Now, the effects that are used by the block argument are handled in its <emph>lexical scope</emph>.</p>
+</div>
+
+</div>
+</div>
+
+
+</section>
 </main>
 
 {% include footer.html %}

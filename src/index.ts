@@ -61,7 +61,10 @@ function processCode() {
       code.setAttribute("prelude", pre)
       code.setAttribute("postlude", post)
       code.setAttribute("content", code.textContent)
-      prelude = prelude + "import " + moduleName + "\n"
+
+      if (!opts.ignore) {
+        prelude = prelude + "import " + moduleName + "\n"
+      }
     }
   }
 
@@ -155,6 +158,9 @@ interface CodeOptions {
   // do not typecheck
   sketch: boolean,
 
+  // do not include in prelude of following examples
+  ignore: boolean,
+
   // reset the prelude
   reset: boolean
 }
@@ -167,6 +173,7 @@ const defaultOpts = {
   repl: false,
   readOnly: false,
   reset: false,
+  ignore: false,
   sketch: false
 }
 
@@ -200,6 +207,7 @@ function parseOptions(str: string): CodeOptions {
     repl: has("repl"),
     readOnly: has("read-only"),
     reset: has("reset"),
+    ignore: has("ignore"),
     sketch: has("sketch")
   }
 }
@@ -213,10 +221,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // let codes = document.querySelectorAll("code")
   // monacoEditor(codes[codes.length - 1])
-
   hljs.configure({
-      languages: ['bash', 'effekt']
+      languages: ['effekt', 'bash']
   });
+
+  // highlight inline code
+  document.querySelectorAll("code").forEach(code => {
+    // it is a block code
+    if (code.parentElement.tagName == "pre") return;
+
+    hljs.highlightBlock(code)
+  })
 
   docs.init()
 })

@@ -9,7 +9,7 @@ position: 2
 ## Key Design Decisions
 
 Compared to other languages with effect handlers (and support for polymorphic effects) the Effekt language
-aims to be more lightweight in its concepts.
+aims to be more lightweight in its concepts. Here we list a few design considerations.
 
 ### No First-Class Functions
 For this reason we purposefully

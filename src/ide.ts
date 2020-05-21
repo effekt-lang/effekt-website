@@ -33,10 +33,12 @@ export function createModel(filename: string, contents: string, hiddenPrelude: s
   }
   //@ts-ignore
   model.modelPosition = function (viewPos: Position): Position {
+    viewPos = viewPos || { line: 0, character: 0 }
     return { line: (viewPos.line || 0) + lineOffset, character: viewPos.character || 0 }
   }
   //@ts-ignore
   model.viewPosition = function (modelPos: Position): Position {
+    modelPos = modelPos || { line: 0, character: 0 }
     return { line: (modelPos.line || 0) - lineOffset, character: modelPos.character || 0 }
   }
   //@ts-ignore
