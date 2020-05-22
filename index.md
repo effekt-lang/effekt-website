@@ -7,7 +7,7 @@ position: 1
 features:
   - first: [
       "Effect Handlers",
-      "(Algebraic) effect handlers let you define advanced control-flow structures like Generators as user libraries. Those libraries can be seamlessly composed.",
+      "(Algebraic) effect handlers let you define advanced control-flow structures like generators as user libraries. Those libraries can be seamlessly composed.",
       "#intro-handlers"]
 
   - second: [
