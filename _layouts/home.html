@@ -259,7 +259,7 @@ def map[A, B](l: List[A]) { f: A => B / {} }: List[B] / {}
 <p>
   The function <code>map</code> takes a <emph>value argument</emph> <code>l</code> and what we call a <emph>block argument</emph>
   <code>f</code>.
-  For programmers familiar with effect-systems / effect polymorphism this
+  For programmers familiar with effect-systems / effect polymorphism, this
   signature might come with a surprise: Neither the block argument, nor the overall result type mention any effects!
 </p>
 <p>
@@ -269,7 +269,7 @@ def map[A, B](l: List[A]) { f: A => B / {} }: List[B] / {}
     itself does not require handling of any effects."
   </blockquote>
 </p>
-<p>If block arguments do use effects, those have to be handled at the <emph>call-site</emph>:</p>
+<p>If block arguments, however, do use effects, those have to be handled at the <emph>call-site</emph>:</p>
 <pre><code class="language-effekt:repl">try {
   [1, 2, 3, 4].map { x => println(x); if (x > 2) do Raise("abort") else () }
   println("done")
