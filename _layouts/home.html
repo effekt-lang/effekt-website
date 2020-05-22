@@ -214,101 +214,70 @@ the message and returning <code class="language-effekt">42</code> as default val
 <p>Tracking effects statically in the type is a great way to achieve safety. However, often, as soon as
   you start writing <emph>higher-order functions</emph> the type- and effect system starts to get
   into your way.</p>
+<p>Not so in Effekt! It features a new form of effect polymorphism, which we call <strong>contextual effect polymorphism</strong>.</p>
 </div></div>
 
 <div class="container">
 <div>
 <h3>Effect Polymorphism</h3>
-<p>Not so in Effekt! It features a new form of effect polymorphism, which we call <strong>contextual effect polymorphism</strong>.</p>
-
-<p>The higher-order function <code>eachLine</code> expects two arguments: firstly, a
-<emph>value argument</emph>, which is passed in parenthesis.
-Secondly, a <emph>block argument</emph>, which is passed in curly braces.
-It calls the provided block with each line in the file.
+<p>
+  A (higher-order) function is effect polymorphic, if it can be used with different
+  argument functions, independent on the effects those argument functions use.
 </p>
-<p>The signature of <code>eachLine</code> in Effekt is:</p>
-<pre><code class="language-effekt:sketch">def eachLine(file: File) { f: String => Unit / {} }: Unit / {}</code></pre>
-<p>Note that the signature does not say anything about effects.</p>
+<p>
+  Maybe one of the most famous higher-order functions is <code>map</code> on lists.
+  We can invoke map with different argument functions (called <emph>blocks</emph> in Effekt).</p>
+<p>
+  In our examples, we call the same <code>map</code> function with different blocks that
+  (a) do not use effects, (b) use built-in effects (<code>println</code>),
+  (c) use user-defined effects (<code class="language-effekt">Raise</code>).
+</p>
+<blockquote>You can notice that the last example cannot be run, since it still has unhandled effects <code class="language-effekt">Raise</code>.</blockquote>
 </div>
 <div>
-  <pre><code class="language-effekt:hide">
+  <pre><code class="language-effekt:prelude:hide">
   import immutable/list
-
-  type File = List[String]
-  def eachLine(file: File) { f: String => Unit / {} }: Unit / {} =
-    file.foreach { line => f(line) }
-
-  val someFile = ["first line", "second line", "", "third line"]
   </code></pre>
-  <pre><code class="language-effekt">def printLines(file: File) = try {
-      eachLine(file) { line =>
-        if (line == "") { do Raise("empty") }
-        else { println(line) }
-      }
-    } with Raise { msg =>
-      println("found an empty line, aborting!")
-    }
-  </code></pre>
+  <pre><code class="language-effekt:repl">[1, 2, 3].map { x => x * 2 }</code></pre>
+  <pre><code class="language-effekt:repl">[1, 2, 3].map { x => println(x) }</code></pre>
+  <pre><code class="language-effekt:repl">[1, 2, 3].map { x => if (x > 2) do Raise("") else () }</code></pre>
   </div>
 </div>
 
 <div class="container">
 <div>
-<h3>The Traditional Reading</h3>
-<p>In traditional effect systems, this would be read is:</p>
-<blockquote>"given a block <code>f</code> that has no
-effects, <code>eachLine</code> also has no effects".</blockquote>
-
-<p>Given that reading, we couldn't use <code>eachLine</code> as in our example, since the block passed
-  to <code>eachLine</code> uses two effects <code class="language-effekt">Raise</code> and <code class="language-effekt">Console</code>
-  (due to <code>println</code>).</p>
-</div>
-<div>
-<h3>The Contextual Reading</h3>
-<p>In Effekt, we apply a different reading, which we call <strong>contextual</strong>:</p>
-<blockquote>"given a block <code>f</code> without any further requirements,
-  <code>eachLine</code> does not require any effects."</p></blockquote>
-<p>The function <code>eachLine</code> is effect polymorphic. We can call it with arbitrary
-  blocks, indepedent of the effects the block arguments use.</p>
-<p>The type ofthe block parameter <code>f</code> tells us that it does not impose any
-  <emph>requirements</emph> on its caller <emph>within</epmph> <code>eachLine</code>.
-  However, it <emph>can have</emph> effects, that simply need to be handled <emph>at the call-site</emph>
-  of <code>eachLine</code>.
-</div></div>
-
-
-<div class="container">
-<div>
-<h3>Contextual Effect Polymorphism by Example</h3>
-<p>Here are some examples of calling <code>eachLine</code>. For example, we can provide a block that does not use any effects:</p>
-<pre><code class="language-effekt:repl">eachLine(someFile) { line => () }</code></pre>
-<p>The type of the block is <code class="language-effekt">String => Unit / {}</code> and
-the overall type of the call is <code class="language-effekt">Unit / {}</code>.</p>
-
-<p>Further, we can provide a block that uses builtin effects (<code class="language-effekt">Console</code>):</p>
-<pre><code class="language-effekt:repl">eachLine(someFile) { line => println(line) }</code></pre>
-<p>The type of the block is <code class="language-effekt">String => Unit / { Console }</code> and
-the overall type of the call now becomes <code class="language-effekt">Unit / { Console }</code>.</p>
-</div>
-<div>
-<h3>&nbsp;</h3>
-<p>We can also provide a block that uses a user-defined effects:</p>
-<pre><code class="language-effekt:sketch">eachLine(someFile) { line => do Raise(line) }</code></pre>
-<p>The type of the block is <code class="language-effekt">String => Unit / { Raise }</code> and
-  the overall type of the call is <code class="language-effekt">Unit / { Raise }</code>.
-Since it still has unhandled user effects, it does not type-check and we cannot run it.</p>
-
-<p>To be able to run it, we handle the user-effect at the call-site to <code>eachLine</code>:</p>
+<h3>Contextual Effect Polymorphism</h3>
+<p>
+  In Effekt, the function <code>map</code> has the signature:
+</p>
+<pre><code class="language-effekt:sketch">//          value argument  block argument
+//            vvvvvvvvvv  vvvvvvvvvvvvvvvvvv
+def map[A, B](l: List[A]) { f: A => B / {} }: List[B] / {}
+//                                      ^^              ^^
+//                                   no effects!     no effects!
+</code></pre>
+<p>
+  The function <code>map</code> takes a <emph>value argument</emph> <code>l</code> and what we call a <emph>block argument</emph>
+  <code>f</code>.
+  For programmers familiar with effect-systems / effect polymorphism this
+  signature might come with a surprise: Neither the block argument, nor the overall result type mention any effects!
+</p>
+<p>
+  In Effekt, we read the signature of <code>map</code> as follows:
+  <blockquote>
+    "Given a list and a block <code>f</code>, map cannot handle any effects of <code>f</code>. Also <code>map</code>
+    itself does not require handling of any effects."
+  </blockquote>
+</p>
+<p>If block arguments do use effects, those have to be handled at the <emph>call-site</emph>:</p>
 <pre><code class="language-effekt:repl">try {
-  eachLine(someFile) { line => do Raise(line) }
-} with Raise { line => println(line) }</code></pre>
-<p>Now, the effects that are used by the block argument are handled in its <emph>lexical scope</emph>.</p>
+  [1, 2, 3, 4].map { x => println(x); if (x > 2) do Raise("abort") else () }
+  println("done")
+} with Raise { msg => println("abort") }</code></pre>
+<p>Here, the block uses the <code class="language-effekt">Raise</code> effect, which is handled at the call-site of <code>map</code>.</p>
+<a class="learn-more-button" href="docs/concepts/effect-polymorphism"><span class="learn-more">Learn More</span></a>
 </div>
-
 </div>
-</div>
-
-
 </section>
 </main>
 

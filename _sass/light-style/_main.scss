@@ -74,7 +74,7 @@ html {
 
   display: block;
   clear: both;
-  margin-top: 2em;
+  margin: 2em 0;
 
   a.learn-more-button {
     display: block;
@@ -90,6 +90,9 @@ html {
         > *:first-child {
           margin-right: 2em;
         }
+        > *:last-child {
+          margin-right: 0 !important;
+        }
       }
     }
     &.float-right {
@@ -98,6 +101,9 @@ html {
 
         > *:last-child {
           margin-left: 2em;
+        }
+        > *:first-child {
+          margin-left: 0 !important;
         }
       }
     }
