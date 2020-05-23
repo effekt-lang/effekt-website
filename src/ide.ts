@@ -99,7 +99,7 @@ function convertDiagnostics(d: Diagnostic): monaco.editor.IMarkerData {
 }
 
 function toLspPosition(position: monaco.Position): Position {
-  return { line: position.lineNumber - 1, character: position.column }
+  return { line: position.lineNumber - 1, character: position.column - 1 }
 }
 
 
