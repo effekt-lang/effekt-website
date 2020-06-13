@@ -12,5 +12,5 @@ Effekt is a research language focusing on the following core concepts:
 2. Effect safety
 3. Lightweight support for effect polymorphism
 
-All three are more advanced, so make sure to check out the [basic introduction](/docs)
+All three are more advanced, so make sure to check out the [basic introduction](../)
 first.

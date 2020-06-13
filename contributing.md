@@ -12,12 +12,12 @@ you get started:
 ## Building Effekt
 While this document might age and outdate, the most current and up-to-date
 instructions can be found in the
-[Github Workflows file](https://github.com/effekt-lang/effekt/blob/master/.github/workflows/ci.yml).
+[Github Workflows file]({{ site.githuburl }}/blob/master/.github/workflows/ci.yml).
 This might be a bit tricky to read but contains all necessary information.
 
 If you notice that something does not work as expected, please consider
-opening an [issue](https://github.com/effekt-lang/effekt/issues). Also feel free to
-update this page on [Github](https://github.com/effekt-lang/effekt/tree/master/docs/docs)
+opening an [issue]({{ site.githuburl }}/issues). Also feel free to
+update this page on [Github]({{ site.githuburl }}/tree/master/docs/docs)
 and opening a pull request.
 
 ### Software Requirements

@@ -15,12 +15,12 @@ Effekt language.
 {% endfor %}
 
 ## Syntax
-The Syntax is heavily inspired by the [Scala language](scala-lang.org). So
+The Syntax is heavily inspired by the [Scala language](http://scala-lang.org). So
 users familiar with Scala should have no problems getting started. Right now
 the syntax is not documented very well and also subject to change. So the best
 way to learn it is by looking at
-[examples]({{ githuburl }}/tree/master/examples/pos),
-or even looking into the [parser implementation]({{ githuburl }}/blob/master/shared/src/main/scala/effekt/Parser.scala).
+[examples]({{ site.githuburl }}/tree/master/examples/pos),
+or even looking into the [parser implementation]({{ site.githuburl }}/blob/master/shared/src/main/scala/effekt/Parser.scala).
 
 One particular thing important to note: statements are semicolon _separated_.
 That is, a semicolon is required between statements, but not allowed in a
@@ -28,7 +28,7 @@ trailing position. This will potentially change soon.
 
 ## Example: Lists
 To familiarize ourselves, let's start by inspecting the implementation of
-lists in the [standard library]({{ githuburl }}/effekt/tree/master/lib/immutable).
+lists in the [standard library]({{ site.githuburl }}/tree/master/lib/immutable).
 
 
 #### Module Declarations
@@ -156,4 +156,4 @@ with other more advanced features like control effects.
 
 ### More Advanced Features
 There is much more to Effekt. Some of the more advanced features are
-described in the Section [Core Concepts](/docs/concepts)
+described in the Section [Core Concepts](concepts)

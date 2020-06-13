@@ -14,7 +14,7 @@ npm install -g https://github.com/effekt-lang/effekt/releases/latest/download/ef
 This will download the compiler and install the `effekt` command in your path.
 
 Alternatively, you can also download a specific release on the
-[release page on Github](https://github.com/effekt-lang/effekt/releases).
+[release page on Github]({{ site.githuburl }}/releases).
 And then install it with
 ```bash
 npm install -g <PATH_TO_FILE>/effekt.tgz

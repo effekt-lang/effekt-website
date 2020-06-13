@@ -40,7 +40,7 @@ have first-class functions has the following implications:
 - blocks cannot escape their definition site
 - blocks do not need to be represented by closures -- all values used in blocks are still available on the call-stack
 
-Maybe most importantly, [effect checking](docs/concepts/effect-system) becomes much easier,
+Maybe most importantly, [effect checking](docs/concepts/effect-safety) becomes much easier,
 while supporting many advanced use cases.
 
 
