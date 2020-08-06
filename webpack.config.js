@@ -21,7 +21,7 @@ module.exports = {
     filename: "[name].bundle.js",
     chunkFilename: "[name].chunk.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/effekt-website/dist/"
+    publicPath: "/dist/"
   },
   module: {
     rules: [
