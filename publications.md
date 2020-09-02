@@ -39,7 +39,7 @@ to the Effekt language. We are happy to share author-copies on request.
 
 > **"Capability-Passing Style for Zero-Cost Effect Handlers"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
-> Conditionally accepted at the _International Conference on Functional Programming (2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/schuster19zero/))
+> In _Proceedings of the International Conference on Functional Programming (ICFP 2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/schuster19zero/))
 
 > **"Programming with Implicit Values, Functions, and Control"**.\
 > Jonathan Immanuel Brachthäuser and Daan Leijen.\
@@ -54,7 +54,7 @@ to the Effekt language. We are happy to share author-copies on request.
 
 > **"Effect Handlers, Evidently"**.\
 > Ningning Xie, Jonathan Immanuel Brachthäuser, Daniel Hillerström, Philipp Schuster, Daan Leijen. 2020.\
-> Conditionally accepted at the _International Conference on Functional Programming (2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/xie20evidently/))
+>  In _Proceedings of the International Conference on Functional Programming (2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/xie20evidently/))
 
 > **"Taming Control-flow through Linear Effect Handlers"**.\
 > Daan Leijen and Jonathan Immanuel Brachthäuser.\
