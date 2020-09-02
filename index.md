@@ -43,7 +43,7 @@ If you are interested in the Effekt language, we have a few things to get you st
 
 <div id="start-videos">
 <h3>Watch the Talks</h3>
-<p>We collected talks and demos about various aspects of the Effekt language in this <a href="https://www.youtube.com/playlist?list=PLqCIRc1Z01F7DqUAupr2Eyel_CyL4d8V7">Youtube playlist</a></p>
+<p>We collected talks and demos about various aspects of the Effekt language in this <a href="https://www.youtube.com/playlist?list=PLqCIRc1Z01F7DqUAupr2Eyel_CyL4d8V7">Youtube playlist</a>.</p>
 </div>
 
 <div id="start-install">
