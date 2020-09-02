@@ -212,6 +212,11 @@ html {
       content: "\f2d2"
     }
   }
+  #start-videos {
+    &:before {
+      content: "\f167"
+    }
+  }
   #start-install {
     &:before {
       content: "\f019"

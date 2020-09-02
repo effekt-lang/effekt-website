@@ -21,6 +21,7 @@ features:
       "#intro-polymorphism"]
 ---
 
+
 ## Getting Started
 If you are interested in the Effekt language, we have a few things to get you started:
 
@@ -40,8 +41,13 @@ If you are interested in the Effekt language, we have a few things to get you st
 <p>To play around with the language, you can use the <a href="quickstart">online editor</a>.</p>
 </div>
 
+<div id="start-videos">
+<h3>Watch the Talks</h3>
+<p>We collected talks and demos about various aspects of the Effekt language in this <a href="https://www.youtube.com/playlist?list=PLqCIRc1Z01F7DqUAupr2Eyel_CyL4d8V7">Youtube playlist</a></p>
+</div>
+
 <div id="start-install">
-<h3>Try Online</h3>
+<h3>Installation Guide</h3>
 <p>To install Effekt and try the examples on your own computer you can follow the <a href="docs/getting-started">installation instructions</a>.</p>
 </div>
 
