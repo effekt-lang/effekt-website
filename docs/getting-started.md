@@ -172,3 +172,9 @@ there is a few things you need to look out for.
 Instead of using the `effekt` command, on linux for now the shell-script
 `effekt.sh` has to be used. It is installed alongside `effekt` using
 `npm install ...`.
+
+1. Open the settings of VSCode
+2. Search for `effekt`
+3. Edit the `Effekt: Executable` property
+4. Enter the path to `effect.sh`, e.g. `/usr/bin/effekt.sh`
+5. Restart VSCode
