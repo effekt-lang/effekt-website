@@ -15,3 +15,23 @@ Licensed under Apache License. See [LICENSE](LICENSE) for terms.
 
 #### Original License
 See the MICROSITE-LICENSE file for the original sbt-microsite license.
+
+### How to Update the Effekt Compiler / LSP Server
+The website features an interactive REPL and editor. In order to update the
+underlying compiler, run the following commands.
+
+1. In the effekt repo:
+```
+sbt> project effektJS
+effektJS> fullOptJS
+[info] Full optimizing ./js/target/scala-2.13/effekt-opt.js
+```
+
+2. Move the resulting `effekt-opt.js` to `src/effekt.js` in the website repo.
+
+3. In the website repo, run `webpack`:
+```
+> webpack
+```
+
+This will generate a bunch of packed js files.
