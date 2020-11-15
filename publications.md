@@ -15,10 +15,16 @@ The main reference is the following tech report:
 > Jonathan Immanuel Brachthäuser, Philipp Schuster, and Klaus Ostermann.\
 > Tech Report ([PDF](http://ps.informatik.uni-tuebingen.de/publications/brachthaeuser20effekt/))
 
+The tech report is an extended version of the OOPSLA'20 publication:
+
+> **"Effects as Capabilities: Effect Handlers and Lightweight Effect Polymorphisms"**.\
+> Jonathan Immanuel Brachthäuser, Philipp Schuster, and Klaus Ostermann. 2020.\
+> In _Proc. ACM Program. Lang._, 4 (OOPSLA), Article 126 ([ACM](https://dl.acm.org/doi/10.1145/3428194)).
+
 The language is the result of several developments. In particular, it is the
-first language to combine a second-class type-system with control effects.
+first language to combine a second-class type-system with advanced control effects.
 In particular, we compile Effekt programs to capability-passing style, using
-a monadic impementation of delimited control.
+a monadic implementation of delimited control.
 
 You can read more about the language, its predecessors, and important
 technical details in the following papers, which are ordered by relevance
@@ -39,7 +45,7 @@ to the Effekt language. We are happy to share author-copies on request.
 
 > **"Capability-Passing Style for Zero-Cost Effect Handlers"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
-> In _Proceedings of the International Conference on Functional Programming (ICFP 2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/schuster19zero/))
+> In _Proceedings of the International Conference on Functional Programming (ICFP 2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/schuster19zero/), [ACM](https://dl.acm.org/doi/10.1145/3408975))
 
 > **"Programming with Implicit Values, Functions, and Control"**.\
 > Jonathan Immanuel Brachthäuser and Daan Leijen.\
@@ -54,7 +60,7 @@ to the Effekt language. We are happy to share author-copies on request.
 
 > **"Effect Handlers, Evidently"**.\
 > Ningning Xie, Jonathan Immanuel Brachthäuser, Daniel Hillerström, Philipp Schuster, Daan Leijen. 2020.\
->  In _Proceedings of the International Conference on Functional Programming (2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/xie20evidently/))
+>  In _Proceedings of the International Conference on Functional Programming (2020)_. ([PDF](http://ps.informatik.uni-tuebingen.de/publications/xie20evidently/), [ACM](https://dl.acm.org/doi/10.1145/3408981))
 
 > **"Taming Control-flow through Linear Effect Handlers"**.\
 > Daan Leijen and Jonathan Immanuel Brachthäuser.\
