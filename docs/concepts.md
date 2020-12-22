@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Core Concepts
+title: Concepts and Features
 permalink: docs/concepts
 ---
 

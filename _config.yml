@@ -20,6 +20,8 @@ include:
 - css/fontawesome.min.css
 - webfonts
 - dist
+exclude:
+- effekt
 org: docs
 markdown: kramdown
 kramdown:

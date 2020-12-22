@@ -1,7 +1,7 @@
 ---
 layout: docs
-title: Bidirectional EFfects
-permalink: docs/bidirectional
+title: Bidirectional Effects
+permalink: docs/concepts/bidirectional
 ---
 
 # Bidirectional Effects

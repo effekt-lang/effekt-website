@@ -1,0 +1,3 @@
+[submodule "effekt"]
+	path = effekt
+	url = https://github.com/effekt-lang/effekt.git
