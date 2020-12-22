@@ -33,12 +33,12 @@ options:
       - title: Parser
         url: docs/casestudies/parser
       - title: Pretty Printer
-        url: docs/casestudies/pretty
+        url: docs/casestudies/prettyprinter
       - title: ANF Transformation
         url: docs/casestudies/anf
       - title: Automatic Differentiation
         url: docs/casestudies/ad
       - title: Build Systems
-        url: docs/casestudies/build-system
+        url: docs/casestudies/buildsystem
       - title: Naturalistic DSLs
-        url: docs/casestudies/dsls
+        url: docs/casestudies/naturalisticdsls
