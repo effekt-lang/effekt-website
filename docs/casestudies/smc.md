@@ -51,7 +51,7 @@ record Particle(weight: Double, age: Int, cont: Cont[Unit, Unit])
 
 Using the `Particle` data type, we can define our SMC handler as follows:
 ```
-def smc[R](numberOfParticles: Int) {
+def smcHandler[R](numberOfParticles: Int) {
   // should maintain the number of particles.
   resample: List[Particle] => List[Particle]
 } { p: () => R / SMC } = {
@@ -137,6 +137,12 @@ def totalWeight(ps: List[Particle]): Double = {
 }
 ```
 
+Now we have everything available to define `smc` as `smcHandler` using `resampleUniform`:
+```
+def smc[R](numberOfParticles: Int) { p: () => R / SMC } =
+  smcHandler[R](numberOfParticles) { ps => resampleUniform(ps) } { p() }
+```
+
 
 
 ## Importance Sampling
@@ -167,6 +173,10 @@ extern def sleep(n: Int): Unit =
 extern def reportMeasurementJS[R](w: Double, d: R): Unit =
   "$effekt.callcc(k => { showPoint(w, d); window.setTimeout(() => k(null), 0)})"
 
+extern def reportDiscreteMeasurementJS[R](w: Double, d: R): Unit =
+  "$effekt.callcc(k => { showPoint(w, d, { discrete: true }); window.setTimeout(() => k(null), 0)})"
+
+
 // here we set a time out to allow rerendering
 extern pure def setupGraphJS(): Unit =
   "setup()"
@@ -184,12 +194,23 @@ def report[R](interval: Int) { prog: Unit / Measure[R] } =
     }
   }
 ```
+```effekt:hide
+def reportDiscrete[R](interval: Int) { prog: Unit / Measure[R] } =
+  try { setupGraphJS(); prog() }
+  with Measure[R] {
+    def measure(w, d) = {
+      reportDiscreteMeasurementJS(w, d);
+      sleep(interval);
+      resume(())
+    }
+  }
+```
 
 Running SMC and importance sampling now is a matter of composing the handlers.
 ```
 def runSMC(numberOfParticles: Int) =
   report[Int](20) {
-    smc(numberOfParticles) { ps => resampleUniform(ps) } { geometric(0.5) }
+    smc(numberOfParticles) { geometric(0.5) }
   }
 ```
 
@@ -200,10 +221,21 @@ def runImportance(numberOfParticles: Int) =
   }
 ```
 
+We have also prepared a handler called `reportDiscrete` to experiment with examples that
+have non-integer return types:
+```
+def runDiscrete(numberOfParticles: Int) =
+  reportDiscrete[String](0) {
+    smc(numberOfParticles) {
+      if (bernoulli(0.5)) { "hello" } else { "world" }
+    }
+  }
+```
+
 
 In the below REPL you can try the examples. Click `run` and then try entering `runSMC(100)` (then click `run` again):
 ```effekt:repl
-runSMC(100)
+
 ```
 
 
@@ -259,6 +291,20 @@ const bar = svg.selectAll(".bar")
   .data(data)
 
 
+function scaleDiscrete(data) {
+  x.domain(data.map(function(d) { return d.value; }))
+  xaxis.call(d3.axisBottom(x))
+}
+
+function scaleLinear(data) {
+  const minValue = d3.min(data, function(d) { return d.value; })
+  const maxValue = d3.max(data, function(d) { return d.value; })
+
+  x.domain(range(minValue, maxValue))
+  xaxis.call(d3.axisBottom(x))
+}
+
+
 function setup() {
   data = []
   count = 0
@@ -273,14 +319,6 @@ function range(n, m) {
 }
 
 function render(data) {
-  const minValue = d3.min(data, function(d) { return d.value; })
-  const maxValue = d3.max(data, function(d) { return d.value; })
-
-  // this isn't yet fully working...
-
-  // use this for non-linear data: data.map(function(d) { return d.value; })
-  x.domain(range(minValue, maxValue))
-  xaxis.call(d3.axisBottom(x))
 
   // use this for rescaling the y axis:
   //y.domain([0, d3.max(data, function(d) { return d.weight; })]);
@@ -333,10 +371,7 @@ function normalize(data) {
   return newdata;
 }
 
-function showPoint(weight, value) {
-  count = count + 1;
-  counter.innerHTML = count;
-
+function addPointToData(weight, value) {
   var found = false;
   for (var i = 0; i < data.length; i++) {
     let el = data[i]
@@ -348,7 +383,19 @@ function showPoint(weight, value) {
   if (!found) {
     data.push({ weight, value })
   }
-  render(normalize(data))
+}
+
+function showPoint(weight, value, options) {
+  count = count + 1;
+  counter.innerHTML = count;
+  addPointToData(weight, value)
+  const normalized = normalize(data)
+  if (!!options && !!options.discrete) {
+    scaleDiscrete(normalized)
+  } else {
+    scaleLinear(normalized)
+  }
+  render(normalized)
 }
 
 </script>
