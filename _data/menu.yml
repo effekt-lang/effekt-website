@@ -38,6 +38,8 @@ options:
         url: docs/casestudies/anf
       - title: Automatic Differentiation
         url: docs/casestudies/ad
+      - title: Probabilistic Programming
+        url: docs/casestudies/smc
       - title: Build Systems
         url: docs/casestudies/buildsystem
       - title: Naturalistic DSLs
