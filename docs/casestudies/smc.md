@@ -14,7 +14,14 @@ import mutable/array
 import unsafe/cont
 ```
 
-We define the following effect to model probabilistic processes.
+In this case study we implement the Sequential Monte Carlo algorithm for doing
+probabilistic inference. The idea is to run multiple instances of some
+probabilistic process (so called particles) and occasionally resample from
+the collection of these instances, while they are still running, according to
+the weight they picked up so far.
+
+We define the following `SMC` effect to model probabilistic processes and the
+`Measure` effect to deal with the results.
 ```
 effect SMC {
   def resample(): Unit
@@ -27,11 +34,11 @@ effect Measure[R] {
 }
 ```
 
-We can use the effect to define some probabilistic programs.
+We can use the `SMC` effect to define some probabilistic programs.
 ```
-def bernoulli(p: Double) = uniform() > p
+def bernoulli(p: Double) = uniform() < p
 
-def geometric(p: Double): Int / SMC = {
+def biasedGeometric(p: Double): Int / SMC = {
   resample();
   val x = bernoulli(p);
   if (x) {
@@ -40,7 +47,9 @@ def geometric(p: Double): Int / SMC = {
   } else { 1 }
 }
 ```
-
+Here `bernoulli` draws from a Bernoulli distribution (a biased coin flip) and
+`biasedGeometric` draws from a Geometric distribution with a bias towards
+smaller numbers.
 
 ## A SMC Handler
 A particle consists of its current _weight_ (or "score"), the _age_ (number of resampling generations it survived -- not used at the moment),
@@ -90,12 +99,14 @@ def smcHandler[R](numberOfParticles: Int) {
 It runs `numberOfParticles`-many instances of the provided program `p` under a handler that collects the
 continuation whenever a particle encounters a call to `resample`. Once all particles either finished their
 computation or hit a `resample`, the handler passes the list of live particles to the argument function `resample`.
-This argument function then can reorder and redistribute the particles.
+This argument function then draws particles from the given list according to their weights to obtain a new list
+of particles. Thus, the new list will likely not contain particles with small weights while there will likely be
+multiple copies of particles with large weights.
 
 ## Resampling
 We now implement such a (naive) resampling function. It proceeds by first filling an array (100 times the particle count)
-with a number copies of the particles relative to their weight.
-Then it picks new particles at random.
+with a number of copies of the particles relative to their weight.
+Then it picks new particles at random, resetting the weights in the new list.
 ```
 def resampleUniform(ps: List[Particle]): List[Particle] = {
   val total = ps.totalWeight
@@ -121,7 +132,7 @@ def resampleUniform(ps: List[Particle]): List[Particle] = {
   repeat(numberOfParticles) {
     val index = (random() * (bucketSize - 1).toDouble).toInt
     buckets.get(index).foreach { p =>
-      newParticles = Cons(p, newParticles)
+      newParticles = Cons(Particle(1.0, p.age, p.cont), newParticles)
     }
   }
   newParticles
@@ -182,7 +193,7 @@ extern pure def setupGraphJS(): Unit =
   "setup()"
 ```
 To visualize the results, we define the following helper function `report` that
-handlers `Measure` effects by adding the data points to a graph (below).
+handles `Measure` effects by adding the data points to a graph (below).
 ```
 def report[R](interval: Int) { prog: Unit / Measure[R] } =
   try { setupGraphJS(); prog() }
@@ -210,14 +221,14 @@ Running SMC and importance sampling now is a matter of composing the handlers.
 ```
 def runSMC(numberOfParticles: Int) =
   report[Int](20) {
-    smc(numberOfParticles) { geometric(0.5) }
+    smc(numberOfParticles) { biasedGeometric(0.5) }
   }
 ```
 
 ```
 def runImportance(numberOfParticles: Int) =
   report[Int](20) {
-    importance(numberOfParticles) { geometric(0.5) }
+    importance(numberOfParticles) { biasedGeometric(0.5) }
   }
 ```
 
