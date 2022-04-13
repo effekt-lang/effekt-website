@@ -43,7 +43,7 @@ def biasedGeometric(p: Double): Int / SMC = {
   val x = bernoulli(p);
   if (x) {
     score(log(1.5));
-    1 + geometric(p)
+    1 + biasedGeometric(p)
   } else { 1 }
 }
 ```
