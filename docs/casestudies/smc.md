@@ -57,7 +57,7 @@ record Measurement[R](weight: Double, data: R)
 record Particles[R](moving: List[Particle], done: List[Measurement[R]])
 ```
 
-Using the `Particle` data type, we can define our SMC handler as follows:
+Using the above data types, we can define our SMC handler as follows:
 ```
 def smcHandler[R](numberOfParticles: Int) {
   // should maintain the number of particles.
@@ -134,12 +134,12 @@ def resampleUniform[R](particles: Particles[R]): Particles[R] = {
         case (Cons(p, rest), _) =>
           currentWeight = currentWeight + p.weight
           if (currentWeight >= targetWeight) {
-            newParticles = Cons(p, newParticles)
+            newParticles = Cons(Particle(1.0, p.age, p.cont), newParticles)
           } else { remainingPs = rest }
         case (Nil(), Cons(m, rest)) =>
           currentWeight = currentWeight + m.weight
           if (currentWeight >= targetWeight) {
-            newMeasurements = Cons(m, newMeasurements)
+            newMeasurements = Cons(Measurement(1.0, m.data), newMeasurements)
           } else { remainingMs = rest }
       }
     }
