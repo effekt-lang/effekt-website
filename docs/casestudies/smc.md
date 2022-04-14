@@ -28,10 +28,6 @@ effect SMC {
   def uniform(): Double
   def score(d: Double): Unit
 }
-
-effect Measure[R] {
-  def measure(weight: Double, data: R): Unit
-}
 ```
 
 We can use the `SMC` effect to define some probabilistic programs.
@@ -56,16 +52,20 @@ A particle consists of its current _weight_ (or "score"), the _age_ (number of r
 and the continuation that corresponds to the remainder of its computation.
 ```
 record Particle(weight: Double, age: Int, cont: Cont[Unit, Unit])
+record Measurement[R](weight: Double, data: R)
+
+record Particles[R](moving: List[Particle], done: List[Measurement[R]])
 ```
 
-Using the `Particle` data type, we can define our SMC handler as follows:
+Using the above data types, we can define our SMC handler as follows:
 ```
 def smcHandler[R](numberOfParticles: Int) {
   // should maintain the number of particles.
-  resample: List[Particle] => List[Particle]
+  resample: Particles[R] => Particles[R]
 } { p: () => R / SMC } = {
   var weight = 1.0;
   var particles: List[Particle] = Nil()
+  var measurements: List[Measurement[R]] = Nil()
   var age = 0;
 
   def checkpoint(cont: Cont[Unit, Unit]) =
@@ -78,15 +78,18 @@ def smcHandler[R](numberOfParticles: Int) {
   }
 
   def run() = {
-    val ps = resample(particles);
+    val Particles(ps, ms) = resample(Particles(particles, measurements));
     particles = Nil();
+    measurements = ms;
     ps.foreach { p => p.run }
   }
 
   repeat(numberOfParticles) {
     weight = 1.0;
-    try { val res = p(); measure(weight, res) }
-    with SMC {
+    try {
+      val res = p();
+      measurements = Cons(Measurement(weight, res), measurements)
+    } with SMC {
       def resample() = checkpoint(cont { t => resume(t) })
       def uniform() = resume(random())
       def score(d) = { weight = weight * d; resume(()) }
@@ -94,6 +97,7 @@ def smcHandler[R](numberOfParticles: Int) {
   }
 
   while (not(particles.isEmpty)) { run() }
+  measurements
 }
 ```
 It runs `numberOfParticles`-many instances of the provided program `p` under a handler that collects the
@@ -108,40 +112,55 @@ We now implement such a (naive) resampling function. It proceeds by first fillin
 with a number of copies of the particles relative to their weight.
 Then it picks new particles at random, resetting the weights in the new list.
 ```
-def resampleUniform(ps: List[Particle]): List[Particle] = {
-  val total = ps.totalWeight
-  val numberOfParticles = ps.size
+def resampleUniform[R](particles: Particles[R]): Particles[R] = {
+  val Particles(ps, ms) = particles;
+  val total = ps.totalWeight + ms.totalWeight
+  val numberOfParticles = ps.size + ms.size
   val targetSize = numberOfParticles * 100;
-  var buckets = emptyArray[Particle](targetSize);
-  var bucketSize = 0;
 
-  def add(p: Particle) = {
-    buckets.put(bucketSize, p);
-    bucketSize = bucketSize + 1
-  }
-
-  // fill buckets
-  ps.foreach { p =>
-    val prob = p.weight / total
-    val numberOfBuckets = (prob * targetSize.toDouble).toInt;
-    repeat(numberOfBuckets) { add(p) }
-  }
+  var newParticles: List[Particle] = Nil();
+  var newMeasurements: List[Measurement[R]] = Nil();
 
   // select new particles by drawing at random
-  var newParticles: List[Particle] = Nil();
-  repeat(numberOfParticles) {
-    val index = (random() * (bucketSize - 1).toDouble).toInt
-    buckets.get(index).foreach { p =>
-      newParticles = Cons(Particle(1.0, p.age, p.cont), newParticles)
+  // this is a very naive implementation with O(numberOfParticles^2) worst case.
+  def draw() = {
+    val targetWeight = random() * total;
+    var currentWeight = 0.0;
+    var remainingPs = ps
+    var remainingMs = ms
+    while (currentWeight < targetWeight) {
+      (remainingPs, remainingMs) match {
+        case (Nil(), Nil()) => <> // ERROR should not happen
+        case (Cons(p, rest), _) =>
+          currentWeight = currentWeight + p.weight
+          if (currentWeight >= targetWeight) {
+            newParticles = Cons(Particle(1.0, p.age, p.cont), newParticles)
+          } else { remainingPs = rest }
+        case (Nil(), Cons(m, rest)) =>
+          currentWeight = currentWeight + m.weight
+          if (currentWeight >= targetWeight) {
+            newMeasurements = Cons(Measurement(1.0, m.data), newMeasurements)
+          } else { remainingMs = rest }
+      }
     }
   }
-  newParticles
+
+  repeat(numberOfParticles) { draw() }
+
+  Particles(newParticles, newMeasurements)
 }
 
 // helper function to compute the total weight
 def totalWeight(ps: List[Particle]): Double = {
   var totalWeight = 0.0
   ps.foreach { case Particle(w, _, _) =>
+    totalWeight = totalWeight + w
+  }
+  totalWeight
+}
+def totalWeight[R](ps: List[Measurement[R]]): Double = {
+  var totalWeight = 0.0
+  ps.foreach { case Measurement(w, _) =>
     totalWeight = totalWeight + w
   }
   totalWeight
@@ -160,18 +179,21 @@ def smc[R](numberOfParticles: Int) { p: () => R / SMC } =
 Of course the above handler is not the only one. We can define an even simpler handler
 that performs importance sampling by sequentially running each particle to the end.
 ```
-def importance[R](n: Int) { p : R / SMC } =
+def importance[R](n: Int) { p : R / SMC } = {
+  var measurements: List[Measurement[R]] = Nil()
   n.repeat {
     var currentWeight = 1.0;
     try {
       val result = p();
-      measure(currentWeight, result)
+      measurements = Cons(Measurement(currentWeight, result), measurements)
     } with SMC {
       def resample() = resume(())
       def uniform() = resume(random())
       def score(d) = { currentWeight = currentWeight * d; resume(()) }
     }
   }
+  measurements
+}
 ```
 
 ### Running the Examples
@@ -195,52 +217,42 @@ extern pure def setupGraphJS(): Unit =
 To visualize the results, we define the following helper function `report` that
 handles `Measure` effects by adding the data points to a graph (below).
 ```
-def report[R](interval: Int) { prog: Unit / Measure[R] } =
-  try { setupGraphJS(); prog() }
-  with Measure[R] {
-    def measure(w, d) = {
-      reportMeasurementJS(w, d);
-      sleep(interval);
-      resume(())
-    }
+def report[R](interval: Int, ms: List[Measurement[R]]) = {
+  setupGraphJS();
+  ms.foreach { m =>
+    reportMeasurementJS(m.weight, m.data);
+    sleep(interval)
   }
+}
 ```
 ```effekt:hide
-def reportDiscrete[R](interval: Int) { prog: Unit / Measure[R] } =
-  try { setupGraphJS(); prog() }
-  with Measure[R] {
-    def measure(w, d) = {
-      reportDiscreteMeasurementJS(w, d);
-      sleep(interval);
-      resume(())
-    }
+def reportDiscrete[R](interval: Int, ms: List[Measurement[R]]) = {
+  setupGraphJS();
+  ms.foreach { m =>
+    reportDiscreteMeasurementJS(m.weight, m.data);
+    sleep(interval)
   }
+}
 ```
 
 Running SMC and importance sampling now is a matter of composing the handlers.
 ```
 def runSMC(numberOfParticles: Int) =
-  report[Int](20) {
-    smc(numberOfParticles) { biasedGeometric(0.5) }
-  }
+  report(20, smc(numberOfParticles) { biasedGeometric(0.5) })
 ```
 
 ```
 def runImportance(numberOfParticles: Int) =
-  report[Int](20) {
-    importance(numberOfParticles) { biasedGeometric(0.5) }
-  }
+  report(20, importance(numberOfParticles) { biasedGeometric(0.5) })
 ```
 
 We have also prepared a handler called `reportDiscrete` to experiment with examples that
 have non-integer return types:
 ```
 def runDiscrete(numberOfParticles: Int) =
-  reportDiscrete[String](0) {
-    smc(numberOfParticles) {
-      if (bernoulli(0.5)) { "hello" } else { "world" }
-    }
-  }
+  reportDiscrete(0, smc(numberOfParticles) {
+    if (bernoulli(0.5)) { "hello" } else { "world" }
+  })
 ```
 
 
