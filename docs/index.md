@@ -28,7 +28,7 @@ trailing position. This will potentially change soon.
 
 ## Example: Lists
 To familiarize ourselves, let's start by inspecting the implementation of
-lists in the [standard library]({{ site.githuburl }}/tree/master/lib/immutable).
+lists in the [standard library]({{ site.githuburl }}/blob/master/libraries/js/monadic/immutable/list.effekt).
 
 
 #### Module Declarations
