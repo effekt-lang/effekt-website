@@ -111,7 +111,6 @@ function autoResize(editor: monaco.editor.ICodeEditor) {
   updateEditorHeight();
 }
 
-
 function registerTypechecking(editor: monaco.editor.ICodeEditor) {
   var timeout;
 
