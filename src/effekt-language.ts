@@ -33,7 +33,7 @@ export function evalModule(contents: string) {
 
 // Evaluate should eval each module ONCE and then store in field modules.
 // Load should just look them up.
-let loadedModules = {
+let loadedModules: any = {
   "examplefile.js": {
     module: null,
     timestamp: 12345677
@@ -56,6 +56,10 @@ export function load(path: string) {
 }
 
 export function evaluate(content: string) {
+  // We have to clear the module cache once per call to evaluate.
+  // Otherwise the cached modules will close over *the current* REPL output,
+  // which might be different between clicks on different "run" buttons.
+  loadedModules = {};
   write("interactive.effekt", content)
   const mainFile = Effekt.compileFile("interactive.effekt")
   return load(mainFile.replace(/^(out\/)/,"")).main().run()
