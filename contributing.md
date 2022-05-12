@@ -33,19 +33,6 @@ but we use Maven to extract dependencies and aggregate license files of the
 library dependencies. Finally, we use npm simply as a way to deploy the
 language as an npm-package.
 
-### Dependencies
-Additionally, since Effekt uses Scala.js to compile to JavaScript,
-you also need a Scala.js compatible fork of
-
-- the Kiama library <https://github.com/b-studios/kiama>
-
-Once you have sbt installed, you can obtain and build the fork as follows:
-```bash
-git clone git@github.com:b-studios/kiama.git
-cd kiama
-git checkout scala-js
-sbt publishLocal
-```
 ### Compiling the Effekt Compiler
 Great, you made it so far! We can finally compile the Effekt project. For
 this enter the sbt terminal:
