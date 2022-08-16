@@ -30,15 +30,15 @@ Calling a bidirectional effect introduces both the effect itself, as well as
 its exposed implementation effects at the callsite.
 ```effekt
 def user1(): Unit / { Get, Exc, Console } =
-  println(Get())
+  println(do Get())
 ```
 The handler for `Get` can now trigger the exception effect in the scope of the
 call to `Get`:
 
 ```effekt
-def alwaysFail { prog: Unit / Get }: Unit / {} = try {
+def alwaysFail { prog: => Unit / Get }: Unit / {} = try {
   prog()
-} with Get { resume { Exc("Can't get the config, sorry.") } }
+} with Get { resume { do Exc("Can't get the config, sorry.") } }
 ```
 Note, how the return type of the handler `alwaysFail` mentions the empty effect
 set, even though it uses the `Exc` effect.
@@ -48,8 +48,8 @@ This is only sound, since the `Exc` effect is handled at the _call-site_ of
 
 ```effekt
 def user2(): Unit / { Get, Console } = try {
-  println(Get())
-} with Exc { msg => println(msg) }
+  println(do Get())
+} with Exc[A] { msg => println(msg) }
 ```
 We can run the example to observe the result:
 ```effekt:repl

@@ -144,7 +144,7 @@ def printIncrement(l: List[Int]): List[Int] / { Console } =
 // ============================
 // Effekt supports multiple argument sections. For instance, we can define the
 // function:
-def manyArguments(n: Int, m: String) { b1: () => Unit } (otherValue: Boolean) { b2: String }: Unit = <>
+def manyArguments(n: Int, m: String)(otherValue: Boolean) { b1: () => Unit } { b2: => String }: Unit = <>
 
 // Block argument sections (in curly braces) can only take a single block. The syntax `b2: String` is short
 // for `b2: () => String / {}`.

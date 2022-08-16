@@ -157,7 +157,7 @@ def handledTriple(n: Int, s: Int): List[Solution] / {} =
   try {
     try {
       [ triple(n, s) ]
-    } with Fail { () => [] }
+    } with Fail[A] { () => [] }
   } with Flip { () => resume(true).append(resume(false)) }
 ```
 If we encounter a `Fail`, we give up with the empty list as the result. Otherwise,

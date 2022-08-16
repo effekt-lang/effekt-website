@@ -32,13 +32,13 @@ effect SMC {
 
 We can use the `SMC` effect to define some probabilistic programs.
 ```
-def bernoulli(p: Double) = uniform() < p
+def bernoulli(p: Double) = do uniform() < p
 
 def biasedGeometric(p: Double): Int / SMC = {
-  resample();
+  do resample();
   val x = bernoulli(p);
   if (x) {
-    score(log(1.5));
+    do score(log(1.5));
     1 + biasedGeometric(p)
   } else { 1 }
 }
@@ -63,17 +63,17 @@ def smcHandler[R](numberOfParticles: Int) {
   // should maintain the number of particles.
   resample: Particles[R] => Particles[R]
 } { p: () => R / SMC } = {
-  var weight = 1.0;
+  var currentWeight = 1.0;
   var particles: List[Particle] = Nil()
   var measurements: List[Measurement[R]] = Nil()
-  var age = 0;
+  var currentAge = 0;
 
   def checkpoint(cont: Cont[Unit, Unit]) =
-    particles = Cons(Particle(weight, age, cont), particles)
+    particles = Cons(Particle(currentWeight, currentAge, cont), particles)
 
   def run(p: Particle): Unit = {
-    weight = p.weight;
-    age = p.age;
+    currentWeight = p.weight;
+    currentAge = p.age;
     p.cont.apply(())
   }
 
@@ -85,14 +85,14 @@ def smcHandler[R](numberOfParticles: Int) {
   }
 
   repeat(numberOfParticles) {
-    weight = 1.0;
+    currentWeight = 1.0;
     try {
       val res = p();
-      measurements = Cons(Measurement(weight, res), measurements)
+      measurements = Cons(Measurement(currentWeight, res), measurements)
     } with SMC {
       def resample() = checkpoint(cont { t => resume(t) })
       def uniform() = resume(random())
-      def score(d) = { weight = weight * d; resume(()) }
+      def score(d) = { currentWeight = currentWeight * d; resume(()) }
     }
   }
 
@@ -179,7 +179,7 @@ def smc[R](numberOfParticles: Int) { p: () => R / SMC } =
 Of course the above handler is not the only one. We can define an even simpler handler
 that performs importance sampling by sequentially running each particle to the end.
 ```
-def importance[R](n: Int) { p : R / SMC } = {
+def importance[R](n: Int) { p : => R / SMC } = {
   var measurements: List[Measurement[R]] = Nil()
   n.repeat {
     var currentWeight = 1.0;
@@ -199,19 +199,19 @@ def importance[R](n: Int) { p : R / SMC } = {
 ### Running the Examples
 
 ```effekt:hide
-extern def sleep(n: Int): Unit =
+extern control def sleep(n: Int): Unit =
   "$effekt.callcc(k => window.setTimeout(() => k(null), n))"
 
 // here we set a time out to allow rerendering
-extern def reportMeasurementJS[R](w: Double, d: R): Unit =
+extern control def reportMeasurementJS[R](w: Double, d: R): Unit =
   "$effekt.callcc(k => { showPoint(w, d); window.setTimeout(() => k(null), 0)})"
 
-extern def reportDiscreteMeasurementJS[R](w: Double, d: R): Unit =
+extern control def reportDiscreteMeasurementJS[R](w: Double, d: R): Unit =
   "$effekt.callcc(k => { showPoint(w, d, { discrete: true }); window.setTimeout(() => k(null), 0)})"
 
 
 // here we set a time out to allow rerendering
-extern pure def setupGraphJS(): Unit =
+extern io def setupGraphJS(): Unit =
   "setup()"
 ```
 To visualize the results, we define the following helper function `report` that

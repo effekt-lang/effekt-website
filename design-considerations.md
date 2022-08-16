@@ -21,6 +21,12 @@ blocks as arguments, they always have to be fully applied.
 
 The following example shows the standard map function on lists:
 
+```effekt:hide
+type List[A] {
+  Nil()
+  Cons(head: A, tail: List[A])
+}
+```
 ```effekt
 def map[A, B](l: List[A]) { f: A => B } : List[B] =
   l match {
@@ -45,7 +51,7 @@ while supporting many advanced use cases.
 
 
 ### Static Effect Checking
-Unlike Java (with runtime exceptions) or Scala, in Effekt all effects are fully
+Unlike Java (with runtime exceptions) or Scala, in Effekt effects are fully
 tracked by the type system (that is, effect system). For instance using
 `println` has an associated effect `Console`.
 
