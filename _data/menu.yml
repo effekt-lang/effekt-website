@@ -44,3 +44,6 @@ options:
         url: docs/casestudies/buildsystem
       - title: Naturalistic DSLs
         url: docs/casestudies/naturalisticdsls
+
+  - title: Examples
+    url: examples
