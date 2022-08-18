@@ -9,7 +9,7 @@ export const syntax = <ILanguage>{
   keywords: [
     'module', 'import', 'def', 'val', 'var', 'effect', 'type', 'match',
     'case', 'record', 'extern', 'include', 'resume', 'with', 'if', 'try',
-    'else', 'do', 'handle', 'while', 'fun', 'region', 'in', 'new'
+    'else', 'do', 'handle', 'while', 'fun', 'region', 'in', 'new', 'interface'
   ],
 
   definitionKeywords: [
