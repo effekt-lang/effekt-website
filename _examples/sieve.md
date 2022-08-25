@@ -8,6 +8,8 @@ date: 2022-08-25
 Based on https://www.cs.hmc.edu/~oneill/papers/Sieve-JFP.pdf
 
 ```
+import immutable/list
+
 effect EmitPrime {
   def emitPrime(prime: Int): Unit
 }
