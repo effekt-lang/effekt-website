@@ -10,15 +10,14 @@ Yay, we are happy that you want to contribute to the language. Here is how
 you get started:
 
 ## Building Effekt
-While this document might age and outdate, the most current and up-to-date
-instructions can be found in the
-[Github Workflows file]({{ site.githuburl }}/blob/master/.github/workflows/ci.yml).
-This might be a bit tricky to read but contains all necessary information.
+While this document might age and become outdated, the most current and up-to-date
+instructions can always be found in the [Github Actions workflow file]({{ site.githuburl }}/blob/master/.github/workflows/ci.yml).
+It might be a bit tricky to read but does contain all the necessary information.
 
 If you notice that something does not work as expected, please consider
-opening an [issue]({{ site.githuburl }}/issues). Also feel free to
-update this page on [Github]({{ site.githuburl }}/tree/master/docs/docs)
-and opening a pull request.
+opening an [issue]({{ site.githuburl }}/issues). Also feel free to update this
+page on [Github]({{ site.githuburl_website }}/blob/master/contributing.md)
+and subsequently open a pull request.
 
 ### Software Requirements
 You need to have the following software installed to build and use Effekt:
@@ -28,30 +27,40 @@ You need to have the following software installed to build and use Effekt:
 - Node.js (>= 10) and npm
 - Maven
 
-Why three package management tools? The main build tool we use is Effekt,
+Why three package management tools? The main build tool we use is sbt,
 but we use Maven to extract dependencies and aggregate license files of the
 library dependencies. Finally, we use npm simply as a way to deploy the
-language as an npm-package.
+language as an npm package.
 
 ### Compiling the Effekt Compiler
-Great, you made it so far! We can finally compile the Effekt project. For
-this enter the sbt terminal:
-
+Great that you have made it this far! We can now finally compile the Effekt
+project. To do so, first clone the repository as well as all of its submodule
+dependencies:
 ```bash
-sbt
+$ git clone https://github.com/effekt-lang/effekt
+$ cd effekt
+$ git submodule update --init
+```
+Inside the repository's root, enter an `sbt` shell, select your platform of
+choice and run all unit tests to verify your setup:
+```bash
+$ sbt
 sbt:root> project effektJVM
 sbt:effekt> test
 ...
 ```
-As mentioned before, the Effekt compiler can be run as a java program, but
-also as a Scala program. Hence, we need a slightly complicate
+Ignoring a handful of spurious warnings, a wall of green text should indicate
+all tests passing.
+
+As mentioned before, the Effekt compiler can be run as a Java program, but
+also as a JavaScript program. Hence, we need a slightly complicated
 [Cross-build setup](https://www.scala-js.org/doc/project/cross-build.html)
-with two projects `effektJVM` and `effektJS`.
+with two projects: `effektJVM` and `effektJS`.
 
 ### Locally Installing your Compiler Build
 The easiest way to install your version of Effekt is by running
 ```bash
-sbt
+$ sbt
 sbt:root> project effektJVM
 sbt:effekt> install
 ...
@@ -60,12 +69,11 @@ Please note that this also requires `mvn` to generate license files.
 
 ### Generating the Effekt Binary
 The Effekt binary is actually just a simple wrapper that invokes `java -jar effekt.jar`.
-To generate the jar-file and assembly everything simply run:
-
+To generate the jar file and assemble everything simply run:
 ```bash
-sbt deploy
+$ sbt deploy
 ```
-Afterwards, you can find the `effekt.jar` in the `bin/` folder.
+Afterwards, you can find the `effekt.jar` in the `bin/` directory.
 
 ### Working on the "Standard Library"
 The Effekt standard library is still in its infancy. If you want to work on
