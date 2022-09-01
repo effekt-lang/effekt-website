@@ -1,7 +1,7 @@
 import * as hljs from "./highlight-effekt";
 import * as docs from "./docs";
 
-async function enableEditing(code: HTMLElement, run: HTMLElement) {
+async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLElement, liftedOut: HTMLElement) {
     let parent = code.parentNode as HTMLElement
 
     parent.classList.add("editor-loading")
@@ -31,8 +31,9 @@ async function enableEditing(code: HTMLElement, run: HTMLElement) {
       output.classList.add("repl-output")
       parent.insertAdjacentElement("afterend", output)
     }
+
     // init editor
-    editor.create(code, run, output, model)
+    editor.create(code, run, output, coreOut, liftedOut, model)
 }
 
 
@@ -69,8 +70,49 @@ function processCode() {
   }
 
   function addNavigation(code: HTMLElement, opts: CodeOptions) {
-    let nav = document.createElement("nav")
+    let parent = code.parentNode.parentNode as HTMLElement
+
+    const nav = document.createElement("nav")
+
     nav.classList.add("code-menu")
+
+    let coreOut: HTMLElement;
+    if (opts.core) {
+      coreOut = document.createElement("code")
+      coreOut.innerHTML = "// Please click 'edit' to show generated core."
+
+      let container = document.createElement("div")
+      container.classList.add("core-out")
+
+      let headline = document.createElement("h4")
+      headline.innerHTML = "Generated Core"
+      container.appendChild(headline)
+
+      let pre = document.createElement("pre")
+      pre.append(coreOut)
+      container.appendChild(pre)
+
+      parent.insertBefore(container, code.parentNode.nextSibling)
+    }
+
+    let liftedCore: HTMLElement;
+    if (opts.lifted) {
+      liftedCore = document.createElement("code")
+      liftedCore.innerHTML = "// Please click 'edit' to show generated lifted core."
+
+      let container = document.createElement("div")
+      container.classList.add("core-out")
+
+      let headline = document.createElement("h4")
+      headline.innerHTML = "Generated Lifted Core"
+      container.appendChild(headline)
+
+      let pre = document.createElement("pre")
+      pre.append(liftedCore)
+      container.appendChild(pre)
+
+      parent.insertBefore(container, code.parentNode.nextSibling)
+    }
 
     if (opts.repl) {
       let run = document.createElement("a")
@@ -80,11 +122,11 @@ function processCode() {
       nav.append(run)
 
       run.onclick = () => {
-        enableEditing(code, run);
+        enableEditing(code, run, coreOut, liftedCore);
         return false
       }
 
-    } else if(!opts.readOnly) {
+    } else if (!opts.readOnly) {
       let edit = document.createElement("a")
       edit.setAttribute("href", "#")
       edit.classList.add("button-edit")
@@ -94,7 +136,7 @@ function processCode() {
       let activateEditor = () => {
         edit.onclick = () => { return false }
         edit.classList.add("disabled");
-        enableEditing(code, null);
+        enableEditing(code, null, coreOut, liftedCore);
         return false
       }
       edit.onclick = activateEditor
@@ -162,7 +204,13 @@ interface CodeOptions {
   ignore: boolean,
 
   // reset the prelude
-  reset: boolean
+  reset: boolean,
+
+  // show core
+  core: boolean,
+
+  // show lifted core
+  lifted: boolean
 }
 
 const defaultLang = "effekt"
@@ -174,7 +222,9 @@ const defaultOpts = {
   readOnly: false,
   reset: false,
   ignore: false,
-  sketch: false
+  sketch: false,
+  core: false,
+  lifted: false
 }
 
 function classToOptions(dom: HTMLElement) {
@@ -208,7 +258,9 @@ function parseOptions(str: string): CodeOptions {
     readOnly: has("read-only"),
     reset: has("reset"),
     ignore: has("ignore"),
-    sketch: has("sketch")
+    sketch: has("sketch"),
+    core: has("core"),
+    lifted: has("lifted")
   }
 }
 

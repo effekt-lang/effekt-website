@@ -52,7 +52,14 @@ export function load(path: string) {
   } else {
     return mod.module
   }
+}
 
+export function showCore(path: string): string {
+  return Effekt.showCore(path)
+}
+
+export function showLiftedCore(path: string): string {
+  return Effekt.showLiftedCore(path)
 }
 
 export function evaluate(content: string) {

@@ -1,5 +1,6 @@
 // import * as monaco from "monaco-editor";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as hljs from "./highlight-effekt";
 import "monaco-editor/esm/vs/editor/browser/controller/coreCommands";
 import "monaco-editor/esm/vs/editor/contrib/hover/hover";
 import "monaco-editor/esm/vs/editor/contrib/wordHighlighter/wordHighlighter";
@@ -23,7 +24,14 @@ monaco.editor.defineTheme('effekt-page-theme', pageTheme);
 monaco.languages.registerHoverProvider('effekt', IDE.hoverProvider);
 
 
-export function create(container: HTMLElement, run: HTMLElement, out: HTMLElement, model: IDE.IViewModel): monaco.editor.ICodeEditor {
+export function create(
+  container: HTMLElement,
+  run: HTMLElement,
+  out: HTMLElement,
+  coreOut: HTMLElement,
+  liftedOut: HTMLElement,
+  model: IDE.IViewModel
+): monaco.editor.ICodeEditor {
 
   let theme = document.body.classList.contains("docs") ? "effekt-docs-theme" : "effekt-page-theme";
 
@@ -67,6 +75,9 @@ export function create(container: HTMLElement, run: HTMLElement, out: HTMLElemen
   autoResize(editor)
 
   registerTypechecking(editor)
+
+  registerCoreGeneration(editor, coreOut, liftedOut)
+
   // type check once for hover
   IDE.typecheck(model)
 
@@ -119,6 +130,33 @@ function registerTypechecking(editor: monaco.editor.ICodeEditor) {
     let model = editor.getModel() as IDE.IViewModel
     timeout = setTimeout(() => IDE.typecheck(model), 150);
   })
+}
+
+function registerCoreGeneration(editor: monaco.editor.ICodeEditor, coreOut: HTMLElement, liftedOut: HTMLElement) {
+  var timeout;
+
+  function showCore(model) {
+    if (coreOut) {
+      let core = IDE.showCore(model);
+      coreOut.innerHTML = core
+      hljs.highlightBlock(coreOut)
+    }
+    if (liftedOut) {
+      let lifted = IDE.showLiftedCore(model);
+      liftedOut.innerHTML = lifted
+      hljs.highlightBlock(liftedOut)
+    }
+  }
+
+  let model = editor.getModel() as IDE.IViewModel
+
+  editor.onDidChangeModelContent(evt => {
+    if (timeout) { clearTimeout(timeout) }
+    timeout = setTimeout(() => showCore(model), 150);
+  })
+
+  showCore(model)
+
 }
 
 function addRunAction(editor, run, output) {

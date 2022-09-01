@@ -55,6 +55,16 @@ export function typecheck(model: IViewModel) {
   monaco.editor.setModelMarkers(model, "effekt", diagnostics);
 }
 
+export function showCore(model: IViewModel) {
+  updateModel(model)
+  return effekt.showCore(filename(model.uri))
+}
+
+export function showLiftedCore(model: IViewModel) {
+  updateModel(model)
+  return effekt.showLiftedCore(filename(model.uri))
+}
+
 export function updateModel(model: IViewModel) {
   writeFile(filename(model.uri), model.getFullText())
 }
