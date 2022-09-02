@@ -138,15 +138,16 @@ function registerCoreGeneration(editor: monaco.editor.ICodeEditor, coreOut: HTML
   function showCore(model) {
     if (coreOut) {
       let core = IDE.showCore(model);
-      coreOut.innerHTML = core
+      coreOut.innerText = core
       hljs.highlightBlock(coreOut)
     }
     if (liftedOut) {
       let lifted = IDE.showLiftedCore(model);
-      liftedOut.innerHTML = lifted
+      liftedOut.innerText = lifted
       hljs.highlightBlock(liftedOut)
     }
   }
+
 
   let model = editor.getModel() as IDE.IViewModel
 
