@@ -5,7 +5,11 @@ title: Lift Inference
 
 # Lift Inference
 
-Programs in the Effekt surface language are translated to the underlying Core language.
+Programs in the Effekt surface language are translated to the underlying Core language,
+which is in explicit capability-passing style. Core corresponds to `System Xi` in
+[this paper](https://se.cs.uni-tuebingen.de/publications/brachthaeuser20effects/) and
+`System C` in [this paper](https://se.cs.uni-tuebingen.de/publications/brachthaeuser22effects/).
+
 In order to efficiently compile programs in Core, the overhead incurred by using
 effect handlers should be minimized. In particular, the search for the correct handler
 at runtime should be avoided. This can be facilitated by making so-called lifting
@@ -53,12 +57,12 @@ have to be lifted to which handlers, such a runtime search can be rendered unnec
 
 ### Regions and subregion evidence
 
-A structured way to do so is to introduce a region system and explicit subregion evidence.
-Every handler opens a new region in its body and the corresponding capability has to
-run in this exact region. Each handler then additionally binds evidence that the new
-region it opens is a subregion of the region it is defined in. The capability bound by
-the handler can then be called in every subregion of the handler by providing it with
-the correct subregion evidence.
+A structured way to make explicit which capability has to be lifted to which handler
+is to introduce a region system and explicit subregion evidence. Every handler opens a
+new region in its body and the corresponding capability has to run in this exact region.
+Each handler then additionally binds evidence that the new region it opens is a subregion
+of the region it is defined in. The capability bound by the handler can then be called
+in every subregion of the handler by providing it with the correct subregion evidence.
 
 Consider the following variation of the above example without the `abort`-block:
 
@@ -78,19 +82,22 @@ def main() =
   }
 ```
 
-By clicking on "edit" the corresponding code in the Lifted Core language is shown. There
-the subregion evidence is explicit. The inner handler binds evidence that its new region
-is a subregion of the region of the outer handler and this evidence is then provided in
-the call of `Exc1`, making it explicit that `Exc1` has to jump over the inner handler to
-run in the region of the outer handler.
+By clicking on "edit" the corresponding code in the Lifted Core language (which corresponds
+to `LambdaCap` in [this paper](https://se.cs.uni-tuebingen.de/publications/schuster22typed/))
+is shown. In Lifted Core the subregion evidence is explicit. The inner handler binds evidence
+that its new region is a subregion of the region of the outer handler and this evidence is
+then provided in the call of `Exc1`, making it explicit that `Exc1` has to jump over the
+inner handler to run in the region of the outer handler.
 
 
 ### Region and evidence inference
 
-Back to the original example. There the call to `Exc1` is within the definition of `abort`
-which is not inside the inner handler. Nevertheless, `abort` is called inside the inner
-handler and hence the call to `Exc1` only is only executed there, so it should again be
-provided with the evidence bound at the inner handler.
+Back to the original example, where `Exc1` is called in the definition of `abort`. But
+what is the correct evidence for `Exc1` then? The problem is that at the point of the
+definition of `abort` it is not yet known where `abort` will be called. In the example
+`abort` is called inside the inner handler and hence `Exc1` should again be provided with
+the evidence bound at the inner handler. But in general `abort` could also be called in a
+different region.
 
 To account for this, it is possible for functions in Lifted Core to abstract over evidence.
 The idea is to have a new region for each function which is later instantiated with the
