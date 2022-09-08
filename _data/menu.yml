@@ -47,3 +47,10 @@ options:
 
   - title: Examples
     url: examples
+
+  - title: Implementation
+    url: docs/implementation
+    nested_options:
+
+      - title: Lift Inference
+        url: docs/implementation/lift-inference

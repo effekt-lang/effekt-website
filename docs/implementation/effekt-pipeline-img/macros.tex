@@ -1,0 +1,33 @@
+% make entries from tsr.bib work
+\providecommand{\selfref}{}
+
+% define colors
+\definecolor{darkred}{RGB}{150,0,0}
+\definecolor{darkgreen}{RGB}{0,150,0}
+\definecolor{darkblue}{RGB}{0,0,150}
+\definecolor{medred}{RGB}{200,0,0}
+\definecolor{medgreen}{RGB}{0,200,0}
+\definecolor{medblue}{RGB}{0,0,200}
+\definecolor{brown}{RGB}{145,105,70}
+
+% define syntax for strings
+\colorlet{string-color}{brown}
+\newcommand{\syntaxString}[1]{\mathtt{\color{string-color}{"#1"}}}
+
+% define highlighting
+\colorlet{diff-color}{medblue}
+\colorlet{diffnew-color}{purple}
+\colorlet{diff2-color}{red}
+\colorlet{corr-color}{darkgreen}
+\colorlet{env1-color}{medgreen}
+\colorlet{env2-color}{medred}
+\colorlet{env3-color}{orange}
+\colorlet{envn-color}{gray}
+\newcommand{\hlDiff}[1]{\textcolor{diff-color}{#1}}
+\newcommand{\hlDiffNew}[1]{\textcolor{diffnew-color}{#1}}
+\newcommand{\hlDiffB}[1]{\textcolor{diff2-color}{#1}}
+\newcommand{\hlCorr}[1]{\textcolor{corr-color}{#1}}
+\newcommand{\hlEnvA}[1]{\textcolor{env1-color}{#1}}
+\newcommand{\hlEnvB}[1]{\textcolor{env2-color}{#1}}
+\newcommand{\hlEnvC}[1]{\textcolor{env3-color}{#1}}
+\newcommand{\hlEnvN}[1]{\textcolor{envn-color}{#1}}
