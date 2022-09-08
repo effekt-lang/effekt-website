@@ -1,0 +1,38 @@
+\documentclass{standalone}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{calc}
+\usepackage{color}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{longtable}
+\usepackage{pdfpages}
+\usepackage{amscd,amsmath,amssymb,amstext,amsthm}
+\usepackage{braket}
+\usepackage{mathpartir}
+\usepackage{tikz}
+
+\usetikzlibrary{
+  calc,
+  cd,
+  patterns,
+  positioning
+}
+
+
+\geometry{a4paper,left=20mm,right=20mm,top=20mm,bottom=20mm}
+
+
+\begin{document}
+
+\input{macros.tex}
+
+\input{src-pipeline.tex}
+
+\end{document}
