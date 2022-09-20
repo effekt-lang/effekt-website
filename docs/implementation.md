@@ -9,7 +9,7 @@ permalink: docs/implementation
 The compiler pipeline for Effekt can be illustrated as follows:
 
 <figure>
-<img src="effekt-pipeline-img/image.svg" alt="Effekt Compiler Pipeline (07.09.22)" width="100%" />
+<img src="/docs/implementation/effekt-pipeline-img/image.svg" alt="Effekt Compiler Pipeline (07.09.22)" width="100%" />
 </figure>
 
 The compilation is divided into the following large phases: parsing, frontend,
