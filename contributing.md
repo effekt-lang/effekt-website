@@ -37,13 +37,17 @@ Great that you have made it this far! We can now finally compile the Effekt
 project. To do so, first clone the repository as well as all of its submodule
 dependencies:
 ```bash
-$ git clone https://github.com/effekt-lang/effekt
-$ cd effekt
-$ git submodule update --init
+$ git clone --recurse-submodules git@github.com:effekt-lang/effekt.git
 ```
+> Note: We recommend you to use the following [git config](https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse) that will always keep the submodules in sync with the current branch that you are working on:
+> ```
+> git config --global submodule.recurse true
+> ```
+
 Inside the repository's root, enter an `sbt` shell, select your platform of
 choice and run all unit tests to verify your setup:
 ```bash
+$ cd effekt
 $ sbt
 sbt:root> project effektJVM
 sbt:effekt> test
