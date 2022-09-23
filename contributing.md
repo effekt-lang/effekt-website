@@ -40,7 +40,7 @@ dependencies:
 $ git clone --recurse-submodules git@github.com:effekt-lang/effekt.git
 ```
 > Note: We recommend you to use the following [git config](https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse) that will always keep the submodules in sync with the current branch that you are working on:
-> ```
+> ```bash
 > git config --global submodule.recurse true
 > ```
 
