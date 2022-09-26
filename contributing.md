@@ -53,7 +53,7 @@ $ git clone --recurse-submodules git@github.com:effekt-lang/effekt.git
 > git config --global submodule.recurse true
 > ```
 > If despite your best efforts the submodule still resides in an undesirable
-> state, you can always nuke it: `$ rm -rf kiama/ && git submodule update`
+> state, you can always re-initialize it: `$ rm -rf kiama/ && git submodule update`
 
 Inside the repository's root, enter an `sbt` shell, select your platform of
 choice and run all unit tests to verify your setup:
