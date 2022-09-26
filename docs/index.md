@@ -14,7 +14,7 @@ Effekt language.
   {% endif %}
 {% endfor %}
 
-Let's start with a hello world:
+Let's start with a simple example function that prints `"Hello World!" to the console:
 ```effekt
 def main() = {
   println("Hello World!")
