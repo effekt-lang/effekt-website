@@ -14,6 +14,13 @@ Effekt language.
   {% endif %}
 {% endfor %}
 
+Let's start with a hello world:
+```effekt
+def main() = {
+  println("Hello World!")
+}
+```
+
 ## Syntax
 The Syntax is heavily inspired by the [Scala language](http://scala-lang.org). So
 users familiar with Scala should have no problems getting started. Right now
