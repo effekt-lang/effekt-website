@@ -85,11 +85,10 @@ right of `=>`.
 #### Function Application
 As you can see, functions like `size` are called like `size(l)`. Additionally,
 inspired by the Koka language, there is some syntactic sugar and you can also
-call the same function as `l.size`. This only works if the function takes
-exactly one value argument. However, Effekt allows multiple argument
-sections and we can define a function like
+call the same function as `l.size`. This also works if our function takes
+multiple arguments, like append:
 ```
-def append[A](self: List[A])(other: List[A]): List[A] = <>
+def append[A](self: List[A], other: List[A]): List[A] = <>
 ```
 and call it:
 ```effekt:repl
@@ -128,7 +127,7 @@ element in the list:
 def map[A, B](l: List[A]) { f: A => B } : List[B] =
   l match {
     case Nil() => Nil()
-    case Cons(a, rest) => Cons(f(a), map(rest) { a => f(a) })
+    case Cons(a, rest) => Cons(f(a), map(rest) {f})
   }
 ```
 The signature of `map` is read as follows:
@@ -139,10 +138,6 @@ The signature of `map` is read as follows:
 We purposefully call `l` a value and `f` a block, since in Effekt these are
 two different universes that cannot be mixed. Blocks are no values. They cannot
 be stored in variables, data structures, or be returned from functions.
-
-Just like functions, blocks also always need to be fully applied. This
-requirement can be seen in the recursive application to `map`, where a block
-is constructed only to apply `f`.
 
 Using method-application syntax, we can call `map` as follows:
 

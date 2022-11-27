@@ -29,7 +29,7 @@ effect Get(): Config / Exc
 Calling a bidirectional effect introduces both the effect itself, as well as
 its exposed implementation effects at the callsite.
 ```effekt
-def user1(): Unit / { Get, Exc, Console } =
+def user1(): Unit / { Get, Exc } =
   println(do Get())
 ```
 The handler for `Get` can now trigger the exception effect in the scope of the
@@ -47,7 +47,7 @@ This is only sound, since the `Exc` effect is handled at the _call-site_ of
 `Get`:
 
 ```effekt
-def user2(): Unit / { Get, Console } = try {
+def user2(): Unit / { Get } = try {
   println(do Get())
 } with Exc[A] { msg => println(msg) }
 ```

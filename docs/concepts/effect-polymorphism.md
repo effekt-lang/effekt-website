@@ -77,13 +77,21 @@ Here are some examples of calling `eachLine`. For example, we can provide a bloc
 ```effekt:repl
 eachLine(someFile) { line => () }
 ```
+```effekt:hide
+interface Console {
+  def log(msg: String): Unit
+}
+
+def runExample[R] { prog: () => R / Console }: R =
+  try { prog() } with Console { def log(msg) = resume(println(msg)) }
+```
 
 The type of the block is <code class="language-effekt">String => Unit / {}</code> and
 the overall type of the call is <code class="language-effekt">Unit / {}</code>.
 
-Further, we can provide a block that uses builtin effects (<code class="language-effekt">Console</code>):
+Further, we can provide a block that uses the effect <code class="language-effekt">Console</code> from the previous section:
 ```effekt:repl
-eachLine(someFile) { line => println(line) }
+runExample { eachLine(someFile) { line => do log(line) } }
 ```
 The type of the block is <code class="language-effekt">String => Unit / { Console }</code> and
 the overall type of the call now becomes <code class="language-effekt">Unit / { Console }</code>.

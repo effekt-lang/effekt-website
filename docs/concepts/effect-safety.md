@@ -6,12 +6,14 @@ permalink: docs/concepts/effect-safety
 
 # Effect Safety
 Unlike Java (with runtime exceptions) or Scala, in Effekt effects are fully
-tracked by the type system (that is, effect system). For instance using
-`println` has an associated effect `Console`.
-
+tracked by the type system (that is, effect system). For instance, to track printing
+on the console, we can define a corresponding effect:
 ```effekt
+interface Console {
+  def log(msg: String): Unit
+}
 def sayHello(): Unit / { Console } =
-  println("Hello World!")
+  do log("Hello World!")
 ```
 While the left component (that is, `Unit`) is the type of values returned by
 `sayHello`, the right component of the return type (that is, `{ Console }`)
@@ -42,11 +44,16 @@ leads to a difference of purity compared to existing languages.
 Functions can take blocks as arguments. An example, we have seen in the
 [introduction](../) is the function `map`:
 
-```effekt:reset:prelude:hide
+```effekt:reset:hide:prelude
 import immutable/list
 ```
+```effekt:hide
+interface Console {
+  def log(msg: String): Unit
+}
 ```
-def each[A](l: List[A]) { f: A => Unit } : Unit = <>
+```effekt
+def each[A](l: List[A]) { f: A => Unit }: Unit = <>
 ```
 The type of the block argument `f` is `A => Unit` indicating that it consumes an
 element of type `A`. Actually, `A => Unit` is
@@ -58,7 +65,7 @@ runtime error.
 Maybe surprisingly, on the callsite to `each`, we actually can use other effects:
 ```
 def printList(l: List[Int]): Unit / { Console } =
-  each(l) { x =>  println(x) }
+  each(l) { x => do log(x.show) }
 ```
 Here, the block passed to `each` _does_ use another effect, namely the `Console`
 effect.

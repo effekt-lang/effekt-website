@@ -68,7 +68,7 @@ def noFirstClass { someBlock: () => Int / {} } = {
 // tracked by the type system (that is, effect system). For instance using
 // `println` has an associated effect `Console`.
 
-def sayHello(): Unit / { Console } =
+def sayHello(): Unit / {} =
   println("Hello World!")
 
 // While the left component (that is, `Unit`) is the type of values returned by
@@ -112,7 +112,7 @@ def myMap2[A, B](l: List[A]) { f: A => B / {} } : List[B] = <>
 // not using any effects _visible to `map`_.
 
 // Maybe surprisingly, on the callsite to `map`, we actually can use other effects:
-def printIncrement(l: List[Int]): List[Int] / { Console } =
+def printIncrement(l: List[Int]): List[Int] / {} =
   myMap(l) { x =>  println(x); x + 1 }
 
 // Here, the block passed to `map` _does_ use another effect, namely the `Console` effect.
@@ -144,7 +144,7 @@ def printIncrement(l: List[Int]): List[Int] / { Console } =
 // ============================
 // Effekt supports multiple argument sections. For instance, we can define the
 // function:
-def manyArguments(n: Int, m: String)(otherValue: Boolean) { b1: () => Unit } { b2: => String }: Unit = <>
+def manyArguments(n: Int, m: String, otherValue: Boolean) { b1: () => Unit } { b2: => String }: Unit = <>
 
 // Block argument sections (in curly braces) can only take a single block. The syntax `b2: String` is short
 // for `b2: () => String / {}`.
