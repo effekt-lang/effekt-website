@@ -128,7 +128,7 @@ def execute[A] { f: => A / Suspend }: ExecutionResult[A] = {
   }
 }
 
-def main(): ExecutionResult[Unit] / Console = {
+def main(): ExecutionResult[Unit] = {
   execute {
     val condition = do newCondition()
     def firstThread(): Unit / Suspend = {
