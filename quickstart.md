@@ -8,7 +8,7 @@ position: 2
 # Try Effekt Online
 You can immediately experiment with the Effekt language, without [installing](docs/getting-started) it.
 
-Effekt is a research language, we recommend reading [the paper](http://ps.informatik.uni-tuebingen.de/publications/brachthaeuser20effekt/) describing important design decisions and the inner workings of Effekt.
+Effekt is a research language, we recommend reading [the paper](http://ps.cs.uni-tuebingen.de/publications/brachthaeuser20effekt/) describing important design decisions and the inner workings of Effekt.
 
 ```effekt:prelude:hide
 import immutable/list
