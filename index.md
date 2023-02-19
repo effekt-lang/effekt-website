@@ -29,10 +29,10 @@ If you are interested in the Effekt language, we have a few things to get you st
 
 <div id="start-guide">
 <h3>Quick Guides</h3>
-<p>To get a first impression of the distinguishing features, read the quick-guides on this page (
-  <a href="#intro-handlers">effect handlers</a>,
-  <a href="#intro-safety">effect safety</a>,
-  <a href="#intro-polymorphism">effect polymorphism</a>).
+<p>To get a first impression of the distinguishing features, read the quick-guides on this page
+  (<a href="#intro-handlers">effect handlers</a>,
+   <a href="#intro-safety">effect safety</a>,
+   <a href="#intro-polymorphism">effect polymorphism</a>).
 </p>
 </div>
 
