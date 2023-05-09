@@ -23,7 +23,7 @@ and subsequently open a pull request.
 You need to have the following software installed to build and use Effekt:
 
 - git
-- JDK >= 1.8 and [Maven](https://maven.apache.org/)
+- JDK >= 1.11
 - sbt (<https://www.scala-sbt.org>)
 - npm (to package and install the Effekt compiler)
 - (Maven -- only for creating releases)
