@@ -27,7 +27,7 @@ effektJS> fullOptJS
 [info] Full optimizing ./js/target/scala-2.13/effekt-opt.js
 ```
 
-2. Move the resulting `effekt-opt.js` to `src/effekt.js` in the website repo.
+2. Move the resulting `effekt/js/target/scala-$VERSION/effekt-opt.js` to `src/effekt.js` in the website repo.
 
 3. In the website repo, run `webpack`:
 ```
@@ -35,3 +35,13 @@ effektJS> fullOptJS
 ```
 
 This will generate a bunch of packed js files.
+
+### Building the Website Locally
+The website is built with [jekyll](https://jekyllrb.com/) and requires a ruby installation.
+
+Follow instructions on the Jekyll website to install jekyll (which requires Ruby) and serve the website locally with
+```
+bundle exec jekyll serve
+```
+
+
