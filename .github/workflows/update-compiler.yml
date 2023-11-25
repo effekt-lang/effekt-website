@@ -1,0 +1,70 @@
+name: NodeJS with Webpack
+
+on:
+  # can only be triggered manually
+  workflow_dispatch:
+    inputs:
+      effekt_commit:
+        description: "Commit SHA of Effekt submodule to checkout and build. If omitted, the latest commit is chosen. (OPTIONAL)"
+        required: false
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Scala & sbt
+        uses: olafurpg/setup-scala@v11
+        with:
+          java-version: openjdk@1.17
+  
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Scala version from build.sbt
+        run: |
+          echo "scala_version=$(grep "scalaVersion" build.sbt | awk -F \" '{print $2}')" >> $GITHUB_ENV
+    
+      - name: Update submodule
+        run: |
+          git submodule update --remote --recursive
+          if [ -n "$effekt_commit" ]; then
+            git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
+          else
+            git -C effekt/ checkout master
+          fi
+    
+      - name: Build Effekt JS
+        run: |
+          cd effekt/
+          sbt "project effektJS"
+          sbt clean compile fastLinkJS
+    
+      - name: Copy js file to website
+        run: |
+          cp effekt/js/target/scala-${{ env.scala_version }}/effekt-fastopt/main.js ../.
+          cd ..
+          rm src/effekt.js
+          mv main.js src/effekt.js
+    
+      - name: Run webpack
+        run: |
+          npm install
+          npx webpack
+    
+      - name: Commit updated compiler and submodule update
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add src/ dist/ effekt/
+          git commit -m "update compiler"
+      
+      - name: Push changes
+        # here we have to make sure that trigger event is on 'manual'
+        # since 'on push' could cause a infinite loop of actions triggering each other
+        if: github.event_name == 'workflow_dispatch'
+        run: git push origin
