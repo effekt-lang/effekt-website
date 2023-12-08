@@ -25,10 +25,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get Scala version from build.sbt
-        run: |
-          echo "scala_version=$(grep "scalaVersion" build.sbt | awk -F \" '{print $2}')" >> $GITHUB_ENV
-    
       - name: Update submodule
         run: |
           git submodule update --remote --recursive
@@ -41,15 +37,12 @@ jobs:
       - name: Build Effekt JS
         run: |
           cd effekt/
-          sbt "project effektJS"
-          sbt clean compile fastLinkJS
+          sbt assembleBinary
     
       - name: Copy js file to website
         run: |
-          cp effekt/js/target/scala-${{ env.scala_version }}/effekt-fastopt/main.js ../.
+          cp -f out/effekt.js ../src/effekt.js
           cd ..
-          rm src/effekt.js
-          mv main.js src/effekt.js
     
       - name: Run webpack
         run: |
@@ -67,4 +60,4 @@ jobs:
         # here we have to make sure that trigger event is on 'manual'
         # since 'on push' could cause a infinite loop of actions triggering each other
         if: github.event_name == 'workflow_dispatch'
-        run: git push origin
+        run: git push origin master
