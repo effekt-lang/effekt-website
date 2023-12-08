@@ -27,16 +27,15 @@ jobs:
 
       - name: Update submodule
         run: |
-          git submodule update --remote --recursive
+          cd effekt/
+          git checkout master
+          git pull
           if [ -n "$effekt_commit" ]; then
-            git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
-          else
-            git -C effekt/ checkout master
+            git checkout ${{ github.event.inputs.effekt_commit }}
           fi
     
       - name: Build Effekt JS
         run: |
-          cd effekt/
           sbt assembleJS
     
       - name: Copy js file to website
