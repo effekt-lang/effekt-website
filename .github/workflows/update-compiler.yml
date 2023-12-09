@@ -27,21 +27,17 @@ jobs:
 
       - name: Update submodule
         run: |
-          cd effekt/
-          git checkout master
-          git pull
+          git -C effekt/ checkout master
+          git -C effekt/ pull
           if [ -n "$effekt_commit" ]; then
-            git checkout ${{ github.event.inputs.effekt_commit }}
+            git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
           fi
     
       - name: Build Effekt JS
         run: |
+          cd effekt/
           sbt assembleJS
-    
-      - name: Copy js file to website
-        run: |
           cp -f out/effekt.js ../src/effekt.js
-          cd ..
     
       - name: Run webpack
         run: |
