@@ -29,12 +29,13 @@ jobs:
 
       - name: Update submodule
         run: |
-          git -C effekt/ checkout master
-          git -C effekt/ pull
-          if [ -n "$effekt_commit" ]; then
-            git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
-          fi
-    
+          git submodule update --recursive --remote --init
+        
+      - name: Checkout given commit
+        if: "${{ github.event.inputs.effekt_commit != '' }}"
+        run: |
+          git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
+
       - name: Build Effekt JS
         run: |
           cd effekt/
@@ -51,7 +52,7 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add src/ dist/ effekt/
-          git commit -m "update compiler"
+          git commit -m "Github Action: update compiler"
       
       - name: Push changes
         # here we have to make sure that trigger event is on 'manual'
