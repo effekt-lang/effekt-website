@@ -1,1 +1,0 @@
-../../effekt/examples/casestudies/buildsystem.md

@@ -1,1 +1,0 @@
-../../effekt/examples/casestudies/ad.md
