@@ -47,16 +47,23 @@ jobs:
         run: |
           npm install
           npx webpack
-    
-      - name: Commit updated compiler and submodule update
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add src/ dist/ effekt/
-          git commit -m "Github Action: update compiler $(git -C effekt show -s --format=%h)"
-      
-      - name: Push changes
+  
+      - name: Open Pull Request
         # here we have to make sure that trigger event is on 'manual'
         # since 'on push' could cause a infinite loop of actions triggering each other
         if: github.event_name == 'workflow_dispatch'
-        run: git push
+        uses: peter-evans/create-pull-request@v5
+        with:
+          add-paths: |
+            src/
+            dist/
+            effekt/
+          commit-message: "Github Action: update compiler"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: update-compiler
+          title: '[Action] Update compiler'
+          body: |
+            Update Effekt compiler on the website.
+          reviewers: dvdvgt
+          draft: false
