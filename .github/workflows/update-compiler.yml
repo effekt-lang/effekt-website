@@ -60,11 +60,10 @@ jobs:
             effekt/
           commit-message: "Github Action: update compiler"
           base: master
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          branch: update-compiler
-          title: '[Action] Update compiler'
-          body: |
-            Update Effekt compiler on the website.
-          reviewers: dvdvgt
+          branch: action/update-compiler
+          title: "[Github Action] Update compiler"
+          body: "Update Effekt compiler on the website."
+          reviewers: |
+            b-studios
+            dvdvgt
           draft: false
