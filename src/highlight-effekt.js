@@ -109,7 +109,7 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
     name: 'Effekt',
     keywords: {
       literal: 'true false null',
-      keyword: 'module effect type def with val var if for while import return else case try match resume do record region in new interface let box unbox fun extern and is'
+      keyword: 'module effect type def with val var if for while import return else case try match resume do record region in new interface let box unbox fun extern and is namespace'
     },
     contains: [
       hljs.C_LINE_COMMENT_MODE,
