@@ -10,7 +10,7 @@ export const syntax = <ILanguage>{
     'module', 'import', 'def', 'val', 'var', 'effect', 'type', 'match',
     'case', 'record', 'extern', 'include', 'resume', 'with', 'if', 'try',
     'else', 'do', 'handle', 'while', 'fun', 'region', 'in', 'new',
-    'box', 'unbox', 'interface', 'resource', 'and', 'is'
+    'box', 'unbox', 'interface', 'resource', 'and', 'is', 'namespace'
   ],
 
   definitionKeywords: [
