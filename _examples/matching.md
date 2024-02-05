@@ -14,6 +14,10 @@ In particular, we can now
 - `while` and `if` can both take guards
 - `while`, `if`, and `match` all have `else` clauses. 
 
+```effekt:reset:hide:prelude
+import immutable/list
+import immutable/option
+```
 ```
 record Request(username: String)
 record User(id: Int)
