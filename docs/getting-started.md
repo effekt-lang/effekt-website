@@ -112,9 +112,22 @@ Hello
 
 ## Setting Up VSCode
 Effekt comes with a basic language server implementation (LSP).
-The [effekt-vscode repository](https://github.com/effekt-lang/effekt-vscode)
-The extension is currently not published, so you will have to install it
-manually by downloading a `vsix` file.
+The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
+
+### Visual Studio Marketplace 
+
+You can install the `effekt-lang.effekt` extension from the Visual Studio Marketplace.
+
+1. Select `Preferences / Extensions` in the menu
+2. Type "effekt" in the search bar
+3. Click `Install`
+
+Or paste the following command into the VS Code Quick Open menu (Ctrl+P):
+
+> ext install effekt-lang.effekt
+
+### Manual Installation
+
 You can download the extension of the latest release on Github:
 
 > <https://github.com/effekt-lang/effekt-vscode/releases/latest>
