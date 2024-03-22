@@ -111,7 +111,7 @@ record Solution(first: Int, second: Int, third: Int)
 We now use two different effect operations to express nondeterminism:
 
 ```
-effect Flip(): Boolean
+effect Flip(): Bool
 effect Fail[A](): A
 ```
 The first effect `Flip` returns a boolean, representing a nondeterministic
