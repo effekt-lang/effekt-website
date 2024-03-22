@@ -9,7 +9,7 @@ import immutable/list
 
 type Probability = Double
 
-effect Flip(p: Probability): Boolean
+effect Flip(p: Probability): Bool
 
 effect Fail(): Nothing
 
@@ -32,7 +32,7 @@ def model() = {
   doesWin(peter, david)
 }
 
-def doesWin(player1: Skill, player2: Skill): Boolean / Flip =
+def doesWin(player1: Skill, player2: Skill): Bool / Flip =
   player1 match {
     case Bad() => player2 match {
       case Bad() => do Flip(0.5)
@@ -88,7 +88,7 @@ def unionDistribution[A](xs: Distribution[A], ys: Distribution[A]): Distribution
   }
 }
 
-def observe(condition: Boolean): Unit / Fail = {
+def observe(condition: Bool): Unit / Fail = {
   if(condition) {
     ()
   } else {
