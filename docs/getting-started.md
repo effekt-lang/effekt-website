@@ -112,7 +112,7 @@ Hello
 
 ## Setting Up VSCode
 Effekt comes with a basic language server implementation (LSP).
-Source code: [effekt-vscode repository](https://github.com/effekt-lang/effekt-vscode).
+The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
 
 ### Visual Studio Marketplace 
 
