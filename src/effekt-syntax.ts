@@ -33,7 +33,7 @@ export const syntax = <ILanguage>{
   tokenizer: {
     root: [
       // identifiers and keywords
-      [/[a-z_$][\w$]*/, {
+      [/[a-z_$][\w$?!]*/, {
         cases: {
           '@keywords': {
             cases: {
@@ -46,7 +46,7 @@ export const syntax = <ILanguage>{
         }
       }],
 
-      [/[A-Z][\w\$]*/, 'type.identifier' ],
+      [/[A-Z][\w\$?!]*/, 'type.identifier' ],
 
       // whitespace
       { include: '@whitespace' },
@@ -76,7 +76,7 @@ export const syntax = <ILanguage>{
 
     definition: [
       { include: '@whitespace' },
-      [/[a-zA-Z_$][\w$]*/, 'definition'],
+      [/[a-zA-Z_$][\w$?!]*/, 'definition'],
       [new RegExp(""),'','@pop']
     ],
 
