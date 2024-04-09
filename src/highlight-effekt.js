@@ -17,7 +17,7 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
   var SUBST = {
     className: 'subst',
     variants: [
-      {begin: '\\$[A-Za-z0-9_]+'},
+      {begin: '\\$[A-Za-z0-9_?!]+'},
       {begin: '\\${', end: '}'}
     ]
   };
@@ -51,12 +51,12 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
 
   var SYMBOL = {
     className: 'symbol',
-    begin: '\'\\w[\\w\\d_]*(?!\')'
+    begin: '\'\\w[\\w\\d_?!]*(?!\')'
   };
 
   var TYPE = {
     className: 'type',
-    begin: '\\b[A-Z][A-Za-z0-9_]*',
+    begin: '\\b[A-Z][A-Za-z0-9_?!]*',
     relevance: 0
   };
 
