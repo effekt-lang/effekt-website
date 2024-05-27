@@ -3,7 +3,6 @@
   "scripts": {
     "build": "webpack"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/jquery": "^3.5.4",
     "css-loader": "^3.6.0",
