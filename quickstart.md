@@ -10,12 +10,6 @@ You can immediately experiment with the Effekt language, without [installing](do
 
 Effekt is a research language, we recommend reading [the paper](http://ps.cs.uni-tuebingen.de/publications/brachthaeuser20effekt/) describing important design decisions and the inner workings of Effekt.
 
-```effekt:prelude:hide
-import immutable/list
-import immutable/option
-import text/string
-```
-
 ### Online Editor
 Below you can find an online editor, which is enabled by clicking "edit" on the right. Please be aware that
 the changes are not saved!
