@@ -8,6 +8,8 @@ date: 2024-06-15
 This example illustrates how Effekt also applies the same mechanism (distinguishing first from second-class resources)
 to region-based memory.
 ```
+import immutable/list
+
 def main() = {
 
   region r {
