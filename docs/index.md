@@ -39,21 +39,22 @@ trailing position. This will potentially change soon.
 
 ## Example: Lists
 To familiarize ourselves, let's start by inspecting the implementation of
-lists in the [standard library]({{ site.githuburl }}/blob/master/libraries/js/monadic/immutable/list.effekt).
+lists in the [standard library]({{ site.githuburl }}/blob/master/libraries/common/list.effekt).
 
 
 #### Module Declarations
 All Effekt files start with a module declaration
 ```effekt:sketch
-module immutable/list
+module mylib/mylist
 ```
+
 It is important that the qualified module name coincides with the path from
 the project root / include path. That is, the file for our module should live
-under `./immutable/list.effekt`.
+under `./mylib/mylist.effekt`.
 
 #### Datatype Declarations
 The algebraic datatype for lists is declared as follows:
-```effekt
+```effekt:sketch
 type List[A] {
   Nil();
   Cons(head: A, tail: List[A])
@@ -120,17 +121,17 @@ q.back
 Functions can take other functions as arguments. Following Ruby-jargon,
 we call those argument functions _blocks_.
 
-Here is the definition of `map` that takes a block, which it applies to every
+Here is the definition of `myMap` that takes a block, which it applies to every
 element in the list:
 
 ```
-def map[A, B](l: List[A]) { f: A => B } : List[B] =
+def myMap[A, B](l: List[A]) { f: A => B } : List[B] =
   l match {
     case Nil() => Nil()
-    case Cons(a, rest) => Cons(f(a), map(rest) {f})
+    case Cons(a, rest) => Cons(f(a), myMap(rest) {f})
   }
 ```
-The signature of `map` is read as follows:
+The signature of `myMap` is read as follows:
 
 > "For every two types `A` and `B`, given a value `l` of type `List[A]` and
 > a block `f` from `A` to `B`, this function returns a value of type `List[B]`".
@@ -139,10 +140,10 @@ We purposefully call `l` a value and `f` a block, since in Effekt these are
 two different universes that cannot be mixed. Blocks are no values. They cannot
 be stored in variables, data structures, or be returned from functions.
 
-Using method-application syntax, we can call `map` as follows:
+Using method-application syntax, we can call `myMap` as follows:
 
 ```effekt:repl
-[1,2,3].map { x => println(x) }
+inspect(myMap(l) { x => x + 1 })
 ```
 
 #### Variables: Local Mutable State

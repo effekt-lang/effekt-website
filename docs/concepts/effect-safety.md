@@ -45,7 +45,7 @@ Functions can take blocks as arguments. An example, we have seen in the
 [introduction](../) is the function `map`:
 
 ```effekt:reset:hide:prelude
-import immutable/list
+import list
 ```
 ```effekt:hide
 interface Console {

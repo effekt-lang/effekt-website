@@ -56,10 +56,9 @@ You can try running `handled`:
 ```effekt:repl
 handled()
 ```
-The inferred type of `handled` communicates that it only has the requirement
-of the `Console` effect left:
+The inferred type of `handled` communicates that no effect is left:
 ```
-def handledType(): Unit / { Console } = handled()
+def handledType(): Unit / {} = handled()
 ```
 #### Resuming Exceptions
 Tracking effects and handling them is great, but it is fairly standard.
@@ -98,10 +97,10 @@ or backtracking search.
 Here, we repeat a small example that performs an exhaustive search for
 three distinct numbers below `n` that add up to a given number `s`.
 
-We start by importing `immutable/list` from the standard library:
+We start by importing `list` from the standard library:
 
 ```effekt:prelude
-import immutable/list
+import list
 ```
 
 A solution is a triple of three integers:
@@ -159,6 +158,12 @@ def handledTriple(n: Int, s: Int): List[Solution] / {} =
       [ triple(n, s) ]
     } with Fail[A] { () => [] }
   } with Flip { () => resume(true).append(resume(false)) }
+
+def printSolutions(solutions: List[Solution]): Unit =
+  solutions.foreach {
+    case Solution(first, second, third) =>
+      println("(" ++ first.show ++ ", "++ second.show ++ ", " ++ third.show ++ ")")
+  }
 ```
 If we encounter a `Fail`, we give up with the empty list as the result. Otherwise,
 on encounter of a `Flip`, we try both alternatives (`resume(true)` and `resume(false)`).
@@ -169,5 +174,5 @@ we simply append the two subsolutions.
 We can run `handledTriple`:
 
 ```effekt:repl
-handledTriple(6, 9)
+handledTriple(6, 9).printSolutions
 ```

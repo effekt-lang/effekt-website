@@ -7,16 +7,16 @@ date: 2024-02-05
 
 This example illustrates the new pattern matching capabilities of the language (discussed [here](https://github.com/effekt-lang/effekt/issues/383)).
 
-In particular, we can now 
+In particular, we can now
 
 - finally match on literals again
 - have multiple guards (with `and`) that can also match again (with `is`, see below)
 - `while` and `if` can both take guards
-- `while`, `if`, and `match` all have `else` clauses. 
+- `while`, `if`, and `match` all have `else` clauses.
 
 ```effekt:reset:hide:prelude
-import immutable/list
-import immutable/option
+import list
+import option
 ```
 ```
 record Request(username: String)
@@ -60,7 +60,7 @@ def showInbox(req: Request) = req match {
 
 def main() = {
   ["peter", "mary", "john", "margret"].foreach { name =>
-  
+
     println("\n\nInbox of: @" ++ name)
     showInbox(Request(name))
   }

@@ -8,10 +8,9 @@ permalink: docs/casestudies/smc
 
 
 ```effekt:prelude:hide
-import immutable/list
-import immutable/option
-import mutable/array
-import unsafe/cont
+import list
+import option
+import array
 ```
 
 In this case study we implement the Sequential Monte Carlo algorithm for doing

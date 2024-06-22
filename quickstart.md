@@ -14,9 +14,8 @@ Effekt is a research language, we recommend reading [the paper](http://ps.cs.uni
 Below you can find an online editor, which is enabled by clicking "edit" on the right. Please be aware that the changes are not saved!
 
 ```effekt:prelude:hide
-import immutable/list
-import immutable/option
-import text/string
+import list
+import option
 ```
 
 ```

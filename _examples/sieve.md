@@ -5,16 +5,16 @@ date: 2022-08-25
 
 # Sieve of Eratosthenes
 
-Based on https://www.cs.hmc.edu/~oneill/papers/Sieve-JFP.pdf
+Based on <https://www.cs.hmc.edu/~oneill/papers/Sieve-JFP.pdf>
 
 ```
-import immutable/list
+import list
 
-effect EmitPrime {
+interface EmitPrime {
   def emitPrime(prime: Int): Unit
 }
 
-effect PriorityQueue[A] {
+interface PriorityQueue[A] {
   def insertKeyValue(key: Int, value: A): Unit
   def minimumKeyValue(): (Int, A)
   def replaceKeyValue(key: Int, value: A): Unit
@@ -49,7 +49,7 @@ def withNaivePriorityQueue[A, R] { prog: () => R / PriorityQueue[A] } = {
     def replaceKeyValue(k, v) = {
       priorityQueue match {
         case Nil() => <>
-        case Cons(_, rest) => 
+        case Cons(_, rest) =>
           priorityQueue = insert(k, v, rest);
           resume(())
       }
