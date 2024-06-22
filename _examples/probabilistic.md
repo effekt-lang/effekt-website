@@ -4,8 +4,7 @@ date: 2023-04-19
 ---
 
 ```
-import immutable/list
-
+import list
 
 type Probability = Double
 
@@ -131,4 +130,3 @@ def printDistribution[A](disritbution: Distribution[A]): Unit = {
   ()
 }
 ```
-

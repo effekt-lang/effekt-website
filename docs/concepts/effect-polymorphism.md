@@ -15,7 +15,7 @@ Not so in Effekt! It features a new form of effect polymorphism, which we call *
 
 
 ```effekt:hide
-import immutable/list
+import list
 
 effect Break(): Unit
 

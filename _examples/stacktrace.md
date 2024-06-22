@@ -8,8 +8,8 @@ date: 2023-04-28
 This example illustrates user defined stack traces.
 
 ```
-import immutable/list
-import immutable/option
+import list
+import option
 
 type Nothing {}
 
@@ -17,7 +17,7 @@ record SourcePosition(filepath: String, line: Int, column: Int)
 record TraceFrame(position: Option[SourcePosition], description: String)
 type Stacktrace = List[TraceFrame]
 
-effect Exception[E] {
+interface Exception[E] {
   def raise(exception: E, msg: String, trace: Stacktrace): Nothing
 }
 record RuntimeError()
@@ -40,7 +40,7 @@ def ignoring[E] { prog: => Unit / Exception[E] }: Unit =
 def trace[R, E](description: String) { prog: => R / Exception[E] } =
   try { prog() }
   with Exception[E] {
-    def raise(exception, msg, trace) = 
+    def raise(exception, msg, trace) =
       do raise(exception, msg, Cons(TraceFrame(None(), description), trace)) match {}
   }
 
