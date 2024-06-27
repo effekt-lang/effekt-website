@@ -53,7 +53,7 @@ function processCode() {
     // do not add repls to prelude
     if (opts.repl) {
       parent.classList.add("repl")
-      code.setAttribute("prelude", moduleDecl + prelude + "\ndef main() = println(\n")
+      code.setAttribute("prelude", moduleDecl + prelude + "\ndef main() = inspect(\n")
       code.setAttribute("content", code.textContent)
       code.setAttribute("postlude", "\n)\n")
     } else {
