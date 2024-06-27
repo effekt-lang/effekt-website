@@ -114,9 +114,9 @@ Hello
 Effekt comes with a basic language server implementation (LSP).
 The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
 
-### Visual Studio Marketplace 
+### Visual Studio Marketplace
 
-You can install the `effekt-lang.effekt` extension from the Visual Studio Marketplace.
+You can install the `effekt-lang.effekt` extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=effekt-lang.effekt).
 
 1. Select `Preferences / Extensions` in the menu
 2. Type "effekt" in the search bar
