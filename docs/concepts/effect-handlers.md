@@ -14,12 +14,22 @@ This is fancy word for saying we can express advanced control-flow
 ### Exceptions
 Let us start with the simplest effect: exceptions.
 
-First, we declare our effect as follows:
+First, we declare our effect as follows
 
 ```
 effect FileNotFound(path: String): Unit
 ```
-and then use it in some function
+which is a shorthand notation for:
+```effekt:sketch
+// Interface type / Computation type
+//        vvvvvvvvvvvv
+interface FileNotFound {
+  def FileNotFound(path: String): Unit
+  //  ^^^^^^^^^^^^
+  // operation name
+}
+```
+We then use it in some function
 
 ```effekt
 def trySomeFile(f: String) = {
@@ -33,15 +43,14 @@ passing the file as a string argument to the effect operation.
 The inferred type of `trySomeFile` is
 
 ```effekt:sketch
-def trySomeFile(f: String): Unit / { Console, FileNotFound } = ...
+def trySomeFile(f: String): Unit / { FileNotFound } = ...
 ```
-That is, it communicates that the context needs to handle `Console` and
-`FileNotFound`.
+That is, it communicates that the context still needs to handle `FileNotFound`.
 
 > **Remark**
-> Builtin effects like `Console` are actually only tracked,
-> but never handled. That is, the `main` function can still have unhandled
-> builtin effects.
+> Builtin side-effects like printing to the console are tracked, but cannot
+> be handled, and their semantics is fixed. Hence, we do not track them as
+> effects, but as [second-class _resources_](https://dl.acm.org/doi/10.1145/3527320).
 
 #### Handling Exceptions
 Everybody familiar with exception handling knows what comes next: we call
@@ -60,6 +69,17 @@ The inferred type of `handled` communicates that no effect is left:
 ```
 def handledType(): Unit / {} = handled()
 ```
+As a side-note, the above handler is actually short-hand syntax for
+```effekt:sketch
+def handled() =
+  try { trySomeFile("myFile.txt") }
+  with FileNotFound {
+    def FileNotFound(path: String) = println("Error " ++ path)
+  }
+```
+since in general one effect can group multiple operations.
+
+
 #### Resuming Exceptions
 Tracking effects and handling them is great, but it is fairly standard.
 Exceptions transfer the control-flow from the caller (e.g. `do FileNotFound(f)`)
@@ -72,9 +92,9 @@ to the original call-site:
 def handledResume() =
   try { trySomeFile("myFile.txt") }
   with FileNotFound { (path: String) =>
-    println("Error " ++ path);
+    println("Creating file:" ++ path);
     resume(())
-}
+  }
 ```
 Here the keyword `resume` expresses that the execution should proceed at the
 original call to the effect operation `FileNotFound`.
@@ -96,12 +116,6 @@ or backtracking search.
 
 Here, we repeat a small example that performs an exhaustive search for
 three distinct numbers below `n` that add up to a given number `s`.
-
-We start by importing `list` from the standard library:
-
-```effekt:prelude
-import list
-```
 
 A solution is a triple of three integers:
 ```
