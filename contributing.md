@@ -23,15 +23,15 @@ and subsequently open a pull request.
 You need to have the following software installed to build and use Effekt:
 
 - git
-- JDK >= 1.11
+- JDK >= 11
 - sbt (<https://www.scala-sbt.org>)
 - npm (to package and install the Effekt compiler)
 - (Maven -- only for creating releases)
 
 Depending on the backend you want to use / work on, you also need:
-- *JS backend (default)*: Node.js (>= 10) and npm
+- *JS backend (default)*: Node.js (>= 12) and npm
 - *Chez-Scheme backend*: [Chez Scheme](https://github.com/cisco/ChezScheme)
-- *LLVM backend (wip)*: LLVM > 12 and gcc
+- *LLVM backend (wip)*: LLVM >= 15 and gcc
 
 Why three package management tools? The main build tool we use is sbt,
 but we use Maven to extract dependencies and aggregate license files of the
