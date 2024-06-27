@@ -38,8 +38,7 @@ That is, a semicolon is required between statements, but not allowed in a
 trailing position. This will potentially change soon.
 
 ## Example: Lists
-To familiarize ourselves, let's start by inspecting the implementation of
-lists in the [standard library]({{ site.githuburl }}/blob/master/libraries/common/list.effekt).
+To familiarize ourselves, let's start by reimplementing lists, similar to how they are implemented in the [standard library]({{ site.githuburl }}/blob/master/libraries/common/list.effekt).
 
 
 #### Module Declarations
@@ -85,18 +84,20 @@ right of `=>`.
 
 #### Function Application
 As you can see, functions like `size` are called like `size(l)`. Additionally,
-inspired by the Koka language, there is some syntactic sugar and you can also
+Effekt also supports uniform-function call sytax and you can
 call the same function as `l.size`. This also works if our function takes
 multiple arguments, like append:
 ```
-def append[A](self: List[A], other: List[A]): List[A] = <>
+def myAppend[A](self: List[A], other: List[A]): List[A] = <>
 ```
 and call it:
 ```effekt:repl
-[1, 2, 3].append([4, 5, 6])
+[1, 2, 3].myAppend([4, 5, 6])
 ```
 Functions have to be always applied fully! There is no currying / uncurrying
 in Effekt. As we will see, this is important to reason about (side) effects.
+As you might have noticed, we only stubbed the implementation of `myAppend`.
+Here, `<>` denotes a "hole"; forcing a hole creates a runtime error.
 
 #### Records
 You can define a record as follows:
@@ -117,9 +118,9 @@ front(q)
 ```effekt:repl
 q.back
 ```
-#### Blocks
+#### Functions
 Functions can take other functions as arguments. Following Ruby-jargon,
-we call those argument functions _blocks_.
+we sometimes call those argument functions _blocks_.
 
 Here is the definition of `myMap` that takes a block, which it applies to every
 element in the list:
@@ -137,13 +138,18 @@ The signature of `myMap` is read as follows:
 > a block `f` from `A` to `B`, this function returns a value of type `List[B]`".
 
 We purposefully call `l` a value and `f` a block, since in Effekt these are
-two different universes that cannot be mixed. Blocks are no values. They cannot
-be stored in variables, data structures, or be returned from functions.
+two different universes that cannot be mixed. Blocks are not values, they are
+_computations_. Effekt also has other kinds of computations (like objects and regions)
+that we will cover later on. All computations have in common that they live
+in a different universe than values and that they are passed in curly braces.
+In general, computation is _second-class_ it cannot (directly) be stored in variables, data structures,
+or be returned from functions.
 
+However, we can pass computation (such as blocks) as arguments to functions.
 Using method-application syntax, we can call `myMap` as follows:
 
 ```effekt:repl
-inspect(myMap(l) { x => x + 1 })
+l.myMap { x => x + 1 }
 ```
 
 #### Variables: Local Mutable State
