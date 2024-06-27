@@ -17,7 +17,7 @@ features:
 
   - third: [
       "Lightweight Effect Polymorphism",
-      "No need to understand effect polymorphic functions or annotate them. Explicit effect polymorphism simply does not exist.",
+      "No need to understand effect polymorphic functions or annotate them. Just use what is in scope.",
       "#intro-polymorphism"]
 ---
 
