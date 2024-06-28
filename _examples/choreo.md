@@ -44,8 +44,9 @@ Another issue is that processes could "sidechannel" using `io` (like global muta
 which works on a single process, but not when they are distributed (and thus changes semantics).
 
 ## The Choreo Library
-Enough discussion, here now the implementation. First, we define what it means
-for a value to be located on a machine:
+Enough discussion, here now the implementation. If you just want to run it, scroll to the bottom of this page and hit `run`.
+
+First, we define what it means for a value to be located on a machine:
 ```effekt:prelude:hide
 import io
 ```
@@ -303,7 +304,7 @@ We use the following data as our catalog (feel free to change it):
 }</textarea>
 
 
-```
+```effekt
 extern js """
   function findItem(title) {
     const domEl = document.getElementById("catalog");
@@ -323,7 +324,7 @@ def catalog[R] { prog: => R / Catalog }: R =
 ```
 Now the user input:
 
-```
+```effekt
 extern io def prompt(title: String): String = js"window.prompt(${title})"
 
 def input[R] { prog: => R / Input }: R =
@@ -337,7 +338,7 @@ def input[R] { prog: => R / Input }: R =
 ```
 Finally, our logging mechanism. Here we define two handlers `ignore` and `report`
 to be able to choose whether we want to see the logs or not.
-```
+```effekt
 def ignore[R] { prog: => R / Log }: R =
   try { prog() } with Log { def log(msg) = resume(()) }
 
