@@ -359,7 +359,7 @@ def main() = eventloop(box {
     with network(channels);
     with catalog;
     with input;
-    with report; // change to report to see traces
+    with ignore; // change to report to see traces
 
     epp([Exists(buyer), Exists(seller)], buyer) { bookseller(buyer, seller) }
     })
@@ -368,7 +368,7 @@ def main() = eventloop(box {
     with network(channels);
     with catalog;
     with input;
-    with report;
+    with ignore;  // change to report to see traces
 
     epp([Exists(buyer), Exists(seller)], seller) { bookseller(buyer, seller) }
   })
