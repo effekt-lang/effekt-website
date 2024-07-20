@@ -10,8 +10,10 @@ Contributors: Erik Osheim <d_m@plastic-idolatry.com>
 Website: https://www.scala-lang.org
 */
 hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
+
   var ANNOTATION = { className: 'meta', begin: '@[A-Za-z]+' };
 
+  // used in strings for escaping/interpolation/substitution
   var SUBST = {
     className: 'subst',
     variants: [
@@ -44,6 +46,7 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
         relevance: 10
       }
     ]
+
   };
 
   var SYMBOL = {
@@ -63,9 +66,40 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
     relevance: 0
   };
 
-  var DEFINITION = {
+  var CLASS = {
+    className: 'class',
+    beginKeywords: 'class object trait type',
+    end: /[:={\[\n;]/,
+    excludeEnd: true,
+    contains: [
+      {
+        beginKeywords: 'extends with',
+        relevance: 10
+      },
+      {
+        begin: /\[/,
+        end: /\]/,
+        excludeBegin: true,
+        excludeEnd: true,
+        relevance: 0,
+        contains: [TYPE]
+      },
+      {
+        className: 'params',
+        begin: /\(/,
+        end: /\)/,
+        excludeBegin: true,
+        excludeEnd: true,
+        relevance: 0,
+        contains: [TYPE]
+      },
+      NAME
+    ]
+  };
+
+  var METHOD = {
     className: 'function',
-    beginKeywords: 'def effect type val var extern fun interface resource namespace',
+    beginKeywords: 'def',
     end: /[:={\[(\n;]/,
     excludeEnd: true,
     contains: [NAME]
@@ -74,8 +108,8 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
   return {
     name: 'Effekt',
     keywords: {
-      literal: 'true false',
-      keyword: 'module effect type def with val var if for while import return else case try match resume do record region in new interface let box unbox fun extern and is namespace pure'
+      literal: 'true false null',
+      keyword: 'module effect type def with val var if for while import return else case try match resume do record region in new interface let box unbox fun extern and is namespace'
     },
     contains: [
       hljs.C_LINE_COMMENT_MODE,
@@ -83,11 +117,12 @@ hljs.registerLanguage("effekt", function highlightEffekt(hljs) {
       STRING,
       SYMBOL,
       TYPE,
-      DEFINITION,
+      METHOD,
+      CLASS,
       hljs.C_NUMBER_MODE,
       ANNOTATION
     ]
   };
-});
+})
 
-module.exports = hljs;
+module.exports = hljs
