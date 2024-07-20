@@ -5,29 +5,37 @@ import ITheme = monaco.editor.IStandaloneThemeData;
 
 export const syntax = <ILanguage>{
   // defaultToken: 'invalid',
+  tokenPostfix: '.effekt',
 
   keywords: [
     'module', 'import', 'def', 'val', 'var', 'effect', 'type', 'match',
     'case', 'record', 'extern', 'include', 'resume', 'with', 'if', 'try',
     'else', 'do', 'handle', 'while', 'fun', 'region', 'in', 'new',
-    'box', 'unbox', 'interface', 'resource', 'and', 'is', 'namespace'
+    'box', 'unbox', 'interface', 'resource', 'and', 'is', 'namespace',
+    'return', 'as'
   ],
 
   definitionKeywords: [
-    'def', 'type', 'effect'
+    'def', 'type', 'effect', 'val', 'var', 'extern', 'fun', 'interface', 'resource', 'namespace'
   ],
 
   literals: ['true', 'false'],
 
   operators: [
-    '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
-    '&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%',
-    '<<', '>>', '>>>', '+=', '-=', '*=', '/=', '&=', '|=', '^=',
-    '%=', '<<=', '>>=', '>>>='
+    '=',
+    ':',
+    '>', '<', '==', '<=', '>=', '!=',
+    '&&', '||',
+    '++',
+    '+', '-', '*', '/',
+    '=>', '::'
   ],
 
   // we include these common regular expressions
   symbols:  /[=><!~?:&|+\-*\/\^%]+/,
+
+  // supported escapes
+  escapes: /\\(?:[btnfr\\"']|u[0-9A-Fa-f]{4})/,
 
   // The main tokenizer for our languages
   tokenizer: {
@@ -35,18 +43,13 @@ export const syntax = <ILanguage>{
       // identifiers and keywords
       [/[a-z_$][\w$?!]*/, {
         cases: {
-          '@keywords': {
-            cases: {
-              '@definitionKeywords': { token: 'keyword', next: '@definition' },
-              '@default': 'keyword'
-            }
-          },
+          '@definitionKeywords': { token: 'keyword', next: '@definition' },
+          '@keywords': 'keyword',
           '@literals': 'literal',
           '@default': 'identifier'
         }
       }],
-
-      [/[A-Z][\w\$?!]*/, 'type.identifier' ],
+      [/[A-Z][\w\$?!]*/, 'type.identifier'],
 
       // whitespace
       { include: '@whitespace' },
@@ -55,7 +58,7 @@ export const syntax = <ILanguage>{
       [/[{}()\[\]]/, '@brackets'],
       [/[<>](?!@symbols)/, '@brackets'],
       [/@symbols/, { cases: { '@operators': 'operator',
-                              '@default'  : '' } } ],
+                              '@default': '' } } ],
 
       // numbers
       [/\d*\.\d+([eE][\-+]?\d+)?/, 'number.float'],
@@ -71,6 +74,7 @@ export const syntax = <ILanguage>{
 
       // characters
       [/'[^\\']'/, 'string'],
+      [/(')(@escapes)(')/, ['string', 'string.escape', 'string']],
       [/'/, 'string.invalid']
     ],
 
@@ -81,13 +85,25 @@ export const syntax = <ILanguage>{
     ],
 
     comment: [
-      [/[^\/*]+/, 'comment' ]
+      [/[^\/*]+/, 'comment'],
+      [/\/\*/, 'comment', '@push'],
+      ["\\*/", 'comment', '@pop'],
+      [/[\/*]/, 'comment']
     ],
 
     string: [
-      [/[^\\"]+/,  'string'],
-      [/\\./,      'string.escape.invalid'],
-      [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ]
+      [/[^\\"$]+/,       'string'],
+      [/@escapes/,       'string.escape'],
+      [/\\./,            'string.escape.invalid'],
+      [/\$\{/,           { token: 'delimiter.bracket', next: '@bracketCounting' }],
+      [/\$[a-z_][\w$]*/, 'variable'],
+      [/"/,              { token: 'string.quote', bracket: '@close', next: '@pop' }]
+    ],
+
+    bracketCounting: [
+      [/\{/, 'delimiter.bracket', '@bracketCounting'],
+      [/\}/, 'delimiter.bracket', '@pop'],
+      { include: 'root' }
     ],
 
     whitespace: [
