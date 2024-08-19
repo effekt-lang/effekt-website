@@ -15,7 +15,7 @@ interface Exc {
 def div(n: Double, m: Double): Double / { Exc } =
   if (m == 0.0) do raise("Division by zero") else n / m
 ```
-While the left component of the return type (that is, `Int`) is the type of values returned by
+While the left component of the return type (that is, `Double`) is the type of values returned by
 `div`, its right component (that is, `{ Exc }`)
 describes the _set_ of effects that need to be handled by callers of `div`.
 
@@ -26,7 +26,7 @@ language is that of a **requirement**.
 
 We thus read the signature of `sayHello` as
 
-> "The function `div` computes a value of type `Int` requiring a
+> "The function `div` computes a value of type `Double` requiring a
 > capability for `Exc` in its calling context."
 
 That is, it can only be run in contexts that allow the `Exc` effect.
