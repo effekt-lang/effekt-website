@@ -9,6 +9,38 @@ options:
   - title: Introduction to Effekt
     url: docs
 
+  - title: Language Tour
+    url: docs/tutorial
+    nested_options:
+      - title: Hello World
+        url: docs/tutorial/hello-world
+      - title: Values
+        url: docs/tutorial/values
+      - title: Variables
+        url: docs/tutorial/variables
+      - title: Blocks
+        url: docs/tutorial/blocks
+      - title: Records
+        url: docs/tutorial/records
+      - title: Datatypes
+        url: docs/tutorial/adts
+      - title: Loops
+        url: docs/tutorial/loops
+      - title: Functions
+        url: docs/tutorial/functions
+      - title: Effects
+        url: docs/tutorial/effects
+      - title: Objects
+        url: docs/tutorial/objects
+      - title: Captures
+        url: docs/tutorial/captures
+      - title: Namespaces
+        url: docs/tutorial/namespaces
+      - title: Regions
+        url: docs/tutorial/regions
+      - title: FFI
+        url: docs/tutorial/ffi
+
   - title: Concepts and Features
     url: docs/concepts
     nested_options:
