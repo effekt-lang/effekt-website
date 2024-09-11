@@ -1,7 +1,7 @@
 ---
 layout: docs
 title:  "Introduction to Effekt"
-position: 3
+permalink: docs/introduction
 ---
 
 # Quick Introduction to Effekt
