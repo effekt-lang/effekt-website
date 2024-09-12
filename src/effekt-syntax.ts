@@ -59,6 +59,8 @@ export const syntax = <ILanguage>{
       [/[<>](?!@symbols)/, '@brackets'],
       [/@symbols/, { cases: { '@operators': 'operator',
                               '@default': '' } } ],
+      // strings
+      [/"/, { token: 'string.quote', bracket: '@open', next: '@string' }],
 
       // numbers
       [/\d*\.\d+([eE][\-+]?\d+)?/, 'number.float'],
@@ -84,20 +86,26 @@ export const syntax = <ILanguage>{
       [new RegExp(""),'','@pop']
     ],
 
-    comment: [
-      [/[^\/*]+/, 'comment'],
-      [/\/\*/, 'comment', '@push'],
-      ["\\*/", 'comment', '@pop'],
-      [/[\/*]/, 'comment']
+    string: [
+      [/[^\\"$]+/, 'string'],
+      [/@escapes/, 'string.escape'],
+      [/\\./,      'string.escape.invalid'],
+      [/\$\{/,     { token: 'string.escape', next: '@stringInterpolation' }],
+      [/\$/,       'string'],
+      [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' }]
     ],
 
-    string: [
-      [/[^\\"$]+/,       'string'],
-      [/@escapes/,       'string.escape'],
-      [/\\./,            'string.escape.invalid'],
-      [/\$\{/,           { token: 'delimiter.bracket', next: '@bracketCounting' }],
-      [/\$[a-z_][\w$]*/, 'variable'],
-      [/"/,              { token: 'string.quote', bracket: '@close', next: '@pop' }]
+    stringInterpolation: [
+      [/\$\{/, 'delimiter.bracket', '@stringInterpolation'],
+      [/\}/,   'delimiter.bracket', '@pop'],
+      { include: 'root' }
+    ],
+
+    comment: [
+      [/[^\/*]+/, 'comment'],
+      [/\/\*/,    'comment', '@push'],
+      [/\*\//,    'comment', '@pop'],
+      [/[\/*]/,   'comment']
     ],
 
     bracketCounting: [
