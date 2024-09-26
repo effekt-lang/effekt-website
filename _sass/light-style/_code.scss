@@ -110,7 +110,7 @@ pre.repl {
   padding-left: 1.5em;
   position: relative;
 
-  &:before {
+  & code:before {
     content: ">";
     opacity: 0.5;
     font-weight: bold;
