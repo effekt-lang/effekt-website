@@ -15,7 +15,7 @@ The recommended way to install Effekt is by running:
 ```bash
 npm install -g @effekt-lang/effekt
 ```
-This will download the compiler and install the `effekt` command to `$ npm config get prefix`.
+This will download the compiler and install the `effekt` command to `npm root -g`.
 
 #### Install specific release
 
@@ -31,7 +31,7 @@ npm install -g <PATH_TO_FILE>/effekt.tgz
 You can find the installation location by running
 
 ```bash
-$ npm config get prefix
+npm root -g
 ```
 
 Please note that this directory needs to be included in your `$PATH` environment variable in order to run the `effekt` compiler from the command line.
