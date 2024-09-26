@@ -17,7 +17,7 @@ Let us start with the simplest effect: exceptions.
 First, we declare our effect as follows
 
 ```
-effect FileNotFound(path: String): Unit
+effect fileNotFound(path: String): Unit
 ```
 which is a shorthand notation for:
 ```effekt:sketch
@@ -34,18 +34,18 @@ We then use it in some function
 ```effekt
 def trySomeFile(f: String) = {
   println("Trying to open file " ++ f);
-  do FileNotFound(f);
+  do fileNotFound(f);
   println("Unreachable")
 }
 ```
-Here we use our `FileNotFound` effect with the syntax `do FileNotFound(f)`
+Here we use our `fileNotFound` effect operation with the syntax `do FileNotFound(f)`
 passing the file as a string argument to the effect operation.
 The inferred type of `trySomeFile` is
 
 ```effekt:sketch
-def trySomeFile(f: String): Unit / { FileNotFound } = ...
+def trySomeFile(f: String): Unit / { fileNotFound } = ...
 ```
-That is, it communicates that the context still needs to handle `FileNotFound`.
+That is, it communicates that the context still needs to handle `fileNotFound`.
 
 > **Remark**
 > Builtin side-effects like printing to the console are tracked, but cannot
@@ -59,7 +59,7 @@ our function `trySomeFile` and handle the exception:
 ```
 def handled() =
   try { trySomeFile("myFile.txt") }
-  with FileNotFound { (path: String) => println("Error " ++ path) }
+  with fileNotFound { (path: String) => println("Error " ++ path) }
 ```
 You can try running `handled`:
 ```effekt:repl
@@ -73,8 +73,8 @@ As a side-note, the above handler is actually short-hand syntax for
 ```effekt:sketch
 def handled() =
   try { trySomeFile("myFile.txt") }
-  with FileNotFound {
-    def FileNotFound(path: String) = println("Error " ++ path)
+  with fileNotFound {
+    def fileNotFound(path: String) = println("Error " ++ path)
   }
 ```
 since in general one effect can group multiple operations.
@@ -82,8 +82,8 @@ since in general one effect can group multiple operations.
 
 #### Resuming Exceptions
 Tracking effects and handling them is great, but it is fairly standard.
-Exceptions transfer the control-flow from the caller (e.g. `do FileNotFound(f)`)
-to the handler (e.g. `try {... } with FileNotFound { ... }`).
+Exceptions transfer the control-flow from the caller (e.g. `do fileNotFound(f)`)
+to the handler (e.g. `try {... } with fileNotFound { ... }`).
 
 What might come with surprise is that in Effekt the handler can also resume
 to the original call-site:
@@ -91,13 +91,13 @@ to the original call-site:
 ```effekt
 def handledResume() =
   try { trySomeFile("myFile.txt") }
-  with FileNotFound { (path: String) =>
+  with fileNotFound { (path: String) =>
     println("Creating file:" ++ path);
     resume(())
   }
 ```
 Here the keyword `resume` expresses that the execution should proceed at the
-original call to the effect operation `FileNotFound`.
+original call to the effect operation `fileNotFound`.
 
 Running `handledResume()` now prints `Unreachable`:
 ```effekt:repl
@@ -124,8 +124,8 @@ record Solution(first: Int, second: Int, third: Int)
 We now use two different effect operations to express nondeterminism:
 
 ```
-effect Flip(): Bool
-effect Fail[A](): A
+effect flip(): Bool
+effect fail(): Nothing
 ```
 The first effect `Flip` returns a boolean, representing a nondeterministic
 choice. The second effect `Fail` returns a polymorphic `A` to be usable at
@@ -134,9 +134,9 @@ We can now write a function `choice` modelling choosing a number
 between 1 and n:
 
 ```effekt
-def choice(n : Int): Int / { Flip, Fail } =
-  if (n < 1) { do Fail() }
-  else if (do Flip()) { n }
+def choice(n : Int): Int / { flip, fail } =
+  if (n < 1) { do fail() }
+  else if (do flip()) { n }
   else { choice(n - 1) }
 ```
 If `n` is smaller than `1`, we terminate the search. Otherwise we flip a coin
@@ -145,14 +145,14 @@ to either return `n` or try with `n - 1`.
 Modeling our search problem now becomes:
 
 ```effekt
-def triple(n: Int, s: Int): Solution / { Flip, Fail } = {
+def triple(n: Int, s: Int): Solution / { flip, fail } = {
   val i = choice(n);
   val j = choice(i - 1);
   val k = choice(j - 1);
   if ((i + j + k) == s) {
     Solution(i, j ,k)
   } else {
-    do Fail()
+    do fail()
   }
 }
 ```
@@ -160,7 +160,7 @@ We simply choose three times and check whether the three numbers add up to the
 searched number `s`, if not we fail.
 
 Both functions `choice` and `triple` communicate in their type that they require
-the `Flip` and `Fail` effects to be handled.
+the `flip` and `fail` effect operations to be handled.
 
 To enumerate all possible solutions and collect them in a list, we can write
 the following effect handler:
@@ -170,8 +170,8 @@ def handledTriple(n: Int, s: Int): List[Solution] / {} =
   try {
     try {
       [ triple(n, s) ]
-    } with Fail[A] { () => [] }
-  } with Flip { () => resume(true).append(resume(false)) }
+    } with fail { () => [] }
+  } with flip { () => resume(true).append(resume(false)) }
 
 def printSolutions(solutions: List[Solution]): Unit =
   solutions.foreach {
@@ -179,8 +179,8 @@ def printSolutions(solutions: List[Solution]): Unit =
       println("(" ++ first.show ++ ", "++ second.show ++ ", " ++ third.show ++ ")")
   }
 ```
-If we encounter a `Fail`, we give up with the empty list as the result. Otherwise,
-on encounter of a `Flip`, we try both alternatives (`resume(true)` and `resume(false)`).
+If we encounter a `fail`, we give up with the empty list as the result. Otherwise,
+on encounter of a `flip`, we try both alternatives (`resume(true)` and `resume(false)`).
 Calling `resume(true)` gives us a list since the type of the body of the
 corresponding `try` returns a list of solutions. To compute the overall result,
 we simply append the two subsolutions.

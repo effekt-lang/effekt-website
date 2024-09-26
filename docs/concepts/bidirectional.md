@@ -17,20 +17,20 @@ introduced by Zhang et al. in their [OOPSLA'20 paper](https://dl.acm.org/doi/10.
 ## Effects in Both Directions
 Let us assume the following standard definition of an exception effect:
 ```effekt
-effect Exc[A](msg: String): A
+effect exc(msg: String): Nothing
 ```
 The new feature of bidirectional effects is that (effect) operations can now be
 declared to use additional effects. For example, here is the definition of a
 `Config` interface that features a potentially failing `port` operation:
 ```effekt
 interface Config {
-  def port(): Int / { Exc }
+  def port(): Int / { exc }
 }
 ```
 Calling a bidirectional effect introduces both the effect itself, as well as
 its exposed implementation effects at the callsite.
 ```effekt
-def user1(): Unit / { Config, Exc } =
+def user1(): Unit / { Config, exc } =
   println(do port())
 ```
 The handler for `Config` can now trigger the exception effect in the scope of the
@@ -40,19 +40,19 @@ call to `port`:
 def noConfig { prog: => Unit / Config }: Unit / {} = try {
   prog()
 } with Config {
-  def port() = resume { do Exc("No port configured.") }
+  def port() = resume { do exc("No port configured.") }
 }
 ```
 Note, how the return type of the handler `noConfig` mentions the empty effect
-set, even though it uses the `Exc` effect.
+set, even though it uses the `exc` effect operation.
 
-This is only sound, since the `Exc` effect is handled at the _call-site_ of
+This is only sound, since the `exc` effect operation is handled at the _call-site_ of
 `port`:
 
 ```effekt
 def user2(): Unit / { Config } = try {
   println(do port())
-} with Exc[A] { msg => println(msg) }
+} with exc { msg => println(msg) }
 ```
 We can run the example to observe the result:
 ```effekt:repl
@@ -68,10 +68,10 @@ interface Config {
 }
 ```
 ```effekt:hide
-effect Exc[A](msg: String): A
+effect exc(msg: String): Nothing
 ```
 
-First of all, the typing of `user1` would have changed to not mention the `Exc` effect, anymore.
+First of all, the typing of `user1` would have changed to not mention the `exc` effect operation, anymore.
 ```
 def user1(): Unit / { Config } =
   println(do port())
@@ -83,10 +83,10 @@ implementation site of `Config`), not at the callsite to `port`:
 ```
 //                        Now the handler of Config requires exception handling
 //                                                vvv
-def noConfig { prog: => Unit / Config }: Unit / { Exc } = try {
+def noConfig { prog: => Unit / Config }: Unit / { exc } = try {
   prog()
 } with Config {
-  def port() = do Exc("No port configured.")
+  def port() = do exc("No port configured.")
 }
 ```
 
@@ -95,5 +95,5 @@ At the handling site, we now also need to deal with the exception, while the use
 ```effekt:repl
 try {
   noConfig { user1() }
-} with Exc { msg => println("Used port, but no config available.") }
+} with exc { msg => println("Used port, but no config available.") }
 ```
