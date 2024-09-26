@@ -10,38 +10,38 @@ options:
     url: docs/introduction
 
   - title: Language Tour
-    url: docs/tour
+    url: tour
     nested_options:
       - title: Hello World
-        url: docs/tour/hello-world
+        url: tour/hello-world
       - title: Values
-        url: docs/tour/values
+        url: tour/values
       - title: Variables
-        url: docs/tour/variables
+        url: tour/variables
       - title: Computations
-        url: docs/tour/computation
+        url: tour/computation
       - title: Records
-        url: docs/tour/records
+        url: tour/records
       - title: Datatypes
-        url: docs/tour/adts
+        url: tour/adts
       - title: Loops
-        url: docs/tour/loops
+        url: tour/loops
       - title: Functions
-        url: docs/tour/functions
+        url: tour/functions
       - title: Effects
-        url: docs/tour/effects
+        url: tour/effects
       - title: Objects
-        url: docs/tour/objects
+        url: tour/objects
       - title: Captures
-        url: docs/tour/captures
+        url: tour/captures
       - title: Namespaces
-        url: docs/tour/namespaces
+        url: tour/namespaces
       - title: Regions
-        url: docs/tour/regions
+        url: tour/regions
       - title: IO
-        url: docs/tour/io
+        url: tour/io
       - title: FFI
-        url: docs/tour/ffi
+        url: tour/ffi
 
   - title: Concepts and Features
     url: docs/concepts

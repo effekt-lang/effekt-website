@@ -1,1 +1,0 @@
-../../effekt/examples/features/namespaces.effekt.md

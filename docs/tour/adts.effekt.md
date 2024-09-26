@@ -1,1 +1,0 @@
-../../effekt/examples/features/adts.effekt.md

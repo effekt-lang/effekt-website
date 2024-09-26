@@ -2,7 +2,7 @@
 layout: docs
 title: "Language Tour"
 position: 3
-permalink: docs/tour
+permalink: tour
 ---
 
 # Language Tour
