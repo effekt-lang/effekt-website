@@ -82,6 +82,9 @@ options:
   - title: Examples
     url: examples
 
+  - title: Evolution of the Language
+    url: evolution
+
   - title: Implementation
     url: docs/implementation
     nested_options:
