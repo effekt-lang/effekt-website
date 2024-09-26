@@ -166,23 +166,20 @@ function addRunAction(editor, run, output) {
     // TODO this does not work with async or setTimeout, find another solution!
     output.innerHTML = ""
 
-    // delay evaluation to get the impression we are actually doing something
-    window.setTimeout(function() {
-      try {
-        console.log = function(msg) {
-          const logLine = document.createElement("li");
-          logLine.innerText = msg
-          output.appendChild(logLine)
-        }
-        IDE.evaluate(editor.getModel().getFullText())
-        output.classList.remove("cleared")
-      } catch (e) {
-        console.log(e)
-      } finally {
-        console.log = log
-        output.classList.remove("cleared")
+    try {
+      console.log = function(msg) {
+        const logLine = document.createElement("li");
+        logLine.innerText = msg
+        output.appendChild(logLine)
       }
-    }, 150)
+      IDE.evaluate(editor.getModel().getFullText())
+      output.classList.remove("cleared")
+    } catch (e) {
+      console.log(e)
+    } finally {
+      console.log = log
+      output.classList.remove("cleared")
+    }
 
     return false;
   }
