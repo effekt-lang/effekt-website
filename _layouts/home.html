@@ -21,16 +21,17 @@ pagetype: home
               <div class="button-maximize"></div>
             </div>
             <div class="window-contents">
-          <pre><code class="language-effekt:sketch">def eager[R] { p: R / { Flip, Fail, Error } } = try {
-  Success(p())
-} with Flip { () =>
-  resume(true) match {
-    case Failure(msg) => resume(false)
-    case Success(res) => Success(res)
-    case ParseError(msg) => ParseError(msg)
+          <pre><code class="language-effekt:sketch">def eager[R] { p: => R / { flip, fail, error } } =
+  try { Success(p()) }
+  with flip {
+    resume(true) match {
+      case Failure(msg) => resume(false)
+      case Success(res) => Success(res)
+      case ParseError(msg) => ParseError(msg)
+    }
   }
-} with Fail { (msg) => Failure(msg)
-} with Error { (msg) => ParseError(msg) }
+  with fail { msg => Failure(msg) }
+  with error { msg => ParseError(msg) }
 </code></pre><small><a href="{{ site.githuburl }}/blob/master/examples/pos/parser.effekt">Full example on github</a></small>
             </div>
           </div>
@@ -73,7 +74,7 @@ pagetype: home
 
 <section class="intro float-right" id="intro-handlers">
 <header>
-<h2>Effect Handlers</h2>
+<h2>Lexical Effect Handlers</h2>
 </header>
 <div class="container">
   <div>
@@ -145,26 +146,26 @@ def example() = {
 <div class="container">
 <div>
 <h3>Effects are Part of the Type</h3>
-<p>The example uses a <code class="language-effekt">Raise</code> effect to signal that something went wrong. This can be
+<p>The example uses a <code class="language-effekt">raise</code> effect to signal that something went wrong. This can be
 seen in the return type of <code>divide</code>:</p>
 
 <pre><code class="language-effekt:sketch">//      effect set
 //       vvvvvvvvv
-   Int / { Raise }
+   Int / { raise }
 // ^^^
 // return type
 </code></pre>
 
-<p>The type says that <code>divide</code> will produce an integer, but it also requires <code class="language-effekt">Raise</code>
+<p>The type says that <code>divide</code> will produce an integer, but it also requires <code class="language-effekt">raise</code>
 to be handled at the call-site! We use curly braces to say that it is a <emph>set of effects</emph>.</p>
 
 </div>
 <div>
-<pre><code class="language-effekt">effect Raise(msg: String): Unit
+<pre><code class="language-effekt">effect raise(msg: String): Unit
 
-def divide(n: Int, m: Int): Int / { Raise } =
+def divide(n: Int, m: Int): Int / { raise } =
   if (m == 0) {
-    do Raise("Cannot divide by zero"); 0
+    do raise("Cannot divide by zero"); 0
   } else {
     n / m
   }
@@ -183,7 +184,7 @@ the type annotated on <code>typeError</code>. Hover over <code>typeError</code> 
 <div>
 <pre><code class="language-effekt:ignore">def typeError(): Int / {} = divide(4, 0)
 //                          ^^^^^^^^^^^^
-//                 Unhandled effects: Raise
+//                 Unhandled effects: raise
 </code></pre>
 </div>
 </div>
@@ -191,13 +192,13 @@ the type annotated on <code>typeError</code>. Hover over <code>typeError</code> 
 <div>
 <h3>Handling Effects</h3>
 <p>Only programs that do not have any effects left can be executed.</p>
-<p>We can for instance handle the <code class="language-effekt">Raise</code> effect by printing
+<p>We can for instance handle the <code class="language-effekt">raise</code> effect by printing
 the message and returning <code class="language-effekt">42</code> as default value.</p>
 
 <a class="learn-more-button" href="docs/concepts/effect-safety"><span class="learn-more">Learn More</span></a>
 </div>
 <div>
-<pre><code class="language-effekt:repl">try { divide(4, 0)} with Raise { msg =>
+<pre><code class="language-effekt:repl">try { divide(4, 0)} with raise { msg =>
   println(msg); 42
 }</code></pre>
 </div>
@@ -230,17 +231,17 @@ the message and returning <code class="language-effekt">42</code> as default val
 <p>
   In our examples, we call the same <code>map</code> function with different blocks that
   (a) do not use effects, (b) use built-in effects (<code>println</code>),
-  (c) use user-defined effects (<code class="language-effekt">Raise</code>).
+  (c) use user-defined effects (<code class="language-effekt">raise</code>).
 </p>
-<blockquote>You can notice that the last example cannot be run, since it still has unhandled effects <code class="language-effekt">Raise</code>.</blockquote>
+<blockquote>You can notice that the last example cannot be run, since it still has unhandled effects <code class="language-effekt">raise</code>.</blockquote>
 </div>
 <div>
   <pre><code class="language-effekt:prelude:hide">
-  import immutable/list
+  import list
   </code></pre>
   <pre><code class="language-effekt:repl">[1, 2, 3].map { x => x * 2 }</code></pre>
   <pre><code class="language-effekt:repl">[1, 2, 3].map { x => println(x) }</code></pre>
-  <pre><code class="language-effekt:repl">[1, 2, 3].map { x => if (x > 2) do Raise("") else () }</code></pre>
+  <pre><code class="language-effekt:repl">[1, 2, 3].map { x => if (x > 2) do raise("") else () }</code></pre>
   </div>
 </div>
 
@@ -271,10 +272,10 @@ def map[A, B](l: List[A]) { f: A => B / {} }: List[B] / {}
 </p>
 <p>If block arguments, however, do use effects, those have to be handled at the <emph>call-site</emph>:</p>
 <pre><code class="language-effekt:repl">try {
-  [1, 2, 3, 4].map { x => println(x); if (x > 2) do Raise("abort") else () }
+  [1, 2, 3, 4].map { x => println(x); if (x > 2) do raise("abort") else () }
   println("done")
-} with Raise { msg => println("abort") }</code></pre>
-<p>Here, the block uses the <code class="language-effekt">Raise</code> effect, which is handled at the call-site of <code>map</code>.</p>
+} with raise { msg => println("abort") }</code></pre>
+<p>Here, the block uses the <code class="language-effekt">raise</code> effect, which is handled at the call-site of <code>map</code>.</p>
 <a class="learn-more-button" href="docs/concepts/effect-polymorphism"><span class="learn-more">Learn More</span></a>
 </div>
 </div>
