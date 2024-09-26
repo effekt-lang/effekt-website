@@ -1,1 +1,1 @@
-../effekt/examples/features/hello-world.effekt.md
+../effekt/examples/tour/hello-world.effekt.md

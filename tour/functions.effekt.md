@@ -1,1 +1,1 @@
-../effekt/examples/features/functions.effekt.md
+../effekt/examples/tour/functions.effekt.md

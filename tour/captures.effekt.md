@@ -1,1 +1,1 @@
-../effekt/examples/features/captures.effekt.md
+../effekt/examples/tour/captures.effekt.md
