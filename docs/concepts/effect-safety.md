@@ -9,14 +9,13 @@ Similar to Java's checked exceptions, Effekt features an effect system that
 allows us to track effects. As a very simple example, we can define our own
 exceptions (even though they are defined in the [stdlib](https://github.com/effekt-lang/effekt/blob/master/libraries/common/exception.effekt)):
 ```effekt
-interface Exc {
-  def raise[A](msg: String): A
-}
-def div(n: Double, m: Double): Double / { Exc } =
-  if (m == 0.0) do raise("Division by zero") else n / m
+effect exc(msg: String): Nothing
+
+def div(n: Double, m: Double): Double / { exc } =
+  if (m == 0.0) do exc("Division by zero") else n / m
 ```
 While the left component of the return type (that is, `Double`) is the type of values returned by
-`div`, its right component (that is, `{ Exc }`)
+`div`, its right component (that is, `{ exc }`)
 describes the _set_ of effects that need to be handled by callers of `div`.
 
 #### Effects are Requirements
@@ -27,9 +26,9 @@ language is that of a **requirement**.
 We thus read the signature of `sayHello` as
 
 > "The function `div` computes a value of type `Double` requiring a
-> capability for `Exc` in its calling context."
+> capability for `exc` in its calling context."
 
-That is, it can only be run in contexts that allow the `Exc` effect.
+That is, it can only be run in contexts that allow the `exc` effect operation.
 
 For instance, we _cannot_ call it in a "pure" function:
 ```effekt
@@ -47,11 +46,10 @@ Functions can take blocks as arguments. One example function that does so is
 `each`:
 
 ```effekt:reset:hide
-interface Exc {
-  def raise[A](msg: String): A
-}
-def div(n: Double, m: Double): Double / { Exc } =
-  if (m == 0.0) do raise("Division by zero") else n / m
+effect exc(msg: String): Nothing
+
+def div(n: Double, m: Double): Double / { exc } =
+  if (m == 0.0) do exc("Division by zero") else n / m
 ```
 
 ```effekt:sketch
@@ -66,7 +64,7 @@ runtime error, when forced.
 
 Maybe surprisingly, at the callsite to `each`, we actually can use other effects:
 ```
-def meanRatios(l: List[(Double, Double)]): Double / { Exc } = {
+def meanRatios(l: List[(Double, Double)]): Double / { exc } = {
   var sum = 0.0;
   var count = 0;
 
@@ -81,8 +79,8 @@ def meanRatios(l: List[(Double, Double)]): Double / { Exc } = {
   div(sum, count.toDouble)
 }
 ```
-Here, the block passed to `foreach` _does_ use another effect, namely the `Exc`
-effect. In fact, Effekt encourages a different reading of signatures of effectful
+Here, the block passed to `foreach` _does_ use another effect, namely the `exc`
+effect operation. In fact, Effekt encourages a different reading of signatures of effectful
 functions, similar to "contracts":
 
 
@@ -111,5 +109,5 @@ We will see this in detail when talking about [effect polymorphism](effect-polym
 
 We can run the example (we'll cover handling in the next section) in the following way:
 ```effekt:repl
-try { meanRatios([(4.2, 1.3)]) } with Exc { def raise(msg) = 0.0 }
+try { meanRatios([(4.2, 1.3)]) } with exc { msg => 0.0 }
 ```
