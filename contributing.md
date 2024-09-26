@@ -29,7 +29,7 @@ You need to have the following software installed to build and use Effekt:
 - (Maven -- only for creating releases)
 
 Depending on the backend you want to use / work on, you also need:
-- *JS backend (default)*: Node.js (>= 12) and npm
+- *JS backend (default)*: Node.js (>= 16) and npm
 - *Chez-Scheme backend*: [Chez Scheme](https://github.com/cisco/ChezScheme)
 - *LLVM backend (wip)*: LLVM >= 15 and gcc
 
