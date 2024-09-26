@@ -1,8 +1,8 @@
 ---
 layout: docs
-title: Tutorial
+title: "Language Tour"
 position: 3
-permalink: docs/tutorial
+permalink: docs/tour
 ---
 
 # Language Tour
