@@ -60,12 +60,14 @@ function toggleParent(element, activeClass = "active") {
  */
 function activateToggle() {
   const menuToggles = document.querySelectorAll("#menu-toggle, #main-toggle");
+  const handleToggle = (e) => {
+    e.preventDefault();
+    toggleClass("#wrapper", "toggled");
+  };
   if (menuToggles) {
     [...menuToggles].map(elem => {
-      elem.onclick = e => {
-        e.preventDefault();
-        toggleClass("#wrapper", "toggled");
-      };
+      elem.addEventListener('touchstart', handleToggle, { passive: false });
+      elem.addEventListener('click', handleToggle);
     });
   }
 }
@@ -76,24 +78,26 @@ function activateToggle() {
  */
 function activateMenuNesting() {
   const menuParents = document.querySelectorAll(".drop-nested");
+  const handleMenuNesting = (e) => {
+    e.preventDefault();
+    toggleParent(e.currentTarget, "open");
+    const elementType = e.currentTarget.tagName.toLowerCase();
+    if (elementType === "a") {
+      const linkElement = e.currentTarget;
+      const linkElementParent = linkElement.parentNode;
+      const destination = linkElement.href;
+      if (
+        destination !== window.location.href &&
+        !linkElementParent.classList.contains("active")
+      ) {
+        window.location.href = destination;
+      }
+    }
+  };
   if (menuParents) {
     [...menuParents].map(elem => {
-      elem.onclick = e => {
-        e.preventDefault();
-        toggleParent(elem, "open");
-        const elementType = e.currentTarget.tagName.toLowerCase();
-        if (elementType === "a") {
-          const linkElement = e.currentTarget;
-          const linkElementParent = linkElement.parentNode;
-          const destination = linkElement.href;
-          if (
-            destination !== window.location.href &&
-            !linkElementParent.classList.contains("active")
-          ) {
-            window.location.href = destination;
-          }
-        }
-      };
+      elem.addEventListener('touchstart', handleMenuNesting, { passive: false });
+      elem.addEventListener('click', handleMenuNesting);
     });
   }
 }
