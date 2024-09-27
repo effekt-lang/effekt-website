@@ -1,5 +1,6 @@
 LATEX = pdflatex
 DVITEX = latex
+PDFSVG = pdf2svg
 DVISVG = dvisvgm
 
 SRC = $(wildcard src-*.tex)
@@ -11,9 +12,8 @@ all: image.pdf image.svg
 image.pdf: $(SRC) macros.tex image.tex
 	$(LATEX) image.tex
 
-image.svg: $(SRC) macros.tex image.tex
-	$(DVITEX) image.tex
-	$(DVISVG) --output=image.svg --no-fonts image.dvi
+image.svg: $(SRC) macros.tex image.tex image.pdf
+	$(PDFSVG) --output=image.svg --no-fonts image.dvi
 
 clean:
 	@find . -name "*.aux" -type f -delete

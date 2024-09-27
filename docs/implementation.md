@@ -38,17 +38,12 @@ Subsequently the Source IR is translated step-by-step to different IRs.
   to `System Xi` in [this paper](https://se.cs.uni-tuebingen.de/publications/brachthaeuser20effects/)
   and `System C` in [this paper](https://se.cs.uni-tuebingen.de/publications/brachthaeuser22effects/).
 - On [Core](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/core/Tree.scala) there is an optimization pass carried out.
-- Afterwards Core is translated to an IR called [Lifted](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/lifted/Tree.scala) by inferring lifting
-  information as described [here](lift-inference). This is finished
-  for a large subset of Core, but still work in progress for first-class functions.
-- From Lifted there is a translation to a more lowlevel IR called [Machine](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/machine/Tree.scala), which
-  is still work in progress.
+- For some backends (like LLVM) we translate Core to a more lowlevel IR called [Machine](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/machine/Tree.scala).
 
 #### Backend
 The final step is the translation to the corresponding backend language.
 The different backends are targeted from different IRs.
 
   - From Core there are translations to JavaScript and Chez Scheme.
-  - From Lifted there is a translation to Chez Scheme, too.
   - From Machine there are two translations, one targets LLVM, the other one will
     enable a JIT-compiler. Both of these are still work in progress.

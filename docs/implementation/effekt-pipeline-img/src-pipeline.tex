@@ -10,12 +10,10 @@
   \node (effekt)                                       {$\mathsf{Effekt}$ Programs};
   \node (source) [box, right = 1.5 of effekt]          {Source};
   \node (core) [box, right = 1.5 of source]            {Core};
-  \node (lift) [box, right = 1.5 of core]              {Lifted};
-  \node (machine) [box, right = 1.5 of lift]           {Machine};
+  \node (machine) [box, right = 1.5 of core]           {Machine};
   \node (llvm) [box, right = 1.5 of machine]           {LLVM};
   \node (jit) [box, below = 0.9 of llvm]               {JIT};
-  \node (chezlift) [box, below = 0.9 of jit]           {Chez Scheme};
-  \node (other) [box, below = 0.9 of chezlift]         {JavaScript\\Chez Scheme};
+  \node (other) [box, below = 0.9 of jit]              {JavaScript\\Chez Scheme};
 
   % Translations
   \draw[implemented] (effekt) to node (tosource) [above]{} (source);
@@ -26,11 +24,9 @@
     ($(source.south) + (0.4,0.0)$);
   \draw[implemented] (source) to node (tocore) [above]{} (core);
   \draw[implemented] ($(core.south) - (0.4,0.0)$) to[out=-130, in=-50,looseness=5] node (oncore) [below]{} ($(core.south) + (0.4,0.0)$);
-  \draw[wip] (core) to node (tolift) [above]{} (lift);
-  \draw[wip] (lift) to node (tomachine) [above]{} (machine);
-  \draw[wip] (machine) to node (tollvm) [above]{} (llvm);
+  \draw[implemented] (core) to node (tomachine) [above]{} (machine);
+  \draw[implemented] (machine) to node (tollvm) [above]{} (llvm);
   \draw[wip] (machine) to node (tojit) [above]{} (jit);
-  \draw[implemented] (lift) to node (tochezlift) [above]{} (chezlift);
   \draw[implemented] (core) to node (toother) [above]{} (other);
 
   \node (ltosource) [label, above = 0.4 of tosource.north, anchor=south] {Parsing};
@@ -51,14 +47,11 @@
   \node (loncore) [label, below = 0.2 of oncore.south, anchor=north] {Optimization};
   \draw[gray] ($(oncore.north) - (0,0.1)$) -- (loncore);
 
-  \node (ltolift) [label, above = 0.4 of tolift.north, anchor=south] {Lift Inference (WIP)};
-  \draw[gray] ($(tolift.north) + (0,0.1)$) -- (ltolift);
+  %\node (ltomachine) [label, above = 0.4 of tomachine.north, anchor=south] {WIP};
+  %\draw[gray] ($(tomachine.north) + (0,0.1)$) -- (ltomachine);
 
-  \node (ltomachine) [label, above = 0.4 of tomachine.north, anchor=south] {WIP};
-  \draw[gray] ($(tomachine.north) + (0,0.1)$) -- (ltomachine);
-
-  \node (ltollvm) [label, above = 0.4 of tollvm, anchor=south] {WIP};
-  \draw[gray] ($(tollvm.north) + (0,0.1)$) -- (ltollvm);
+  %\node (ltollvm) [label, above = 0.4 of tollvm, anchor=south] {WIP};
+  %\draw[gray] ($(tollvm.north) + (0,0.1)$) -- (ltollvm);
 
   \node (ltojit) [label, below = 0.4 of tojit, anchor=north] {WIP};
   \draw[gray] ($(tojit.south) - (0,0.1)$) -- (ltojit);
