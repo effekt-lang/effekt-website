@@ -147,3 +147,50 @@ body.home #navigation .navbar-wrapper .navigation-brand .custom-feature-icon .ic
     left: 1em;
   }
 }
+
+.docs #page-content-wrapper #content .content-wrapper  {
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    a.previous-page, a.next-page {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+
+      padding: 6px 1em;
+      color: $brand-primary;
+      border: 2px solid $brand-primary;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: all 350ms ease;
+      text-decoration: none;
+      margin-top: 6px;
+
+      &:hover {
+        background-color: $brand-primary;
+        color: $white-color;
+      }
+    }
+
+    .previous-placeholder {
+      visibility: hidden; /* Keeps space for the 'Previous' button */
+      padding: 10px;
+    }
+    .previous-page:before, .next-page:after {
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+    }
+
+    .previous-page:before {
+      content: "\f053"; /* FontAwesome chevron left icon */
+      margin-right: 1em;
+    }
+
+    .next-page:after {
+      content: "\f054"; /* FontAwesome chevron right icon */
+      margin-left: 1em;
+    }
+  }
+}
