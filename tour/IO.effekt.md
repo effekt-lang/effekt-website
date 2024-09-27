@@ -1,1 +1,1 @@
-../effekt/examples/features/IO.effekt.md
+../effekt/examples/tour/IO.effekt.md

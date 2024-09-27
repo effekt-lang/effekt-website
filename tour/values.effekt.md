@@ -1,1 +1,1 @@
-../effekt/examples/features/values.effekt.md
+../effekt/examples/tour/values.effekt.md

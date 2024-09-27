@@ -1,1 +1,1 @@
-../effekt/examples/features/namespaces.effekt.md
+../effekt/examples/tour/namespaces.effekt.md

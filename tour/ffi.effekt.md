@@ -1,1 +1,1 @@
-../effekt/examples/features/ffi.effekt.md
+../effekt/examples/tour/ffi.effekt.md

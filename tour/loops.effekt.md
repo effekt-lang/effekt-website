@@ -1,1 +1,1 @@
-../effekt/examples/features/loops.effekt.md
+../effekt/examples/tour/loops.effekt.md

@@ -1,1 +1,1 @@
-../effekt/examples/features/effect-handlers.effekt.md
+../effekt/examples/tour/effect-handlers.effekt.md

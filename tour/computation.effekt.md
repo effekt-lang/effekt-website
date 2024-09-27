@@ -1,1 +1,1 @@
-../effekt/examples/features/computation.effekt.md
+../effekt/examples/tour/computation.effekt.md

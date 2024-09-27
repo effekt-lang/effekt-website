@@ -1,1 +1,1 @@
-../effekt/examples/features/regions.effekt.md
+../effekt/examples/tour/regions.effekt.md

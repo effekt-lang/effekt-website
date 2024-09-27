@@ -1,1 +1,1 @@
-../effekt/examples/features/mutable-variables.effekt.md
+../effekt/examples/tour/mutable-variables.effekt.md

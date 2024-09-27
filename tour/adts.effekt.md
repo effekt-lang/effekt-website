@@ -1,1 +1,1 @@
-../effekt/examples/features/adts.effekt.md
+../effekt/examples/tour/adts.effekt.md

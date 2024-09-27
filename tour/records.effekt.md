@@ -1,1 +1,1 @@
-../effekt/examples/features/records.effekt.md
+../effekt/examples/tour/records.effekt.md
