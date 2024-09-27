@@ -8,6 +8,7 @@ async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLE
 
     let IDE = await import(/* webpackMode: "lazy", webpackChunkName: "ide" */ "./ide")
     let editor = await import(/* webpackMode: "lazy", webpackChunkName: "editor" */ "./editor")
+    IDE.loadModules();
 
     parent.classList.remove("editor-loading")
     parent.classList.add("editor")
@@ -264,26 +265,53 @@ function parseOptions(str: string): CodeOptions {
   }
 }
 
-
-
-
-window.addEventListener("DOMContentLoaded", () => {
-
+function initDOM() {
   processCode()
 
   // let codes = document.querySelectorAll("code")
   // monacoEditor(codes[codes.length - 1])
   hljs.configure({
-      languages: ['effekt', 'bash']
+    languages: ['effekt', 'bash']
   });
-
+  
   // highlight inline code
   document.querySelectorAll("code").forEach(code => {
     // it is a block code
     if (code.parentElement.tagName == "pre") return;
-
+  
     hljs.highlightBlock(code)
   })
-
+  
   docs.init()
-})
+}
+
+function addLinkListeners() {
+  const links = document.querySelectorAll(".sidebar-nav a");
+
+  const loadPage = (url) => {
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const newContent = doc.querySelector("main#content");
+      document.querySelector("main#content").innerHTML = newContent.innerHTML;
+      initDOM();
+      addLinkListeners();
+
+      window.history.pushState(null, '', url);
+    })
+    .catch(err => console.error("Failed to load page", err));
+  }
+
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+    e.preventDefault();
+    loadPage(link.getAttribute("href"));
+    });
+  });
+
+  initDOM();
+}
+
+window.addEventListener("DOMContentLoaded", () => addLinkListeners());
