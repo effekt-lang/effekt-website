@@ -13,6 +13,8 @@ of our papers, please visit:
 
 > <https://se.cs.uni-tuebingen.de/publications>
 
+Make also sure to look at [Language Evolution](evolution) for a summary of the changes since the publication of each paper.
+
 ### Language Design
 Regarding the language design, there are two main references:
 
