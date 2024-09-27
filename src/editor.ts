@@ -10,7 +10,7 @@ import * as IDE from "./ide"
 //@ts-ignore
 self.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {
-    return "/effekt-website/dist/editor.worker.bundle.js";
+    return "/dist/editor.worker.bundle.js";
   }
 };
 
