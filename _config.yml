@@ -20,6 +20,11 @@ defaults:
       type: "examples"
     values:
       layout: "docs"
+  -
+    scope:
+      path: "tour"
+    values:
+      layout: "tour"
 
 sass:
   load_paths:

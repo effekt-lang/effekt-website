@@ -1,0 +1,43 @@
+---
+layout: docs
+pagetype: docs
+---
+
+{{ content }}
+
+{% assign tour_option = site.data.menu.options | where: "url", "tour" | first %}
+{% assign tour_pages = tour_option.nested_options %}
+<!-- find the index of the page in the tour -->
+{% assign current_index = nil %}
+
+{% for page_option in tour_pages %}
+  {% if page_option.url == page.url %}
+    {% assign current_index = forloop.index0 %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if current_index != nil %}
+  {% assign previous_index = current_index | minus: 1 %}
+  {% assign next_index = current_index | plus: 1 %}
+  {% assign previous_page = tour_pages[previous_index] %}
+  {% assign next_page = tour_pages[next_index] %}
+
+  <div class="navigation-buttons">
+    <!-- Previous button -->
+    {% if previous_index >= 0 and previous_page != nil %}
+      <a href="{{ previous_page.url }}" class="previous-page">
+        {{ previous_page.title }}
+      </a>
+    {% else %}
+      <div class="previous-placeholder"></div>
+    {% endif %}
+
+    <!-- Next button -->
+    {% if next_page != nil %}
+      <a href="{{ next_page.url }}" class="next-page">
+        {{ next_page.title }}
+      </a>
+    {% endif %}
+  </div>
+{% endif %}
