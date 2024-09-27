@@ -108,20 +108,22 @@ pre.editor {
 
 pre.repl {
   padding-left: 1.5em;
+  position: relative;
 
   &:before {
     content: ">";
     opacity: 0.5;
     font-weight: bold;
     position: absolute;
-    top: 1.1em;
-    left: 0.6em;
+    top: 1.5em;
+    left: 0.75em;
     z-index: 9;
+    line-height: 1;
   }
 }
 
 pre.repl.editor {
-  padding-left: 0.8em;
+  padding-left: 0.75em;
 }
 
 pre.editor-loading {
