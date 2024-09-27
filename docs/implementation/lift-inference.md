@@ -5,7 +5,7 @@ title: Lift Inference
 
 # Lift Inference
 
-> **Important**: With release 0.3.1, Effekt moved away from this implementation strategy to explore other novel implementation techniques. This site is kept for historic purposes, only.
+> **Important**: With release 0.4.0, Effekt moved away from this implementation strategy to explore other novel implementation techniques. This site is kept for historic purposes, only.
 
 Programs in the Effekt surface language are translated to the underlying Core language,
 which is in explicit capability-passing style. Core corresponds to `System Xi` in
