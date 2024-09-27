@@ -108,17 +108,14 @@ pre.editor {
 
 pre.repl {
   padding-left: 1.5em;
-  position: relative;
 
-  &:before {
+  & code:before {
     content: ">";
     opacity: 0.5;
     font-weight: bold;
     position: absolute;
-    top: 1.5em;
-    left: 0.75em;
+    left: 0.6em;
     z-index: 9;
-    line-height: 1;
   }
 }
 
