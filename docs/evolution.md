@@ -5,15 +5,15 @@ permalink: evolution
 ---
 
 # A Brief History of Effekt for Fellow Researchers
-Are you a researcher, read one of our [papers](./publications), and notice that
+Are you a researcher, read one of our [papers](./publications), and noticed that
 the syntax (or something else) of the language changed?
 Maybe you want to benchmark against Effekt?
 
 Here, we briefly describe the evolution of the language by summarizing the differences to the papers and the most important changes.
-This should hopefully help you get started. Otherwise, feel free to reach out to us.
+This should hopefully help you get started. Otherwise, feel free to [reach out to us](https://se.cs.uni-tuebingen.de/team/brachthaeuser/).
 
 ## 2023 Paper: From Capabilities to Regions
-In this paper, we complete the lift-inference pipeline from core (back then System Xi),
+In this paper, we complete the [lift-inference pipeline](https://effekt-lang.org/docs/implementation/lift-inference) from core (back then System Xi),
 via lifted, to regions, to iterated CPS.
 
 We implemented evidence monomorphization, which means that handlers are specialized to the stack shape they are used in.
@@ -42,7 +42,7 @@ The paper presents the foundations of the Effekt language. It introduces lexical
 - type parameters of singleton operations now are universally quantified, not existentially
 
 ## Older Papers
-We had some papers describing the Scala Effekt (Scala Symposium 2017, JFP 2020) and Java Effekt (OOPSLA 2018) libraries. These libraries (accidentally) implemented _lexical_ effect handlers.
+We had some papers describing the Scala Effekt (Scala Symposium 2017, JFP 2020) and Java Effekt (OOPSLA 2018) libraries. These libraries implemented _lexical_ effect handlers.
 
 #### Since then
 - Besides implementing lexical effect handlers, the libraries have little to do with the current standalone Effekt language
