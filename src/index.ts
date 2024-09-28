@@ -273,45 +273,48 @@ function initDOM() {
   hljs.configure({
     languages: ['effekt', 'bash']
   });
-  
+
   // highlight inline code
   document.querySelectorAll("code").forEach(code => {
     // it is a block code
     if (code.parentElement.tagName == "pre") return;
-  
+
     hljs.highlightBlock(code)
   })
-  
+
   docs.init()
 }
 
-function addLinkListeners() {
-  const links = document.querySelectorAll(".sidebar-nav a");
-
-  const loadPage = (url) => {
+function loadPage(url, callback) {
   fetch(url)
-    .then(response => response.text())
-    .then(html => {
+    .then((response) => response.text())
+    .then((html) => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       const newContent = doc.querySelector("main#content");
       document.querySelector("main#content").innerHTML = newContent.innerHTML;
-      initDOM();
-      addLinkListeners();
+      callback();
 
-      window.history.pushState(null, '', url);
+      window.history.pushState(null, "", url);
     })
-    .catch(err => console.error("Failed to load page", err));
-  }
+    .catch((err) => console.error("Failed to load page", err));
+}
+
+function addLinkListeners() {
+  const links = document.querySelectorAll(".sidebar-nav a, a.next-page, a.previous-page");
 
   links.forEach((link) => {
     link.addEventListener("click", (e) => {
-    e.preventDefault();
-    loadPage(link.getAttribute("href"));
+      e.preventDefault();
+      loadPage(link.getAttribute("href"), () => {
+          initDOM();
+          addLinkListeners();
+      });
     });
   });
-
-  initDOM();
 }
 
-window.addEventListener("DOMContentLoaded", () => addLinkListeners());
+window.addEventListener("DOMContentLoaded", () => {
+    addLinkListeners()
+    initDOM();
+});

@@ -81,18 +81,6 @@ function activateMenuNesting() {
   const handleMenuNesting = (e) => {
     e.preventDefault();
     toggleParent(e.currentTarget, "open");
-    const elementType = e.currentTarget.tagName.toLowerCase();
-    if (elementType === "a") {
-      const linkElement = e.currentTarget;
-      const linkElementParent = linkElement.parentNode;
-      const destination = linkElement.href;
-      if (
-        destination !== window.location.href &&
-        !linkElementParent.classList.contains("active")
-      ) {
-        window.location.href = destination;
-      }
-    }
   };
   if (menuParents) {
     [...menuParents].map(elem => {
