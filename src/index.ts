@@ -307,6 +307,7 @@ function addLinkListeners() {
     link.addEventListener("click", (e) => {
       e.preventDefault();
       loadPage(link.getAttribute("href"), () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           initDOM();
           addLinkListeners();
       });
