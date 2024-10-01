@@ -5,6 +5,8 @@ title: Lift Inference
 
 # Lift Inference
 
+> **Important**: With release 0.4.0, Effekt moved away from this implementation strategy to explore other novel implementation techniques. This site is kept for historic purposes, only.
+
 Programs in the Effekt surface language are translated to the underlying Core language,
 which is in explicit capability-passing style. Core corresponds to `System Xi` in
 [this paper](https://se.cs.uni-tuebingen.de/publications/brachthaeuser20effects/) and
@@ -20,7 +22,7 @@ information explicit and using this information for a translation to iterated CP
 
 What does lifting information mean? Consider the following example:
 
-```effekt:core
+```effekt
 effect Exc1(): String
 effect Exc2(): String
 
@@ -37,6 +39,21 @@ def main() =
   }
 ```
 
+<div class="core-out"><h4>Generated Core</h4>
+<pre><code class="hljs effekt language-effekt:read-only:ignore">def main2916() =
+  try { (){Exc1$capability4096} =>
+    def abort2920() = Exc1$capability4096.Exc1()
+
+    try { (){Exc2$capability4099} =>
+      abort2920()
+    } with Exc22915 {
+      def Exc22918(){resume2921} =  "aborted two"
+    }
+  } with Exc12914 {
+    def Exc12917(){resume2919} =  "aborted one"
+  }</code></pre>
+</div>
+
 ```effekt:repl
 main()
 ```
@@ -47,7 +64,7 @@ operation `Exc1`. As is visible in the signature of `abort` (with an empty effec
 effect is handled by the outer handler, even though `abort` is called inside of the inner
 handler. The result of running the program thus is `"aborted one"`.
 
-By clicking on "edit" the corresponding code in Core becomes visible. There the effect
+Below the source the corresponding code in Core is shown. There the effect
 operations become explicit capabilities bound at the corresponding handlers. When `abort`
 is called, the `Exc1`-capability is executed and has to jump over the inner handler to its
 binding site, or to put it differently, it has to be lifted. At runtime this amounts to
@@ -66,7 +83,7 @@ in every subregion of the handler by providing it with the correct subregion evi
 
 Consider the following variation of the above example without the `abort`-block:
 
-```effekt:lifted
+```effekt
 effect Exc1(): String
 effect Exc2(): String
 
@@ -82,9 +99,28 @@ def main() =
   }
 ```
 
-By clicking on "edit" the corresponding code in the Lifted Core language (which corresponds
-to `LambdaCap` in [this paper](https://se.cs.uni-tuebingen.de/publications/schuster22typed/))
-is shown. In Lifted Core the subregion evidence is explicit. The inner handler binds evidence
+<div class="core-out"><h4>Generated Lifted Core</h4>
+<pre><code class="hljs effekt language-effekt:read-only:ignore">def main(ev4497: EV): String =
+  try { (ev4499: EV, Exc1$capability: Exc1) =>
+    try { (ev4501: EV, Exc2$capability: Exc2) =>
+      Exc1$capability.Exc1(&lt;ev4501>)
+    } with Exc2 {
+      def Exc2(ev4500: EV) =
+        shift(&lt;ev4500>) { (resume: (EV, String) => String) =>
+          "aborted two"
+        }
+    }
+  } with Exc1 {
+    def Exc1(ev4498: EV) =
+      shift(&lt;ev4498>) { (resume: (EV, String) => String) =>
+        "aborted one"
+      }
+  }</code></pre>
+</div>
+
+Below the source, the Lifted Core intermediate representation (which corresponds
+to `LambdaCap` in [this paper](https://se.cs.uni-tuebingen.de/publications/schuster22typed/)) is shown.
+In Lifted Core the subregion evidence is explicit. The inner handler binds evidence
 that its new region is a subregion of the region of the outer handler and this evidence is
 then provided in the call of `Exc1`, making it explicit that `Exc1` has to jump over the
 inner handler to run in the region of the outer handler.
@@ -104,10 +140,9 @@ The idea is to have a new region for each function which is later instantiated w
 region where the function is called. The function thus abstracts over evidence that this
 new region is a subregion of the region at the definition-site of the function.
 
-This is illustrated in the Lifted Core code for the original example repeated below (just
-click on "edit").
+This is illustrated in the Lifted Core code for the original example repeated below.
 
-```effekt:lifted
+```effekt
 effect Exc1(): String
 effect Exc2(): String
 
@@ -123,6 +158,27 @@ def main() =
     () => "aborted one"
   }
 ```
+<div class="core-out"><h4>Generated Lifted Core</h4>
+<pre><code class="hljs effekt language-effekt:read-only:ignore">def main(ev4153: EV): String =
+  try { (ev4155: EV, Exc1$capability: Exc1) =>
+    def abort(ev4158: EV): String =
+      Exc1$capability.Exc1(&lt;ev4158>)
+
+    try { (ev4157: EV, Exc2$capability: Exc2) =>
+      abort(&lt;ev4157>)
+    } with Exc2 {
+      def Exc2(ev4156: EV) =
+        shift(&lt;ev4156>) { (resume: (EV, String) => String) =>
+          "aborted two"
+        }
+    }
+  } with Exc1 {
+    def Exc1(ev4154: EV) =
+      shift(&lt;ev4154>) { (resume: (EV, String) => String) =>
+        "aborted one"
+      }
+  }</code></pre>
+</div>
 
 Here `abort` abstracts over evidence which is then passed to `Exc1`, since this evidence
 states that the new region of `abort` is a subregion of the region of the outer handler,
@@ -145,7 +201,7 @@ block itself is a subregion of the region where the block argument was defined.
 Look at the following (somewhat silly) variation of the example above with a very simple
 higher-order function `call`, which simply calls its block argument.
 
-```effekt:lifted
+```effekt
 effect Exc1(): String
 effect Exc2(): String
 
@@ -163,6 +219,30 @@ def main() = {
   }
 }
 ```
+<div class="core-out"><h4>Generated Lifted Core</h4>
+<pre><code class="hljs effekt language-effekt:read-only:ignore">def main(ev4190: EV): String =
+  def call(ev4196: EV, ev4197: EV, f: (EV) => String): String =
+    f(&lt;ev4197>)
+
+  try { (ev4192: EV, Exc1$capability: Exc1) =>
+    def abort(ev4195: EV): String =
+      Exc1$capability.Exc1(&lt;ev4195>)
+
+    try { (ev4194: EV, Exc2$capability: Exc2) =>
+      call(&lt;ev4194, ev4192>, &lt;ev4194>, abort)
+    } with Exc2 {
+      def Exc2(ev4193: EV) =
+        shift(&lt;ev4193>) { (resume: (EV, String) => String) =>
+          "aborted two"
+        }
+    }
+  } with Exc1 {
+    def Exc1(ev4191: EV) =
+      shift(&lt;ev4191>) { (resume: (EV, String) => String) =>
+        "aborted one"
+      }
+  }</code></pre>
+</div>
 
 In Lifted Core `call` has two evidence parameters, where the second one is for the block
 parameter `f`, and is also passed to `f`. When `call` is applied it gets two evidence

@@ -13,6 +13,8 @@ of our papers, please visit:
 
 > <https://se.cs.uni-tuebingen.de/publications>
 
+Make also sure to look at [Language Evolution](evolution) for a summary of the changes since the publication of each paper.
+
 ### Language Design
 Regarding the language design, there are two main references:
 
@@ -29,7 +31,7 @@ Regarding the language design, there are two main references:
 ### Compilation of Effect Handlers
 
 > **"From Capabilities to Regions: Enabling Efficient Compilation of Lexical Effect Handlers"**.\
-> Marius Müller, Philipp Schuster, Jonathan Lindegaard Starup, Klaus Ostermann, and [Jonathan Immanuel Brachthäuser]{.sf}. 2023.
+> Marius Müller, Philipp Schuster, Jonathan Lindegaard Starup, Klaus Ostermann, and Jonathan Immanuel Brachthäuser. 2023.
 > In _Proc. ACM Program. Lang._, 7 (OOPSLA2), Article 225. ([Techreport](https://se.cs.uni-tuebingen.de/publications/mueller23lift/), [ACM](http://dx.doi.org/10.1145/3622831))
 
 > **"A Typed Continuation-Passing Translation for Lexical Effect Handlers"**.\

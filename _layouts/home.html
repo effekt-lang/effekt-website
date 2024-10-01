@@ -84,20 +84,20 @@ pagetype: home
   <div>
 <h3>Effects Generalize Exceptions</h3>
 <p>Effect handlers are exception handlers on steroids! Like with exceptions, we first define the type of the
-  exception. In Effekt, a declaration like <code class="language-effekt">Yield</code> is called an <emph>effect signature</emph>.</p>
+  exception. In Effekt, a declaration like <code class="language-effekt">yield</code> is called an <emph>effect signature</emph>.</p>
 
-<p>Calling an effect operation (with <code class="language-effekt">do Yield(42)</code>) is like throwing an exception. It
+<p>Calling an effect operation (with <code class="language-effekt">do yield(42)</code>) is like throwing an exception. It
 transfers the control-flow to the handler that catches (or "handles") the effect. We can also
 send values to the handler (here <code class="language-effekt">n</code>).</p>
 </div>
 <div>
-<pre><code class="language-effekt">effect Yield(n: Int): Bool
+<pre><code class="language-effekt">effect yield(n: Int): Bool
 
 def example() = {
   var produce = true;
   var n = 0;
   while (produce) {
-    produce = do Yield(n)
+    produce = do yield(n)
     n = n + 1
   }
   println("done")
@@ -112,18 +112,18 @@ def example() = {
 <p>So what's new? Effect handlers now can also <strong>resume</strong> the program that called the effect!</p>
 
 <p>
-  In our example, we handle the <code class="language-effekt">Yield</code> effect by printing the number that was sent.
+  In our example, we handle the <code class="language-effekt">yield</code> effect by printing the number that was sent.
   Similar to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">generators</a>,
-  we also resume at the original call to <code class="language-effekt">Yield</code>!
+  we also resume at the original call to <code class="language-effekt">yield</code>!
 </p>
 
-<p>Our example is type-safe: By declaring <code class="language-effekt">Yield</code> to take an integer and return a boolean, at
+<p>Our example is type-safe: By declaring <code class="language-effekt">yield</code> to take an integer and return a boolean, at
   the handler we know that we receive integers and have to call <code class="language-effekt">resume</code> with a boolean value.</p>
 
 <a class="learn-more-button" href="docs/concepts/effect-handlers"><span class="learn-more">Learn More</span></a>
 </div>
 <div>
-<pre><code class="language-effekt:repl">try { example() } with Yield { n =>
+<pre><code class="language-effekt:repl">try { example() } with yield { n =>
   println(n); resume(n < 3)
 }
 </code></pre>
