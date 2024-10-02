@@ -285,47 +285,51 @@ function initDOM() {
   docs.init()
 }
 
-const globalHistory = [];
+const globalHistory = [window.location.href];
 
-function loadPage(url, callback) {
+function loadPage(url, addToHistory = true) {
   fetch(url)
     .then((response) => response.text())
     .then((html) => {
-      globalHistory.push(window.location.href);
-
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       const newContent = doc.querySelector("main#content");
       document.querySelector("main#content").innerHTML = newContent.innerHTML;
-      callback();
 
-      window.history.pushState(null, "", url);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      initDOM();
+      addLinkListeners();
+
+      document.title = doc.querySelector("head > title").innerHTML;
+      
+      if (addToHistory) {
+        window.history.pushState({}, "", url);
+        globalHistory.push(url);
+      }
     })
     .catch((err) => console.error("Failed to load page", err));
 }
 
 function addLinkListeners() {
   const links = document.querySelectorAll(".sidebar-nav a, a.next-page, a.previous-page");
-
+  
   links.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      loadPage(link.getAttribute("href"), () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        initDOM();
-        addLinkListeners();
-      });
+      loadPage(link.getAttribute("href"));
     });
   });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    addLinkListeners()
-    initDOM();
+  addLinkListeners();
+  initDOM();
 
-    window.addEventListener('popstate', (event) => {
-      const previous = globalHistory.pop();
-      loadPage(previous);
-      event.preventDefault()
-    });
+  window.addEventListener('popstate', (event) => {
+    if (globalHistory.length > 1) {
+      globalHistory.pop();
+      const previousUrl = globalHistory[globalHistory.length - 1];
+      loadPage(previousUrl, false);
+    }
+  });
 });
