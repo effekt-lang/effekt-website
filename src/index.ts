@@ -309,11 +309,11 @@ function loadPage(url, addToHistory = true) {
         window.history.pushState({ index: currentHistoryIndex }, "", url);
         setTimeout(() => { // wait until content is rendered
 			window.scrollTo({ top: 0 })
-		}, 100);
+		}, 0);
       } else {
         setTimeout(() => { // wait until content is rendered
 			window.scrollTo({ top: globalHistory[currentHistoryIndex].scrollPosition });
-		}, 100);
+		}, 0);
       }
       console.log("Current history:", globalHistory, "Current index:", currentHistoryIndex);
     })
