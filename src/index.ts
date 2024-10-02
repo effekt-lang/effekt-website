@@ -285,10 +285,14 @@ function initDOM() {
   docs.init()
 }
 
+const globalHistory = [];
+
 function loadPage(url, callback) {
   fetch(url)
     .then((response) => response.text())
     .then((html) => {
+      globalHistory.push(window.location.href);
+
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       const newContent = doc.querySelector("main#content");
@@ -307,9 +311,9 @@ function addLinkListeners() {
     link.addEventListener("click", (e) => {
       e.preventDefault();
       loadPage(link.getAttribute("href"), () => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          initDOM();
-          addLinkListeners();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        initDOM();
+        addLinkListeners();
       });
     });
   });
@@ -318,4 +322,10 @@ function addLinkListeners() {
 window.addEventListener("DOMContentLoaded", () => {
     addLinkListeners()
     initDOM();
+
+    window.addEventListener('popstate', (event) => {
+      const previous = globalHistory.pop();
+      loadPage(previous);
+      event.preventDefault()
+    });
 });
