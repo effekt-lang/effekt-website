@@ -285,7 +285,7 @@ function initDOM() {
   docs.init()
 }
 
-const globalHistory = [window.location.href];
+const globalHistory = [{ url: window.location.href, scrollPosition: 0 }];
 let currentHistoryIndex = 0;
 
 function loadPage(url, addToHistory = true) {
@@ -297,25 +297,32 @@ function loadPage(url, addToHistory = true) {
       const newContent = doc.querySelector("main#content");
       document.querySelector("main#content").innerHTML = newContent.innerHTML;
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       initDOM();
       addLinkListeners();
 
       document.title = doc.querySelector("head > title").innerHTML;
-      
+
       if (addToHistory) {
         globalHistory.splice(currentHistoryIndex + 1);
-        globalHistory.push(url);
+        globalHistory.push({ url, scrollPosition: 0 });
         currentHistoryIndex = globalHistory.length - 1;
         window.history.pushState({ index: currentHistoryIndex }, "", url);
+        setTimeout(() => { // wait until content is rendered
+			window.scrollTo({ top: 0 })
+		}, 100);
+      } else {
+        setTimeout(() => { // wait until content is rendered
+			window.scrollTo({ top: globalHistory[currentHistoryIndex].scrollPosition });
+		}, 100);
       }
+      console.log("Current history:", globalHistory, "Current index:", currentHistoryIndex);
     })
     .catch((err) => console.error("Failed to load page", err));
 }
 
 function addLinkListeners() {
   const links = document.querySelectorAll(".sidebar-nav a, a.next-page, a.previous-page");
-  
+
   links.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -325,10 +332,11 @@ function addLinkListeners() {
 }
 
 function navigateHistory(step) {
+  globalHistory[currentHistoryIndex].scrollPosition = window.pageYOffset;
   const newIndex = currentHistoryIndex + step;
   if (newIndex >= 0 && newIndex < globalHistory.length) {
     currentHistoryIndex = newIndex;
-    loadPage(globalHistory[currentHistoryIndex], false);
+    loadPage(globalHistory[currentHistoryIndex].url, false);
   }
 }
 
@@ -337,10 +345,14 @@ window.addEventListener("DOMContentLoaded", () => {
   initDOM();
 
   window.addEventListener('popstate', (event) => {
-    if (event.state && "index" in event.state) {
+    if (event.state && typeof event.state.index !== 'undefined') {
       const step = event.state.index - currentHistoryIndex;
       navigateHistory(step);
     }
+  });
+
+  window.addEventListener('beforeunload', () => {
+    globalHistory[currentHistoryIndex].scrollPosition = window.pageYOffset;
   });
 });
 
