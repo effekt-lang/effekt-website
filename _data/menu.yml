@@ -78,6 +78,8 @@ options:
         url: docs/casestudies/buildsystem
       - title: Naturalistic DSLs
         url: docs/casestudies/naturalisticdsls
+      - title: Scheduler
+        url: docs/casestudies/scheduler
 
   - title: Examples
     url: examples
