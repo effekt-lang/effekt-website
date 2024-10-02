@@ -286,6 +286,7 @@ function initDOM() {
 }
 
 const globalHistory = [window.location.href];
+let currentHistoryIndex = 0;
 
 function loadPage(url, addToHistory = true) {
   fetch(url)
@@ -303,8 +304,10 @@ function loadPage(url, addToHistory = true) {
       document.title = doc.querySelector("head > title").innerHTML;
       
       if (addToHistory) {
-        window.history.pushState({}, "", url);
+        globalHistory.splice(currentHistoryIndex + 1);
         globalHistory.push(url);
+        currentHistoryIndex = globalHistory.length - 1;
+        window.history.pushState({ index: currentHistoryIndex }, "", url);
       }
     })
     .catch((err) => console.error("Failed to load page", err));
@@ -321,15 +324,24 @@ function addLinkListeners() {
   });
 }
 
+function navigateHistory(step) {
+  const newIndex = currentHistoryIndex + step;
+  if (newIndex >= 0 && newIndex < globalHistory.length) {
+    currentHistoryIndex = newIndex;
+    loadPage(globalHistory[currentHistoryIndex], false);
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   addLinkListeners();
   initDOM();
 
   window.addEventListener('popstate', (event) => {
-    if (globalHistory.length > 1) {
-      globalHistory.pop();
-      const previousUrl = globalHistory[globalHistory.length - 1];
-      loadPage(previousUrl, false);
+    if (event.state && "index" in event.state) {
+      const step = event.state.index - currentHistoryIndex;
+      navigateHistory(step);
     }
   });
 });
+
+window.history.pushState({ index: 0 }, "", window.location.href);
