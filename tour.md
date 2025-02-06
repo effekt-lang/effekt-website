@@ -15,7 +15,7 @@ Each section will be example-driven and the explanations will mostly focus on th
 Only in those section with concepts presenting a departure from well-known concepts, such as lexical effect, regions and captures, more in-depth explanation will be offered.
 
 You will find examples in each section and we invite you to make your own changes to get to know the language.
-Each change will be available in the following code blocks and you can arbitrary expression in code block starting with an `>` in a REPL-like environment.
+Each change will be available in the following code blocks and you can evaluate arbitrary expressions in code blocks starting with an `>` in a REPL-like environment.
 
 ```effekt:repl
 println("Effekt!")
