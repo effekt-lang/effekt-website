@@ -6,7 +6,7 @@ position: 2
 ---
 
 # Try Effekt Online
-You can immediately experiment with the Effekt language, without [installing](docs/) it.
+You can immediately experiment with the Effekt language, without [installing](docs/getting-started) it.
 
 Effekt is a research language, we recommend reading [the papers](https://se.cs.uni-tuebingen.de/research/handlers/effekt/) describing important design decisions and the inner workings of Effekt.
 
