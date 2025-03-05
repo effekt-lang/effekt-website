@@ -8,6 +8,7 @@ async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLE
 
     let IDE = await import(/* webpackMode: "lazy", webpackChunkName: "ide" */ "./ide")
     let editor = await import(/* webpackMode: "lazy", webpackChunkName: "editor" */ "./editor")
+    IDE.loadModules();
 
     parent.classList.remove("editor-loading")
     parent.classList.add("editor")
@@ -264,17 +265,13 @@ function parseOptions(str: string): CodeOptions {
   }
 }
 
-
-
-
-window.addEventListener("DOMContentLoaded", () => {
-
+function initDOM() {
   processCode()
 
   // let codes = document.querySelectorAll("code")
   // monacoEditor(codes[codes.length - 1])
   hljs.configure({
-      languages: ['effekt', 'bash']
+    languages: ['effekt', 'bash']
   });
 
   // highlight inline code
@@ -286,4 +283,77 @@ window.addEventListener("DOMContentLoaded", () => {
   })
 
   docs.init()
-})
+}
+
+const globalHistory = [{ url: window.location.href, scrollPosition: 0 }];
+let currentHistoryIndex = 0;
+
+function loadPage(url, addToHistory = true) {
+  fetch(url)
+    .then((response) => response.text())
+    .then((html) => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const newContent = doc.querySelector("main#content");
+      document.querySelector("main#content").innerHTML = newContent.innerHTML;
+
+      initDOM();
+      addLinkListeners();
+
+      document.title = doc.querySelector("head > title").innerHTML;
+
+      if (addToHistory) {
+        globalHistory.splice(currentHistoryIndex + 1);
+        globalHistory.push({ url, scrollPosition: 0 });
+        currentHistoryIndex = globalHistory.length - 1;
+        window.history.pushState({ index: currentHistoryIndex }, "", url);
+        setTimeout(() => { // wait until content is rendered
+			window.scrollTo({ top: 0 })
+		}, 0);
+      } else {
+        setTimeout(() => { // wait until content is rendered
+			window.scrollTo({ top: globalHistory[currentHistoryIndex].scrollPosition });
+		}, 0);
+      }
+      console.log("Current history:", globalHistory, "Current index:", currentHistoryIndex);
+    })
+    .catch((err) => console.error("Failed to load page", err));
+}
+
+function addLinkListeners() {
+  const links = document.querySelectorAll(".sidebar-nav a, a.next-page, a.previous-page");
+
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      loadPage(link.getAttribute("href"));
+    });
+  });
+}
+
+function navigateHistory(step) {
+  globalHistory[currentHistoryIndex].scrollPosition = window.pageYOffset;
+  const newIndex = currentHistoryIndex + step;
+  if (newIndex >= 0 && newIndex < globalHistory.length) {
+    currentHistoryIndex = newIndex;
+    loadPage(globalHistory[currentHistoryIndex].url, false);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  addLinkListeners();
+  initDOM();
+
+  window.addEventListener('popstate', (event) => {
+    if (event.state && typeof event.state.index !== 'undefined') {
+      const step = event.state.index - currentHistoryIndex;
+      navigateHistory(step);
+    }
+  });
+
+  window.addEventListener('beforeunload', () => {
+    globalHistory[currentHistoryIndex].scrollPosition = window.pageYOffset;
+  });
+});
+
+window.history.pushState({ index: 0 }, "", window.location.href);

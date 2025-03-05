@@ -7,23 +7,28 @@ import * as effekt from "./effekt-language";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import type { Diagnostic, DiagnosticSeverity, Position } from "vscode-languageserver-types"
 
-// initialize:
-// load all code[module=...] elements and write them to the IDE
-document.querySelectorAll("code[module]").forEach( (code: HTMLElement) => {
-  let module = code.getAttribute("module")
-  let filename = module + ".effekt"
-  let content = code.getAttribute("prelude") + code.getAttribute("content") + code.getAttribute("postlude")
-  effekt.write(filename, content)
-})
-
 export interface IViewModel extends monaco.editor.ITextModel {
   getFullText(): string
   modelPosition(pos: Position): Position
   viewPosition(pos: Position): Position
 }
 
+// initialize:
+// load all code[module=...] elements and write them to the IDE
+export function loadModules() {
+  document.querySelectorAll("code[module]").forEach( (code: HTMLElement) => {
+    let module = code.getAttribute("module")
+    let filename = module + ".effekt"
+    let content = code.getAttribute("prelude") + code.getAttribute("content") + code.getAttribute("postlude")
+    effekt.write(filename, content)
+  })
+}
+
 export function createModel(filename: string, contents: string, hiddenPrelude: string, hiddenPostlude: string): IViewModel {
-  let model = monaco.editor.createModel(contents.trim(), "effekt", monaco.Uri.file(filename))
+  let model = monaco.editor.getModel(monaco.Uri.file(filename));
+  if (model) model.setValue(contents.trim())
+  else model = monaco.editor.createModel(contents.trim(), "effekt", monaco.Uri.file(filename))
+
   let pre = hiddenPrelude || ""
   let post = hiddenPostlude || ""
   let lineOffset = (hiddenPrelude.match(/\n/g) || '').length
