@@ -21,4 +21,4 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --base . './**/*.md'
+          args: --base . --require-https --max-redirects 10 --suggest --verbose './**/*.md'
