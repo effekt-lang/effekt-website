@@ -32,7 +32,7 @@ Regarding the language design, there are two main references:
 
 > **"From Capabilities to Regions: Enabling Efficient Compilation of Lexical Effect Handlers"**.\
 > Marius Müller, Philipp Schuster, Jonathan Lindegaard Starup, Klaus Ostermann, and Jonathan Immanuel Brachthäuser. 2023.
-> In _Proc. ACM Program. Lang._, 7 (OOPSLA2), Article 225. ([Techreport](https://se.cs.uni-tuebingen.de/publications/mueller23lift/), [ACM](https://dx.doi.org/10.1145/3622831))
+> In _Proc. ACM Program. Lang._, 7 (OOPSLA2), Article 225. ([Techreport](https://se.cs.uni-tuebingen.de/publications/mueller23lift/), [ACM](https://doi.org/10.1145/3622831))
 
 > **"A Typed Continuation-Passing Translation for Lexical Effect Handlers"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, Marius Müller, and Klaus Ostermann.\
