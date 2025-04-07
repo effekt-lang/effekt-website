@@ -40,7 +40,7 @@ Regarding the language design, there are two main references:
 
 > **"Region-based Resource Management and Lexical Exception Handlers in Continuation-Passing Style"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
-> In _Proceedings of the European Symposium on Programming (ESOP 2022)_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster22region/), [Springer](https://dx.doi.org/10.1007/978-3-030-99336-8_18))
+> In _Proceedings of the European Symposium on Programming (ESOP 2022)_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster22region/), [Springer](https://doi.org/10.1007/978-3-030-99336-8_18))
 
 > **"Capability-Passing Style for Zero-Cost Effect Handlers"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
