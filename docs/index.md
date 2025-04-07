@@ -26,7 +26,7 @@ main()
 ```
 
 ## Syntax
-The Syntax is heavily inspired by the [Scala language](http://scala-lang.org). So
+The Syntax is heavily inspired by the [Scala language](https://scala-lang.org). So
 users familiar with Scala should have no problems getting started. Right now
 the syntax is not documented very well and also subject to change. So the best
 way to learn it is by looking at
