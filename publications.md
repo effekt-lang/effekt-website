@@ -20,12 +20,12 @@ Regarding the language design, there are two main references:
 
 > **"Effects as Capabilities: Effect Handlers and Lightweight Effect Polymorphisms"**.\
 > Jonathan Immanuel Brachthäuser, Philipp Schuster, and Klaus Ostermann. 2020.\
-> In _Proc. ACM Program. Lang._, 4 (OOPSLA), Article 126 ([ACM](https://dl.acm.org/doi/10.1145/3428194), [Extended Techreport](https://se.cs.uni-tuebingen.de/publications/brachthaeuser20effekt/)).
+> In _Proc. ACM Program. Lang._, 4 (OOPSLA), Article 126 ([ACM](https://doi.org/10.1145/3428194), [Extended Techreport](https://se.cs.uni-tuebingen.de/publications/brachthaeuser20effekt/)).
 
 
 > **"Effects, Capabilities, and Boxes: from scope-based reasoning to type-based reasoning and back"**.\
 > Jonathan Immanuel Brachthäuser, Philipp Schuster, Edward Lee, and Aleksander Boruch-Gruszecki.\
-> In _Proc. ACM Program. Lang._, 6 (OOPSLA), Article 76 ([ACM](https://dl.acm.org/doi/abs/10.1145/3527320), [Extended Techreport](https://se.cs.uni-tuebingen.de/publications/brachthaeuser22effects/))
+> In _Proc. ACM Program. Lang._, 6 (OOPSLA), Article 76 ([ACM](https://doi.org/10.1145/3527320), [Extended Techreport](https://se.cs.uni-tuebingen.de/publications/brachthaeuser22effects/))
 
 
 ### Compilation of Effect Handlers
@@ -36,15 +36,15 @@ Regarding the language design, there are two main references:
 
 > **"A Typed Continuation-Passing Translation for Lexical Effect Handlers"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, Marius Müller, and Klaus Ostermann.\
-> In _Proceedings of the International Conference on Programming Language Design and Implementation (PLDI) 2022_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster22typed/), [ACM](https://dl.acm.org/doi/abs/10.1145/3519939.3523710))
+> In _Proceedings of the International Conference on Programming Language Design and Implementation (PLDI) 2022_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster22typed/), [ACM](https://doi.org/10.1145/3519939.3523710))
 
 > **"Region-based Resource Management and Lexical Exception Handlers in Continuation-Passing Style"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
-> In _Proceedings of the European Symposium on Programming (ESOP 2022)_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster22region/), [Springer](https://link.springer.com/chapter/10.1007/978-3-030-99336-8_18))
+> In _Proceedings of the European Symposium on Programming (ESOP 2022)_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster22region/), [Springer](http://dx.doi.org/10.1007/978-3-030-99336-8_18))
 
 > **"Capability-Passing Style for Zero-Cost Effect Handlers"**.\
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
-> In _Proceedings of the International Conference on Functional Programming (ICFP 2020)_. ([Techreport](http://se.cs.uni-tuebingen.de/publications/schuster19zero/), [ACM](https://dl.acm.org/doi/10.1145/3408975))
+> In _Proceedings of the International Conference on Functional Programming (ICFP 2020)_. ([Techreport](http://se.cs.uni-tuebingen.de/publications/schuster19zero/), [ACM](https://doi.org/10.1145/3408975))
 
 
 ### Other Related Work
@@ -68,7 +68,7 @@ to the Effekt language. We are happy to share author-copies on request.
 
 > **"Effect Handlers for the Masses"**.\
 > Jonathan Immanuel Brachthäuser, Philipp Schuster, and Klaus Ostermann.\
-> In _Proc. ACM Program. Lang._, 2 (OOPSLA 2018): 111:1--111:27. ([PDF](http://se.cs.uni-tuebingen.de/publications/brachthaeuser18effect/))
+> In _Proc. ACM Program. Lang._, 2 (OOPSLA 2018): 111:1--111:27. ([PDF](https://se.cs.uni-tuebingen.de/publications/brachthaeuser2018masses/))
 
 > **"Programming with Implicit Values, Functions, and Control"**.\
 > Jonathan Immanuel Brachthäuser and Daan Leijen.\
@@ -83,7 +83,7 @@ to the Effekt language. We are happy to share author-copies on request.
 
 > **"Effect Handlers, Evidently"**.\
 > Ningning Xie, Jonathan Immanuel Brachthäuser, Daniel Hillerström, Philipp Schuster, Daan Leijen. 2020.\
->  In _Proceedings of the International Conference on Functional Programming (2020)_. ([PDF](http://se.cs.uni-tuebingen.de/publications/xie20evidently/), [ACM](https://dl.acm.org/doi/10.1145/3408981))
+>  In _Proceedings of the International Conference on Functional Programming (2020)_. ([PDF](http://se.cs.uni-tuebingen.de/publications/xie20evidently/), [ACM](https://doi.org/10.1145/3408981))
 
 > **"Taming Control-flow through Linear Effect Handlers"**.\
 > Daan Leijen and Jonathan Immanuel Brachthäuser.\
