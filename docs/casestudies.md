@@ -2,6 +2,7 @@
 layout: docs
 title: Casestudies
 permalink: docs/casestudies
+origin: effekt-website/blob/master/docs
 ---
 
 # Casestudies
