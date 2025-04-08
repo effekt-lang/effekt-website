@@ -20,9 +20,26 @@
     }
   }
 
+
   #page-content-wrapper {
     #content {
       .content-wrapper {
+        #source-btn {
+          position: absolute;
+          top: $base-point-grid * 22.75;
+          right: $base-point-grid * 8;
+          font-size: 10pt;
+          a {
+            text-decoration: none;
+            color: gray;
+          }
+        }
+
+        // add padding to first h1 heading in content to separate heading from source link
+        section h1:first-of-type {
+          padding-right: 1em;
+        }
+
         a {
           text-decoration: underline;
 
