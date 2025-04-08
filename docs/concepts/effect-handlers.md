@@ -4,7 +4,7 @@ title: Effect Handlers
 permalink: docs/concepts/effect-handlers
 ---
 
-## An Introduction to (Algebraic) Effect Handlers
+# An Introduction to (Algebraic) Effect Handlers
 Besides the built-in functions like `println` that have effects (e.g. `Console`),
 which are tracked by the effect system, Effekt also offers _user definable control effects_.
 
