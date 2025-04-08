@@ -3,6 +3,7 @@ layout: docs
 title: "Language Tour"
 position: 3
 permalink: tour
+origin: effekt-website/blob/master
 ---
 
 # Language Tour
