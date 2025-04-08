@@ -8,7 +8,7 @@ permalink: docs/concepts/bidirectional
 
 Effekt implements a feature called _"bidirectional effects"_ or
 _"bidirectional control-flow"_. The idea of bidirectional effects has been
-introduced by Zhang et al. in their [OOPSLA'20 paper](https://dl.acm.org/doi/10.1145/3428207):
+introduced by Zhang et al. in their [OOPSLA'20 paper](https://doi.org/10.1145/3428207):
 
 > "Handling bidirectional control flow".
 > Yizhou Zhang, Guido Salvaneschi, and Andrew C. Myers. 2020.
