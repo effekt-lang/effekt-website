@@ -264,10 +264,54 @@ function parseOptions(str: string): CodeOptions {
   }
 }
 
+function getQueryParam(param: string): string | null {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
 
+function decodeBase64(base64: string): string {
+  try {
+    return decodeURIComponent(atob(base64));
+  } catch (e) {
+    console.error("Failed to decode base64 string:", e);
+    return "";
+  }
+}
 
+function encodeBase64(text: string): string {
+  return btoa(encodeURIComponent(text));
+}
+
+function fillCodeBlockFromQuery() {
+  // Get query parameters
+  const playgroundCode = getQueryParam("playground");
+  const replCode = getQueryParam("repl");
+  console.log(playgroundCode)
+  console.log(replCode)
+  
+  // Find the elements
+  const playground = document.getElementById("playground");
+  const repl = document.getElementById("repl");
+  console.log(playground.textContent)
+  console.log(repl.textContent)
+  
+  // Fill playground if parameter exists and element exists
+  if (playgroundCode && playground) {
+    const decodedContent = decodeBase64(playgroundCode);
+    console.log(decodedContent)
+    playground.textContent = decodedContent;
+  }
+  
+  // Fill repl if parameter exists and element exists
+  if (replCode && repl) {
+    const decodedContent = decodeBase64(replCode);
+    console.log(decodedContent)
+    repl.textContent = decodedContent;
+  }
+}
 
 window.addEventListener("DOMContentLoaded", () => {
+  fillCodeBlockFromQuery()
 
   processCode()
 
