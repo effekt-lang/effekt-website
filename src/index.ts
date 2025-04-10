@@ -361,9 +361,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const shareButton = document.getElementById("button-share")
   if (shareButton) {
-    shareButton.onclick = () => {
-      setTimeout(() => null, 500)
-    }
+    shareButton.onclick = share
   }
 
   // const codes = document.querySelectorAll("code")
