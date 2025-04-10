@@ -3,6 +3,8 @@ layout: page
 title: Playground
 section: "playground"
 position: 2
+redirect_from:
+  - quickstart
 ---
 
 # Interactive Playground
