@@ -1,21 +1,17 @@
 import * as hljs from "./highlight-effekt";
 import * as docs from "./docs";
-import { fillFromQueryParams } from "./playground";
+import { IViewModel } from "./ide";
 
-interface EditorRef {
-  model: any;
-  editor: any;
-}
-
-const editorRegistry = new Map<string, EditorRef>()
+let playgroundModel: IViewModel | null = null;
+let replModel: IViewModel | null = null;
 
 async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLElement, liftedOut: HTMLElement) {
-    let parent = code.parentNode as HTMLElement
+    const parent = code.parentNode as HTMLElement
 
     parent.classList.add("editor-loading")
 
-    let IDE = await import(/* webpackMode: "lazy", webpackChunkName: "ide" */ "./ide")
-    let editor = await import(/* webpackMode: "lazy", webpackChunkName: "editor" */ "./editor")
+    const IDE = await import(/* webpackMode: "lazy", webpackChunkName: "ide" */ "./ide")
+    const editor = await import(/* webpackMode: "lazy", webpackChunkName: "editor" */ "./editor")
 
     parent.classList.remove("editor-loading")
     parent.classList.add("editor")
@@ -25,8 +21,8 @@ async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLE
     const contents = code.attributes["content"].value
     code.textContent = ""
 
-    let prelude = code.attributes["prelude"].value || ""
-    let postlude = code.attributes["postlude"].value || "\n"
+    const prelude = code.attributes["prelude"].value || ""
+    const postlude = code.attributes["postlude"].value || "\n"
 
     // we create a model, initialized with the contents
     const model = IDE.createModel(filename, contents, prelude, postlude)
@@ -43,7 +39,11 @@ async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLE
     // init editor
     const edit = editor.create(code, run, output, coreOut, liftedOut, model)
 
-    editorRegistry.set(module, { model: model, editor: edit })
+    if (code.id === "playground") {
+      playgroundModel = model
+    } else if (code.id === "repl") {
+      replModel = model
+    }
 
     edit
 }
@@ -56,11 +56,11 @@ function processCode() {
   let prelude = ""
 
   function addMetadata(code: HTMLElement, opts: CodeOptions) {
-    let moduleName = "module" + id++
+    const moduleName = "module" + id++
     code.setAttribute("module", moduleName)
     const moduleDecl = "module " + moduleName + "\n"
 
-    let parent: HTMLElement = code.parentElement
+    const parent: HTMLElement = code.parentElement
 
     // do not add repls to prelude
     if (opts.repl) {
@@ -69,8 +69,8 @@ function processCode() {
       code.setAttribute("content", code.textContent)
       code.setAttribute("postlude", "\n)\n")
     } else {
-      let pre = moduleDecl + prelude
-      let post = "\n"
+      const pre = moduleDecl + prelude
+      const post = "\n"
       code.setAttribute("prelude", pre)
       code.setAttribute("postlude", post)
       code.setAttribute("content", code.textContent)
@@ -82,7 +82,7 @@ function processCode() {
   }
 
   function addNavigation(code: HTMLElement, opts: CodeOptions) {
-    let parent = code.parentNode.parentNode as HTMLElement
+    const parent = code.parentNode.parentNode as HTMLElement
 
     const nav = document.createElement("nav")
 
@@ -93,14 +93,14 @@ function processCode() {
       coreOut = document.createElement("code")
       coreOut.innerHTML = "// Please click 'edit' to show generated core."
 
-      let container = document.createElement("div")
+      const container = document.createElement("div")
       container.classList.add("core-out")
 
-      let headline = document.createElement("h4")
+      const headline = document.createElement("h4")
       headline.innerHTML = "Generated Core"
       container.appendChild(headline)
 
-      let pre = document.createElement("pre")
+      const pre = document.createElement("pre")
       pre.append(coreOut)
       container.appendChild(pre)
 
@@ -112,14 +112,14 @@ function processCode() {
       liftedCore = document.createElement("code")
       liftedCore.innerHTML = "// Please click 'edit' to show generated lifted core."
 
-      let container = document.createElement("div")
+      const container = document.createElement("div")
       container.classList.add("core-out")
 
-      let headline = document.createElement("h4")
+      const headline = document.createElement("h4")
       headline.innerHTML = "Generated Lifted Core"
       container.appendChild(headline)
 
-      let pre = document.createElement("pre")
+      const pre = document.createElement("pre")
       pre.append(liftedCore)
       container.appendChild(pre)
 
@@ -127,8 +127,7 @@ function processCode() {
     }
 
     if (opts.repl) {
-      let run = document.createElement("a")
-      run.setAttribute("href", "#")
+      const run = document.createElement("button")
       run.classList.add("button-run")
       run.textContent = "run"
       nav.append(run)
@@ -139,13 +138,19 @@ function processCode() {
       }
 
     } else if (!opts.readOnly) {
-      let edit = document.createElement("a")
-      edit.setAttribute("href", "#")
+      if (code.id === "playground") {
+        const share = document.createElement("button")
+        share.setAttribute("id", "button-share")
+        share.textContent = "share"
+        nav.append(share)
+      }
+
+      const edit = document.createElement("button")
       edit.classList.add("button-edit")
       edit.textContent = "edit"
       nav.append(edit)
 
-      let activateEditor = () => {
+      const activateEditor = () => {
         edit.onclick = () => { return false }
         edit.classList.add("disabled");
         enableEditing(code, null, coreOut, liftedCore);
@@ -158,7 +163,7 @@ function processCode() {
 
   fences.forEach(code => {
 
-    let opts = classToOptions(code)
+    const opts = classToOptions(code)
 
     if (opts.reset) {
       prelude = ""
@@ -256,9 +261,9 @@ function startsWith(s: string, prefix: string): boolean {
 }
 
 function parseOptions(str: string): CodeOptions {
-  let langRx = /^language-([a-zA-Z_\-$]+)/
-  let flags = str.split(':')
-  let lang = langRx.exec(str)[1]
+  const langRx = /^language-([a-zA-Z_\-$]+)/
+  const flags = str.split(':')
+  const lang = langRx.exec(str)[1]
 
   function has(flag) { return flags.indexOf(flag) != -1 }
 
@@ -276,13 +281,92 @@ function parseOptions(str: string): CodeOptions {
   }
 }
 
+// Gets the content of the editor and repl on the playground page and creates
+// a shareable link by encoding in base64 and saving it as query parameters in the URL.
+// Also updates the current URL accordingly
+function share() {
+  const url = new URL(window.location.href);
+  // get content of playground and repl
+  // if either has not been initialised yet, fallback to getting the content of the corresponding html element
+  let playgroundContent: string
+  if (playgroundModel) {
+    playgroundContent = playgroundModel.getValue()
+  } else if (document.getElementById("playground")) {
+    playgroundContent = document.getElementById("playground").textContent
+  } else {
+    playgroundContent = ""
+  }
+  let replContent: string
+  if (replModel) {
+    replContent = replModel.getValue()
+  } else if (document.getElementById("repl")) {
+    replContent = document.getElementById("repl").textContent
+  } else {
+    replContent = ""
+  }
+  // encode content in base64
+  const playgroundEncoded = encodeBase64(playgroundContent)
+  const replEncoded = encodeBase64(replContent)
+  // set query params in url
+  url.searchParams.set("playground", playgroundEncoded)
+  url.searchParams.set("repl", replEncoded)
+  // save url to clipboard and update the current url
+  navigator.clipboard.writeText(url.toString()).then(() => {
+    // alert('Link copied to clipboard!');
+    // change current URL
+    history.pushState(null, "", url.toString())
+  }).catch(err => {
+    console.error('Error copying text: ', err);
+  });
+}
+
+function getQueryParam(param: string): string | null {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+function decodeBase64(base64: string): string {
+  try {
+    return decodeURIComponent(atob(base64));
+  } catch (e) {
+    console.error("Failed to decode base64 string:", e);
+    return "";
+  }
+}
+
+function encodeBase64(text: string): string {
+  return btoa(encodeURIComponent(text));
+}
+
+// Fills the given element (by id) by decoding the value of the associated query parameter in the URL
+function fillFromQueryParams(id: string) {
+  // Get query parameters
+  const param = getQueryParam(id);
+  
+  // Find the elements
+  const element = document.getElementById(id);
+  
+  // Fill playground if parameter exists and element exists
+  if (param && element) {
+    const decodedContent = decodeBase64(param);
+    element.textContent = decodedContent;
+  } 
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   fillFromQueryParams("playground")
   fillFromQueryParams("repl")
 
   processCode()
 
-  // let codes = document.querySelectorAll("code")
+  const shareButton = document.getElementById("button-share")
+  if (shareButton) {
+    shareButton.onclick = () => {
+      setTimeout(() => null, 500)
+    }
+  }
+
+  // const codes = document.querySelectorAll("code")
   // monacoEditor(codes[codes.length - 1])
   hljs.configure({
       languages: ['effekt', 'bash']
