@@ -1,7 +1,7 @@
 
 options:
-  - title: Try Online
-    url: quickstart
+  - title: Playground
+    url: playground
 
   - title: Getting Started
     url: docs
