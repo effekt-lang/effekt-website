@@ -1,0 +1,24 @@
+name: link validator
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --base . --require-https --max-redirects 10 --suggest --verbose --accept '100..=103,200..=299,403' --exclude-path 'effekt/kiama' './**/*.md'

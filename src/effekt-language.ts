@@ -42,7 +42,7 @@ let loadedModules: any = {
 export function load(path: string) {
   const mod = loadedModules[path] || { module: null, timestamp: 0 };
   loadedModules[path] = mod;
-  const fullpath = "out/" + path;
+  const fullpath = path;
   const lastModified = Effekt.lastModified(fullpath);
   if (lastModified > mod.timestamp) {
     const contents = Effekt.readFile(fullpath)
@@ -69,5 +69,5 @@ export function evaluate(content: string) {
   loadedModules = {};
   write("interactive.effekt", content)
   const mainFile = Effekt.compileFile("interactive.effekt")
-  return load(mainFile.replace(/^(out\/)/,"")).main().run()
+  return load(mainFile).main()
 }

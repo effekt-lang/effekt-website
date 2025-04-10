@@ -31,7 +31,7 @@ You need to have the following software installed to build and use Effekt:
 Depending on the backend you want to use / work on, you also need:
 - *JS backend (default)*: Node.js (>= 16) and npm
 - *Chez-Scheme backend*: [Chez Scheme](https://github.com/cisco/ChezScheme)
-- *LLVM backend (wip)*: LLVM >= 15 and gcc
+- *LLVM backend (wip)*: LLVM >= 18 and a C compiler (either GCC or Clang)
 
 Why three package management tools? The main build tool we use is sbt,
 but we use Maven to extract dependencies and aggregate license files of the

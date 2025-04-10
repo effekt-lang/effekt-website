@@ -48,7 +48,7 @@ If you are interested in the Effekt language, we have a few things to get you st
 
 <div id="start-install">
 <h3>Installation Guide</h3>
-<p>To install Effekt and try the examples on your own computer you can follow the <a href="docs/getting-started">installation instructions</a>.</p>
+<p>To install Effekt and try the examples on your own computer you can follow the <a href="docs">installation instructions</a>.</p>
 </div>
 
 <div id="start-read">

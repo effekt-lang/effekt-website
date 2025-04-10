@@ -4,7 +4,7 @@ title: Effect Handlers
 permalink: docs/concepts/effect-handlers
 ---
 
-## An Introduction to (Algebraic) Effect Handlers
+# An Introduction to (Algebraic) Effect Handlers
 Besides the built-in functions like `println` that have effects (e.g. `Console`),
 which are tracked by the effect system, Effekt also offers _user definable control effects_.
 
@@ -50,7 +50,7 @@ That is, it communicates that the context still needs to handle `fileNotFound`.
 > **Remark**
 > Builtin side-effects like printing to the console are tracked, but cannot
 > be handled, and their semantics is fixed. Hence, we do not track them as
-> effects, but as [second-class _resources_](https://dl.acm.org/doi/10.1145/3527320).
+> effects, but as [second-class _resources_](https://doi.org/10.1145/3527320).
 
 #### Handling Exceptions
 Everybody familiar with exception handling knows what comes next: we call

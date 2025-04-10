@@ -29,7 +29,7 @@ The first step is to parse the given Effekt program into an AST in the IR called
 On Source there are several steps carried out, mainly
   - [Name Resolution](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/Namer.scala)
   - [Typechecking](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/Typer.scala)
-  - [Transformation to capability-passing style](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/source/Elaborator.scala)
+  - [Transformation to capability-passing style](https://github.com/effekt-lang/effekt/blob/master/effekt/shared/src/main/scala/effekt/cps/Transformer.scala)
 
 #### Middleend
 Subsequently the Source IR is translated step-by-step to different IRs.

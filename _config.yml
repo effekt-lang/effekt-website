@@ -25,6 +25,12 @@ defaults:
       path: "tour"
     values:
       layout: "tour"
+      origin: "effekt/blob/master/examples/tour"
+  -
+    scope:
+      path: "docs/casestudies"
+    values:
+      origin: "effekt/blob/master/examples/casestudies"
 
 sass:
   load_paths:
