@@ -46,29 +46,36 @@ pre {
     right: 0.5em;
     z-index: 999;
 
-    a {
+    button {
       display: inline-block;
       margin-right: 0.5em;
       font-family: "Open Sans", sans-serif;
       text-decoration: none !important;
       color: #a3a3a3;
+      background: none;
+      border: none
     }
-    a.button-run:before, a.button-edit:before {
+    button.button-run:before, button.button-edit:before, button#button-share:before {
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       padding-right: 0.5em;
     }
-    a.button-run:before {
+    button.button-run:before {
       content: "\f144";
     }
-    a.button-edit:before {
+    button.button-edit:before {
       content: "\f044";
     }
-    a.disabled {
-      display: none;
-      color: #aaa;
-      cursor: auto;
-      border-bottom: none;
+    button#button-share:before {
+      content: "\f064";
+    }
+    button#button-share:focus:before {
+      // content: "\f46c";
+      content: "copied";
+    }
+    button:hover {
+      cursor: pointer;
+      color: #727272;
     }
   }
 }
