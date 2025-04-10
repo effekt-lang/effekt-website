@@ -1,6 +1,7 @@
 import * as hljs from "./highlight-effekt";
 import * as docs from "./docs";
 import { IViewModel } from "./ide";
+import { encode, decode, compressAndEncode, decodeAndDecompress }from "./encoding";
 
 let playgroundModel: IViewModel | null = null;
 let replModel: IViewModel | null = null;
@@ -305,8 +306,8 @@ function share() {
     replContent = ""
   }
   // encode content in base64
-  const playgroundEncoded = encodeBase64(playgroundContent)
-  const replEncoded = encodeBase64(replContent)
+  const playgroundEncoded = compressAndEncode(playgroundContent)
+  const replEncoded = encode(replContent)
   // set query params in url
   url.searchParams.set("playground", playgroundEncoded)
   url.searchParams.set("repl", replEncoded)
@@ -325,21 +326,8 @@ function getQueryParam(param: string): string | null {
   return urlParams.get(param);
 }
 
-function decodeBase64(base64: string): string {
-  try {
-    return decodeURIComponent(atob(base64));
-  } catch (e) {
-    console.error("Failed to decode base64 string:", e);
-    return "";
-  }
-}
-
-function encodeBase64(text: string): string {
-  return btoa(encodeURIComponent(text));
-}
-
 // Fills the given element (by id) by decoding the value of the associated query parameter in the URL
-function fillFromQueryParams(id: string) {
+function fillFromQueryParams(id: string, compressed: boolean) {
   // Get query parameters
   const param = getQueryParam(id);
   
@@ -349,7 +337,7 @@ function fillFromQueryParams(id: string) {
   // Fill playground if parameter exists and element exists
   if (param && element) {
     showWarning()
-    const decodedContent = decodeBase64(param);
+    const decodedContent = compressed ? decodeAndDecompress(param) : decode(param);
     element.textContent = decodedContent;
   } 
 }
@@ -362,8 +350,8 @@ function showWarning() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  fillFromQueryParams("playground")
-  fillFromQueryParams("repl")
+  fillFromQueryParams("playground", true)
+  fillFromQueryParams("repl", false)
 
   processCode()
 
