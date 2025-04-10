@@ -348,9 +348,17 @@ function fillFromQueryParams(id: string) {
   
   // Fill playground if parameter exists and element exists
   if (param && element) {
+    showWarning()
     const decodedContent = decodeBase64(param);
     element.textContent = decodedContent;
   } 
+}
+
+function showWarning() {
+  const warning = document.getElementById("playground-warning")
+  if (warning) {
+    warning.classList.remove("hidden")
+  }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -361,7 +369,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const shareButton = document.getElementById("button-share")
   if (shareButton) {
-    shareButton.onclick = share
+    shareButton.onclick = () => {
+      showWarning()
+      share()
+    }
   }
 
   // const codes = document.querySelectorAll("code")
