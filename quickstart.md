@@ -13,12 +13,12 @@ Effekt is a research language, we recommend reading [the papers](https://se.cs.u
 ### Online Editor
 Below you can find an online editor, which is enabled by clicking "edit" on the right. Please be aware that the changes are not saved!
 
-```effekt:prelude:hide
+<pre><code class="language-effekt:prelude:hide">
 import list
 import option
-```
+</code></pre>
 
-```
+<pre><code class="language-effekt" id="playground">
 interface Greet { def sayHello(): Unit }
 
 def helloWorld() = try {
@@ -26,10 +26,8 @@ def helloWorld() = try {
 } with Greet {
   def sayHello() = { println("Hello!"); resume(()) }
 }
-```
+</code></pre>
 
-### REPL
-The following read-eval-print-loop gives you access to run the above contents:
-```effekt:repl
+<pre><code class="language-effekt:repl" id="repl">
 helloWorld()
-```
+</code></pre>
