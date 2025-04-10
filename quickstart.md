@@ -1,17 +1,15 @@
 ---
 layout: page
-title: Try Effekt Online
+title: Playground
 section: "quickstart"
 position: 2
 ---
 
-# Try Effekt Online
+# Interactive Playground
+
 You can immediately experiment with the Effekt language, without [installing](docs/getting-started) it.
 
-Effekt is a research language, we recommend reading [the papers](https://se.cs.uni-tuebingen.de/research/handlers/effekt/) describing important design decisions and the inner workings of Effekt.
-
-### Online Editor
-Below you can find an online editor, which is enabled by clicking "edit" on the right. Please be aware that the changes are not saved!
+Below you can find an editor, which is enabled by clicking "edit" on the right. Please be aware that the changes are not saved unless you create a sharable URL by clicking on the share button.
 
 <pre><code class="language-effekt:prelude:hide">
 import list
@@ -31,3 +29,5 @@ def helloWorld() = try {
 <pre><code class="language-effekt:repl" id="repl">
 helloWorld()
 </code></pre>
+
+**Warning**: Be sure to inspect any Effekt code that is shared with you before executing it as it is possible to run arbitrary, potentially harmful, JavaScript code.
