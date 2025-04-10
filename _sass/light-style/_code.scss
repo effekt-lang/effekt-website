@@ -70,8 +70,7 @@ pre {
       content: "\f064";
     }
     button#button-share:focus:before {
-      // content: "\f46c";
-      content: "copied";
+      content: "\f46c";
     }
     button:hover {
       cursor: pointer;
