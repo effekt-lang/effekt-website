@@ -18,7 +18,7 @@ export function compressAndEncode(text: string): string {
 export function decodeAndDecompress(encoded: string): string {
     try {
       const base64decoded = decode(encoded);
-      const bytes = strToU8(base64decoded)
+      const bytes = strToU8(base64decoded, true)
       const decompressed = inflateSync(bytes);
       return strFromU8(decompressed)
     } catch (e) {
