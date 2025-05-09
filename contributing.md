@@ -11,7 +11,7 @@ you get started:
 
 ## Building Effekt
 While this document might age and become outdated, the most current and up-to-date
-instructions can always be found in the [Github Actions workflow file]({{ site.githuburl }}/blob/master/.github/workflows/ci.yml).
+instructions can always be found in the [Github Actions workflow file]({{ site.githuburl }}/blob/master/.github/actions/setup-effekt/action.yml).
 It might be a bit tricky to read but does contain all the necessary information.
 
 If you notice that something does not work as expected, please consider
