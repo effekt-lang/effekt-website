@@ -18,8 +18,6 @@ options:
         url: /tour/values
       - title: Variables
         url: /tour/variables
-      - title: Computations
-        url: /tour/computation
       - title: Records
         url: /tour/records
       - title: Datatypes
@@ -30,6 +28,8 @@ options:
         url: /tour/functions
       - title: Effects
         url: /tour/effects
+      - title: Computations
+        url: /tour/computation
       - title: Objects
         url: /tour/objects
       - title: Captures
