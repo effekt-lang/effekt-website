@@ -74,6 +74,8 @@ options:
         url: docs/casestudies/ad
       - title: Probabilistic Programming
         url: docs/casestudies/smc
+      - title: Probabilistic Inference
+        url: docs/casestudies/inference
       - title: Build Systems
         url: docs/casestudies/buildsystem
       - title: Naturalistic DSLs
