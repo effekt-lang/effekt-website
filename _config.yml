@@ -50,6 +50,7 @@ include:
 
 exclude:
 - effekt
+- docs/casestudies/smc.effekt.md
 
 org: docs
 markdown: kramdown

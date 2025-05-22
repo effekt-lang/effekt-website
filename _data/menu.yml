@@ -66,8 +66,9 @@ options:
         url: docs/casestudies/frontend
       - title: Automatic Differentiation
         url: docs/casestudies/ad
-      - title: Probabilistic Programming
-        url: docs/casestudies/smc
+      # currently does not work - unlisted
+      # - title: Probabilistic Programming
+      #   url: docs/casestudies/smc
       - title: Probabilistic Inference
         url: docs/casestudies/inference
       - title: Build System
