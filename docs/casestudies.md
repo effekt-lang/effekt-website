@@ -5,7 +5,7 @@ permalink: docs/casestudies
 origin: effekt-website/blob/master/docs
 ---
 
-# Casestudies
+# Case Studies
 
 This folder contains several case studies showcasing the Effekt language and how to use effects and handlers.
 
