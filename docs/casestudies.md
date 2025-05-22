@@ -23,3 +23,6 @@ Other, independent case studies:
 
 - [Automatic Differentiation](/docs/casestudies/ad.effekt.md): Using effect handlers to implement backpropagation.
 - [Naturalistic DSLs](/docs/casestudies/naturalisticdsls.effekt.md): Using effect handlers to model linguistic effects and express natural language examples.
+- [Probabilistic Inference](/docs/casestudies/inference.effekt.md): Performing inference over probabilistic models with the help of effects.
+- [Scheduler](/docs/casestudies/scheduler.effekt.md): Cooperatively threaded scheduler using effect handlers.
+- [Naturalistic DSLs](/docs/casestudies/buildsystem.effekt.md): Implementation of the ideas introduced by "Build Systems à la Carte" by Andrey Mokhov, Neil Mitchell and Simon Peyton Jones.

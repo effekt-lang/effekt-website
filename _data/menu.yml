@@ -62,21 +62,16 @@ options:
   - title: Case Studies
     url: docs/casestudies
     nested_options:
-      - title: Lexer
-        url: docs/casestudies/lexer
-      - title: Parser
-        url: docs/casestudies/parser
-      - title: Pretty Printer
-        url: docs/casestudies/prettyprinter
-      - title: ANF Transformation
-        url: docs/casestudies/anf
+      - title: Compiler Frontend Phases
+        url: docs/casestudies/frontend
       - title: Automatic Differentiation
         url: docs/casestudies/ad
-      - title: Probabilistic Programming
-        url: docs/casestudies/smc
+      # currently does not work - unlisted
+      # - title: Probabilistic Programming
+      #   url: docs/casestudies/smc
       - title: Probabilistic Inference
         url: docs/casestudies/inference
-      - title: Build Systems
+      - title: Build System
         url: docs/casestudies/buildsystem
       - title: Naturalistic DSLs
         url: docs/casestudies/naturalisticdsls

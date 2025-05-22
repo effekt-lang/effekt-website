@@ -1,0 +1,1 @@
+../../effekt/examples/casestudies/frontend.effekt.md
