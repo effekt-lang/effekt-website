@@ -9,7 +9,7 @@ redirect_from:
 
 # Interactive Playground
 
-You can immediately experiment with the Effekt language, without [installing](docs/) it.
+You can immediately experiment with the Effekt language, without [installing](docs/) it. Visit the [language tour](tour) to learn more about the language.
 
 Below you can find an editor, which is enabled by clicking "edit" on the right. Please be aware that the changes are not saved unless you create a sharable URL by clicking on the "share" button.
 

@@ -53,8 +53,7 @@ If you are interested in the Effekt language, we have a few things to get you st
 
 <div id="start-read">
 <h3>Read the Papers</h3>
-<p>To understand the theory and concepts behind Effekt, you can read about
-<a href="design-considerations">design considerations</a>, or read the
+<p>To understand the theory and concepts behind Effekt, you can read the
 <a href="publications">academic papers</a>.</p>
 </div>
 
