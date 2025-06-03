@@ -7,6 +7,11 @@ on:
       effekt_commit:
         description: "Commit SHA of Effekt submodule to checkout and build. If omitted, the latest commit is chosen. (OPTIONAL)"
         required: false
+  schedule:
+    - cron: '0 10 * * 1' # 10:00, every monday
+
+permissions:
+  contents: write
   
 jobs:
   build:
@@ -27,6 +32,7 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+          ref: scheduled-update
 
       - name: Update submodule
         run: |
@@ -48,22 +54,12 @@ jobs:
           npm install
           npx webpack
   
-      - name: Open Pull Request
-        # here we have to make sure that trigger event is on 'manual'
-        # since 'on push' could cause a infinite loop of actions triggering each other
-        if: github.event_name == 'workflow_dispatch'
-        uses: peter-evans/create-pull-request@v5
-        with:
-          add-paths: |
-            src/
-            dist/
-            effekt/
-          commit-message: "Github Action: update compiler"
-          base: master
-          branch: action/update-compiler
-          title: "[Github Action] Update compiler"
-          body: "Update Effekt compiler on the website."
-          reviewers: |
-            b-studios
-            dvdvgt
-          draft: false
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add src/ dist/ effekt/
+          git commit -m "Github Action: update compiler" || echo "nothing to commit"
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
