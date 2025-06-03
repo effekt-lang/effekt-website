@@ -32,7 +32,6 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-          ref: scheduled-update
 
       - name: Update submodule
         run: |
