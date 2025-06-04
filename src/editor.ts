@@ -1,9 +1,9 @@
 // import * as monaco from "monaco-editor";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import * as hljs from "./highlight-effekt";
-import "monaco-editor/esm/vs/editor/browser/controller/coreCommands";
-import "monaco-editor/esm/vs/editor/contrib/hover/hover";
-import "monaco-editor/esm/vs/editor/contrib/wordHighlighter/wordHighlighter";
+// import "monaco-editor/esm/vs/editor/browser/controller/coreCommands";
+// import "monaco-editor/esm/vs/editor/contrib/hover/browser/hoverContribution";
+// import "monaco-editor/esm/vs/editor/contrib/wordHighlighter/browser/wordHighlighter";
 import { syntax, docsTheme, pageTheme } from "./effekt-syntax";
 import * as IDE from "./ide"
 
@@ -55,11 +55,11 @@ export function create(
     matchBrackets: "never",
     overviewRulerBorder: false,
     cursorStyle: "line",
-    renderFinalNewline: false,
+    renderFinalNewline: "off",
     renderLineHighlight: "none",
     fixedOverflowWidgets: true,
     lightbulb: {
-      enabled: false
+      enabled: monaco.editor.ShowLightbulbIconMode.Off
     },
     quickSuggestions: false,
     scrollbar: {
@@ -83,7 +83,7 @@ export function create(
 
   // remove some keybindings
   //@ts-ignore
-  editor._standaloneKeybindingService.addDynamicKeybinding('-expandLineSelection');
+  // editor._standaloneKeybindingService.addDynamicKeybinding('-expandLineSelection');
 
   addRunAction(editor, run, out)
 

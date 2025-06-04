@@ -45,7 +45,7 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
-    namedModules: true,
+    moduleIds: "named",
     concatenateModules: true,
   }
 };
