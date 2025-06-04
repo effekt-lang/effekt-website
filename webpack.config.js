@@ -1,6 +1,7 @@
 const path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const webpack = require("webpack")
 
 module.exports = {
 
@@ -44,7 +45,9 @@ module.exports = {
   plugins: [new MonacoWebpackPlugin()],
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin()],
+    minimizer: [new TerserPlugin({
+      extractComments: false
+    })],
     moduleIds: "named",
     concatenateModules: true,
   }
