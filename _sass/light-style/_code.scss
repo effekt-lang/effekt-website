@@ -14,7 +14,7 @@ pre {
   }
 
   .monaco-editor  {
-    overflow: unsert;
+    overflow: unset;
   }
 
   code.hidden { display: none }
@@ -86,13 +86,10 @@ pre.editor {
 
   .hover-contents {
     h4 {
-      margin-block-start: 0.1em;
-      margin-block-end: -1em;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
     ul {
       margin: 0;
-      line-height: 1em;
     }
   }
 }
