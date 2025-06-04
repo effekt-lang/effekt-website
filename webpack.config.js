@@ -1,7 +1,7 @@
 const path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const webpack = require("webpack")
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
 
@@ -42,13 +42,31 @@ module.exports = {
       }
     ]
   },
-  plugins: [new MonacoWebpackPlugin()],
+  plugins: [
+    // new BundleAnalyzerPlugin(),
+    // new MonacoWebpackPlugin({})
+  ],
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin({
-      extractComments: false
-    })],
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+      })
+    ],
     moduleIds: "named",
+    chunkIds: "named",
     concatenateModules: true,
+    // https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: "vendors",
+          reuseExistingChunk: true,
+          enforce: true,
+        }
+      }
+    }
   }
 };

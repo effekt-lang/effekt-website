@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkeffekt_website=self.webpackChunkeffekt_website||[]).push([[5628],{"./node_modules/monaco-editor/esm/vs/editor/common/services/textModelSync/textModelSync.protocol.js":(e,o,s)=>{s.r(o)}}]);
