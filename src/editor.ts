@@ -1,9 +1,6 @@
 // import * as monaco from "monaco-editor";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import * as hljs from "./highlight-effekt";
-// import "monaco-editor/esm/vs/editor/browser/controller/coreCommands";
-// import "monaco-editor/esm/vs/editor/contrib/hover/browser/hoverContribution";
-// import "monaco-editor/esm/vs/editor/contrib/wordHighlighter/browser/wordHighlighter";
 import { syntax, docsTheme, pageTheme } from "./effekt-syntax";
 import * as IDE from "./ide"
 
