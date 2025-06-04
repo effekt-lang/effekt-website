@@ -1,7 +1,7 @@
 const path = require("path");
 const TerserPlugin = require('terser-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-// const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
 
@@ -44,7 +44,13 @@ module.exports = {
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
-    // new MonacoWebpackPlugin({})
+    new MonacoWebpackPlugin({
+      features: [
+        "coreCommands",
+        "hover",
+        "wordHighlighter"
+      ]
+    })
   ],
   optimization: {
     minimize: true,
