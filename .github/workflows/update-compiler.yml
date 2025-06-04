@@ -51,6 +51,7 @@ jobs:
       - name: Run webpack
         run: |
           npm install
+          rm -f dist/*
           npx webpack
   
       - name: Commit and Push Changes
