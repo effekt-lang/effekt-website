@@ -5,7 +5,7 @@
  */
 import * as effekt from "./effekt-language";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-import type { Diagnostic, DiagnosticSeverity, Position } from "vscode-languageserver-types"
+import { type Diagnostic, type DiagnosticSeverity, type Position } from "vscode-languageserver-types"
 
 // initialize:
 // load all code[module=...] elements and write them to the IDE
