@@ -36,7 +36,7 @@ Let's first think about what they do:
 
 This provides a possible plan of action:
 1. define an early exit effect
-2. define `optional` as a function that recieves a block
+2. define `optional` as a function that receives a block
 3. define the `!` helper under some name of your choice
 4. transcribe the F# example above in Effekt:
 
