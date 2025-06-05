@@ -27,6 +27,40 @@ def assertNonzero(n: Int) = {
   do assert(not(isZero), Formatted::tryEmit(Escape::RESET) ++ "Expected: nonzero number\n  Obtained: ".dim ++ show(n).red)
 }
 
+def tests { body: => Unit / { Test, Formatted } }: Bool = {
+  with Formatted::noFormatting;
+
+  var failed = 0
+  var passed = 0
+
+  // 2) Run the tests
+  try { body() } with Test {
+    // 2a) Handle a passing test on success
+    def success(name, duration) = {
+      passed = passed + 1
+      println("✓".green ++ " " ++ name ++ duration.ms)
+      resume(())
+    }
+
+    // 2b) Handle a failing test on failure, additionally printing its message
+    def failure(name, msg, duration) = {
+      failed = failed + 1
+      println("✕".red ++ " " ++ name ++ duration.ms)
+      println("  " ++ msg.red)
+      resume(())
+    }
+  }
+
+  // 3) Format the test results
+  println("")
+  println(" " ++ (passed.show ++ " pass"))
+  println(" " ++ (failed.show ++ " fail"))
+  println(" " ++ (passed + failed).show ++ " tests total")
+
+  // 4) Return true if all tests succeeded, otherwise false
+  return failed == 0
+}
+
 // TODOs that don't crash
 def todo[R](): Option[R] = None()
 def todo[R](): List[R] = Nil()
@@ -427,7 +461,7 @@ def assertSolutions(obtained: List[Board], expected: List[Board]): Unit / { Asse
   do assert(true, "All solutions found")
 }
 
-def testSuite(): Bool = suite("tasks/sudoku") {
+def testSuite(): Bool = tests {
   val filledSudoku: Board = [
     [1, 4, 2, 3],
     [3, 2, 4, 1],
