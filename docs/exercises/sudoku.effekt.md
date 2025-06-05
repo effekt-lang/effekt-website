@@ -88,14 +88,16 @@ def someBoundary[T] { prog: => Unit / break[T] } =
 
 Let's define a 4x4 Sudoku board.
 We'll use the type alias / synonym `Board` to refer to a list of lists of numbers.
-(Yes, this is not a very efficient representation, it's just somewhat simple.)
+(Yes, this is neither an efficient nor a type-safe representation, it's just somewhat simple.)
+
+
+```effekt
+type Board = List[List[Int]]
+```
 
 Invariants for the board:
 1. the lists are always of length exactly `4`
 2. the numbers inside will always be either `1-4` (as a solution) or `0` (as a empty/placeholder value)
-```effekt
-type Board = List[List[Int]]
-```
 
 ### Internals
 
@@ -198,6 +200,7 @@ Next up is the effect we'll use for backtracking.
 It has two different operations:
 - return a valid digit (so one of `1`, `2`, `3`, `4`)
 - fail the current branch of computation
+
 ```effekt
 /// Search effect
 interface Search {
@@ -292,35 +295,20 @@ Use this to guide your implementation.
 
 The inside of the `try { ... }` has been provided and should work fine.
 
-### Task 1. Find first solution
+### Task 1. Count all the solutions
 
-Find the first possible solution. When you do, return it as `Some(solution)`
-If there's no solution, return `None()`.
-
-> **Hint:** the `each` function from the standard library might be helpful.
-> `each(fromInclusive: Int, toExclusive: Int) { (x: Int) => ... }`.
-> <https://github.com/effekt-lang/effekt/blob/9753ad826a81d3856b6930479ddc42cd72648f11/libraries/common/effekt.effekt#L635-L641>
->
-> You'll also find it used in this very file, so feel free to get inspired ;)
-
-```effekt
-/// Handler that finds first solution
-def findSolution(initial: Board): Option[Board] =
-  try {
-    Some(solve(initial))
-  } with Search {
-    def fail() = todo()      // TODO
-    def pickDigit() = todo() // TODO
-  }
-```
-
-### Task 2. Count all the solutions
-
-Next, return how many solutions there actually are in total.
-Failure means no solutions exists on the given branch.
-If there are multiple options, don't forget to count them up!
+First, return how many solutions there actually are in total.
+Failure means zero solutions exists on the given branch.
+If there are multiple options, don't forget to sum them up!
 
 Please don't use `findAllSolutions` as a subroutine, write the handler from scratch.
+
+> **Hint:** the `each` function from the standard library might be helpful.
+> `each(fromInclusive: Int, toExclusive: Int) { (x: Int) => ... }`, used as `each(0, 4) { i => ... }`
+>
+> You'll also find it used in this very file, so feel free to get inspired ;)
+>
+> Additional hint: we recommend using a mutable variable scoped in the handler of `pickDigit`.
 
 ```effekt
 /// Handler that counts all solutions
@@ -335,9 +323,9 @@ def countSolutions(initial: Board): Int =
 ```
 
 
-### Task 3. Find all solutions
+### Task 2. Find all solutions
 
-Finally, return all of the possible solutions. When you do, return them as a list.
+Next, return all of the possible solutions. When you do, return them as a list.
 If there are no solutions, return an empty list.
 
 ```effekt
@@ -350,6 +338,23 @@ def findAllSolutions(initial: Board): List[Board] =
     def pickDigit() = todo() // TODO
   }
 ```
+
+### Task 3. Find first solution
+
+Finally, find the first possible solution. When you do, return it as `Some(solution)`
+If there's no solution, return `None()`.
+
+```effekt
+/// Handler that finds first solution
+def findSolution(initial: Board): Option[Board] =
+  try {
+    Some(solve(initial))
+  } with Search {
+    def fail() = todo()      // TODO
+    def pickDigit() = todo() // TODO
+  }
+```
+
 
 ---
 
