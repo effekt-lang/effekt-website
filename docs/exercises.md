@@ -17,5 +17,5 @@ Main tasks:
 
 Bonus tasks:
 
-4. [zchallenge](docs/exercises/zchallenge) (domain modelling using effect handlers)
-5. [pull](docs/exercises/pull) (bidirectional effects)
+4. [zchallenge](/docs/exercises/zchallenge) (domain modelling using effect handlers)
+5. [pull](/docs/exercises/pull) (bidirectional effects)
