@@ -30,7 +30,7 @@ Here are some smaller steps:
 1. Define a `hurl` effect operation. Note that you need to be able to hurl both booleans and numbers.
    We'd recommend making the effect parametric in what you're throwing ("hurling").
 2. Transcribe the `factorial` function using your very own `hurl` operation.
-3. Transcribe the final `try { ... } catch as x { ... }` section into the `result()` so that you get some automated testing :)
+3. Transcribe the final `try { ... } catch as x { ... }` section into the `result()`
 
 ```effekt
 // 1. define the effect operation and any useful definitions here
