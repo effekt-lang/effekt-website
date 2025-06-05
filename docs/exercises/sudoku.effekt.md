@@ -6,7 +6,7 @@ permalink: docs/exercises/sudoku
 
 # Exercise 2: 'Sudoku'
 
-```effekt:hide
+```effekt:prelude:hide
 // This part is hidden on the website.
 
 import test

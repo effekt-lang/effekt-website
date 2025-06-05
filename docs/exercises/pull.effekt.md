@@ -6,9 +6,8 @@ permalink: docs/exercises/pull
 
 # Bonus exercise: 'Pull'
 
-```effekt
+```effekt:prelude
 import test
-import char
 ```
 
 In this task, we'll play with pull streams.

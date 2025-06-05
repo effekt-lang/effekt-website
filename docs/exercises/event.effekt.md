@@ -6,7 +6,7 @@ permalink: docs/exercises/event
 
 # Exercise 3: 'Event'
 
-```effekt:hide
+```effekt:prelude:hide
 // This part is hidden on the website.
 import tty
 
