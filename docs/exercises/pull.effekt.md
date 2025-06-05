@@ -8,6 +8,7 @@ permalink: docs/exercises/pull
 
 ```effekt:prelude
 import test
+import tty
 ```
 
 ```effekt:hide
