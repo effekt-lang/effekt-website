@@ -6,11 +6,13 @@ permalink: docs/exercises/sudoku
 
 # Exercise 2: 'Sudoku'
 
-```effekt:prelude:hide
-// This part is hidden on the website.
-
+```effekt:prelude
 import test
 import tty
+```
+
+```effekt:hide
+// This part is hidden on the website.
 
 // Use this to ignore a test
 def ignore(name: String){ body: () => Unit / { Assertion } }: Unit = ()

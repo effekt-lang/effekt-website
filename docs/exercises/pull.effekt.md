@@ -177,7 +177,7 @@ def source[A, R] { stream: () => Unit / emit[A] } { reader: () => R / read[A] }:
 #### Tests
 
 ```effekt
-def testSuite(): Unit = suite("tasks/pull") {
+def testSuite(): Bool = suite("tasks/pull") {
   test("feed (list): nonempty exhaustive") {
     var result = []
     feed([1, 2, 3]) {

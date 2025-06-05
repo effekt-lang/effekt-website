@@ -6,9 +6,12 @@ permalink: docs/exercises/event
 
 # Exercise 3: 'Event'
 
-```effekt:prelude:hide
-// This part is hidden on the website.
+```effekt:prelude
 import tty
+```
+
+```effekt:hide
+// This part is hidden on the website.
 
 /// `filter` on `List`s, written using `list::collect`
 /// Use as `list.filter { elem => elem > 0 }`
