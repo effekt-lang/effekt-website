@@ -38,14 +38,14 @@ def tests { body: => Unit / { Test, Formatted } }: Bool = {
     // 2a) Handle a passing test on success
     def success(name, duration) = {
       passed = passed + 1
-      println("✓".green ++ " " ++ name ++ duration.ms)
+      println("✓".green ++ " " ++ name)
       resume(())
     }
 
     // 2b) Handle a failing test on failure, additionally printing its message
     def failure(name, msg, duration) = {
       failed = failed + 1
-      println("✕".red ++ " " ++ name ++ duration.ms)
+      println("✕".red ++ " " ++ name)
       println("  " ++ msg.red)
       resume(())
     }

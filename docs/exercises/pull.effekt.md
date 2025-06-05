@@ -17,27 +17,23 @@ def tests { body: => Unit / { Test, Formatted } }: Bool = {
   var failed = 0
   var passed = 0
 
-  // 1) Print the name of the test
-  println(name)
-
-  // 2) Run the tests, timing them
-  val totalDuration =
-    try { body() } with Test {
-      // 2a) Handle a passing test on success
-      def success(name, duration) = {
-        passed = passed + 1
-        println("✓".green ++ " " ++ name ++ duration.ms)
-        resume(())
-      }
-
-      // 2b) Handle a failing test on failure, additionally printing its message
-      def failure(name, msg, duration) = {
-        failed = failed + 1
-        println("✕".red ++ " " ++ name ++ duration.ms)
-        println("  " ++ msg.red)
-        resume(())
-      }
+  // 2) Run the tests
+  try { body() } with Test {
+    // 2a) Handle a passing test on success
+    def success(name, duration) = {
+      passed = passed + 1
+      println("✓".green ++ " " ++ name)
+      resume(())
     }
+
+    // 2b) Handle a failing test on failure, additionally printing its message
+    def failure(name, msg, duration) = {
+      failed = failed + 1
+      println("✕".red ++ " " ++ name)
+      println("  " ++ msg.red)
+      resume(())
+    }
+  }
 
   // 3) Format the test results
   println("")
