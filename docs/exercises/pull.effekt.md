@@ -175,10 +175,6 @@ def source[A, R] { stream: () => Unit / emit[A] } { reader: () => R / read[A] }:
 
 ### Main and tests
 
-```effekt:repl
-testSuite()
-```
-
 #### Tests
 
 ```effekt
@@ -247,4 +243,9 @@ def testSuite(): Unit = suite("tasks/pull") {
     assert(res, 333)
   }
 }
+```
+
+
+```effekt:repl
+testSuite()
 ```
