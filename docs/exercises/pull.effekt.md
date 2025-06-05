@@ -285,3 +285,9 @@ def testSuite(): Bool = tests {
 ```effekt:repl
 testSuite()
 ```
+
+
+---
+
+[Back to Exercises](/docs/exercises)
+

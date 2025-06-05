@@ -61,3 +61,9 @@ Here's a REPL:
 ```effekt:repl
 result()
 ```
+
+
+---
+
+[Back to Exercises](/docs/exercises)
+

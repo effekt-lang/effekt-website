@@ -124,3 +124,8 @@ def example() = eventloop {
 ```effekt:repl
 example()
 ```
+
+---
+
+[Back to Exercises](/docs/exercises)
+

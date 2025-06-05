@@ -39,14 +39,20 @@ You can also find them in `tty` in stdlib. (Just write `import tty` and jump to 
 - it's perfectly OK to output `<RED>`, `<BOLD>` and `<RESET>` for testing purposes when working on the problem
 - bidirectional / higher-order effects might be helpful here
 
----
-
-Put your solution here:
+You can use the following editor to work on your solution:
 
 ```effekt
 def main() = ()
 ```
 
+and REPL to run things:
+
 ```effekt:repl
 main()
 ```
+
+If you want to share your solution, you can use our [playground](/playground) which allows shareable links.
+
+---
+
+[Back to Exercises](/docs/exercises)

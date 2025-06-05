@@ -84,3 +84,8 @@ Here's where you can call `getResearchStages` on the three possible inputs:
 ```effekt:repl
 test1()
 ```
+
+---
+
+[Back to Exercises](/docs/exercises)
+
