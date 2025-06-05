@@ -67,8 +67,6 @@ def todo[R](): List[R] = Nil()
 def todo(): Int = 42
 ```
 
-## Sudoku
-
 ### Prerequisites
 
 `break` is a helper effect that allows us to return a value quickly from a block of code.
@@ -343,6 +341,9 @@ def findAllSolutions(initial: Board): List[Board] =
 
 Finally, find the first possible solution. When you do, return it as `Some(solution)`
 If there's no solution, return `None()`.
+
+> **Hint:** We recommend using the `break` effect with the `someBoundary` handler here,
+> both are defined at the top of this file.
 
 ```effekt
 /// Handler that finds first solution
