@@ -8,6 +8,7 @@ origin: effekt-website/blob/master/docs
 # Exercises
 
 This folder contains several exercises made for the "Effekt: Lexical Effect Handlers in Action" tutorial at &lt;Programming&gt; 2025.
+Visit the [language tour](/tour) to learn more about the language.
 
 Main tasks:
 
