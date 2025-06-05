@@ -1,3 +1,9 @@
+---
+layout: docs
+title: Exercise 'Stages'
+permalink: docs/exercises/stages
+---
+
 # Exercise 1b: 'Research Stages'
 
 Here's some F# code shared on the internet that people use to prove how cool the F# language is:

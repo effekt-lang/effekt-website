@@ -1,3 +1,9 @@
+---
+layout: docs
+title: Exercise 'Hurl'
+permalink: docs/exercises/hurl
+---
+
 # Exercise 1a: 'Hurl'
 
 [Hurl](https://hurl.wtf) is an interesting programming language where exception handling is the only allowed control flow.

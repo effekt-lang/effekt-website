@@ -1,3 +1,9 @@
+---
+layout: docs
+title: Exercise 'Sudoku'
+permalink: docs/exercises/sudoku
+---
+
 # Exercise 2: 'Sudoku'
 
 ```effekt:hide

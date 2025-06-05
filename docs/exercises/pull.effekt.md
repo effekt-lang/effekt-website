@@ -1,3 +1,9 @@
+---
+layout: docs
+title: Exercise 'Pull'
+permalink: docs/exercises/pull
+---
+
 # Bonus exercise: 'Pull'
 
 ```effekt

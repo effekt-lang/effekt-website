@@ -1,3 +1,9 @@
+---
+layout: docs
+title: Exercise 'Event'
+permalink: docs/exercises/event
+---
+
 # Exercise 3: 'Event'
 
 ```effekt:hide
