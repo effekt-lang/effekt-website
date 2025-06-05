@@ -1,10 +1,10 @@
 ---
 layout: docs
-title: Exercise 'ZChallenge'
-permalink: docs/exercises/zchallenge
+title: Exercise 'Challenge'
+permalink: docs/exercises/challenge
 ---
 
-# Bonus task: 'ZChallenge: TTY Formatting'
+# Bonus task: 'Challenge: TTY Formatting'
 
 In Effekt, create a tiny & correct TTY (terminal) formatting library using effects and handlers.
 
