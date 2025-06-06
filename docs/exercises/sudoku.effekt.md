@@ -297,12 +297,12 @@ The inside of the `try { ... }` has been provided and should work fine.
 
 First, return how many solutions there actually are in total.
 Failure means zero solutions exists on the given branch.
-If there are multiple options, don't forget to sum them up!
+If we want to try all options, we resume for each option, noting the results down, and summing them up.
 
 Please don't use `findAllSolutions` as a subroutine, write the handler from scratch.
 
 > **Hint:** the `each` function from the standard library might be helpful.
-> `each(fromInclusive: Int, toExclusive: Int) { (x: Int) => ... }`, used as `each(0, 4) { i => ... }`
+> `each(fromInclusive: Int, toExclusive: Int) { (x: Int) => ... }`, used as `each(1, 5) { i => ... }`
 >
 > You'll also find it used in this very file, so feel free to get inspired ;)
 >
