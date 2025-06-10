@@ -1,1 +1,1 @@
-../../effekt/examples/casestudies/smc.effekt.md
+../../effekt/examples/other/smc.effekt.md
