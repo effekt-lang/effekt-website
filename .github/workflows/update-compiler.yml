@@ -50,6 +50,10 @@ jobs:
         run: |
           git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
 
+      - name: Checkout latest release
+        run: |
+          git -C effekt/ checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+
       - name: Compile Effekt to JS
         run: |
           cd effekt/
