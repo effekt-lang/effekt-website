@@ -24,7 +24,7 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       # Login as a GitHub App in order to bypass GitHub's rules about automatic releases
       - name: Get GitHub App token
@@ -50,9 +50,11 @@ jobs:
         run: |
           git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
 
-      - name: Checkout latest release
+      # get the latest tag and check out the corresponding commit
+      - name: Checkout latest tag
+        if: "${{ github.event.inputs.effekt_commit == '' }}"
         run: |
-          git -C effekt/ checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+          git -C effekt/ checkout $(git -C effekt/ describe --tags $(git -C effekt/ rev-list --tags --max-count=1))
 
       - name: Compile Effekt to JS
         run: |
