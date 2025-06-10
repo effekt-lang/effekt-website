@@ -37,13 +37,10 @@ jobs:
       - name: Checkout repository with token
         uses: actions/checkout@v4
         with:
-          submodules: 'true'
+          submodules: recursive
           token: ${{ steps.app-token.outputs.token }}
+          ref: master
 
-      - name: Update submodule
-        run: |
-          git submodule update --recursive --remote --init
-        
       - name: Checkout given commit
         if: "${{ github.event.inputs.effekt_commit != '' }}"
         run: |
