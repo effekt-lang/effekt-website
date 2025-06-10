@@ -54,7 +54,7 @@ underlying compiler, run the following commands.
     ```
 4. In the website's repo, run `webpack`:
     ```
-    $ npm exec webpack webpack
+    $ npm exec webpack
     ```
     This will generate a bunch of packed js files.
 1. Optionally, verify that everything functions as expected by locally deploying the website:

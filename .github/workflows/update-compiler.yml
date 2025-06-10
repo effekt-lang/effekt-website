@@ -59,6 +59,7 @@ jobs:
       - name: Run webpack
         run: |
           npm install
+          rm -f dist/*
           npx webpack
       
       - name: Setup name and email
