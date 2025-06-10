@@ -74,5 +74,5 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           git add src/ dist/ effekt/
-          git commit -m "Github Action: update compiler" || echo "nothing to commit"
+          git commit -m "Github Action: update compiler $(git -C effekt show -s --format=%h)" || echo "nothing to commit"
           git push origin master
