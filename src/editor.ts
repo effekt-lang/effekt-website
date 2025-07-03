@@ -3,6 +3,7 @@ import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import * as hljs from "./highlight-effekt";
 import { syntax, docsTheme, pageTheme } from "./effekt-syntax";
 import * as IDE from "./ide"
+import { share } from "./index"
 
 //@ts-ignore
 self.MonacoEnvironment = {
@@ -182,7 +183,10 @@ function addRunAction(editor, run, output) {
   }
 
   if (run) {
-    run.onclick = () => evaluate(editor)
+    run.onclick = () => {
+      share(false)
+      evaluate(editor)
+    }
 
     editor.addAction({
       id: 'effekt-run',

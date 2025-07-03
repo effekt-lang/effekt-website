@@ -134,7 +134,8 @@ function processCode() {
       nav.append(run)
 
       run.onclick = () => {
-        enableEditing(code, run, coreOut, liftedCore);
+        enableEditing(code, run, coreOut, liftedCore)
+        share(false)
         return false
       }
 
@@ -282,43 +283,52 @@ function parseOptions(str: string): CodeOptions {
   }
 }
 
-// Gets the content of the editor and repl on the playground page and creates
-// a shareable link by encoding in base64 and saving it as query parameters in the URL.
-// Also updates the current URL accordingly
-function share() {
-  const url = new URL(window.location.href);
-  // get content of playground and repl
-  // if either has not been initialised yet, fallback to getting the content of the corresponding html element
-  let playgroundContent: string
+function getPlaygroundContent(): string {
   if (playgroundModel) {
-    playgroundContent = playgroundModel.getValue()
+    return playgroundModel.getValue()
   } else if (document.getElementById("playground")) {
-    playgroundContent = document.getElementById("playground").textContent
+    return document.getElementById("playground").textContent
   } else {
-    playgroundContent = ""
+    return ""
   }
-  let replContent: string
+}
+
+function getReplContent(): string {
   if (replModel) {
-    replContent = replModel.getValue()
+    return replModel.getValue()
   } else if (document.getElementById("repl")) {
-    replContent = document.getElementById("repl").textContent
+    return document.getElementById("repl").textContent
   } else {
-    replContent = ""
+    return ""
   }
-  // encode content in base64
-  const playgroundEncoded = compressAndEncode(playgroundContent)
-  const replEncoded = encode(replContent)
+}
+
+function encodePlayground(): string {
+  const playgroundContent = getPlaygroundContent()
+  return compressAndEncode(playgroundContent)
+}
+
+function encodeRepl(): string {
+  const replContent = getReplContent()
+  return encode(replContent)
+}
+
+// Gets the content of the editor and repl on the playground page and creates
+// a shareable link by encoding the content base64 after deflating it and saving it as query parameters in the URL.
+// Also updates the current URL accordingly
+export function share(toClipboard: boolean = true) {
+  const url = new URL(window.location.href);
   // set query params in url
-  url.searchParams.set("playground", playgroundEncoded)
-  url.searchParams.set("repl", replEncoded)
+  url.searchParams.set("playground", encodePlayground())
+  url.searchParams.set("repl", encodeRepl())
   // save url to clipboard and update the current url
-  navigator.clipboard.writeText(url.toString()).then(() => {
-    // alert('Link copied to clipboard!');
-    // change current URL
-    history.pushState(null, "", url.toString())
-  }).catch(err => {
-    console.error('Error copying text: ', err);
-  });
+  if (toClipboard) {
+    navigator.clipboard.writeText(url.toString()).catch(err => {
+      console.error('Error copying text: ', err);
+    });
+  }
+  // change current URL
+  history.pushState(null, "", url.toString())
 }
 
 function getQueryParam(param: string): string | null {
