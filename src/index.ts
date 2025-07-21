@@ -135,7 +135,7 @@ function processCode() {
 
       run.onclick = () => {
         enableEditing(code, run, coreOut, liftedCore)
-        share(false)
+        if (code.id === "playground") { share(false) }
         return false
       }
 
