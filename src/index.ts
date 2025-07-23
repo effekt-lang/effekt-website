@@ -44,6 +44,7 @@ async function enableEditing(code: HTMLElement, run: HTMLElement, coreOut: HTMLE
       playgroundModel = model
     } else if (code.id === "repl") {
       replModel = model
+      share(false)
     }
 
     edit
