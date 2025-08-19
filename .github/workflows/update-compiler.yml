@@ -40,6 +40,12 @@ jobs:
           submodules: recursive
           token: ${{ steps.app-token.outputs.token }}
           ref: master
+      
+      - name: Update submodules
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git submodule update --remote --init --recursive
 
       - name: Checkout given commit
         if: "${{ github.event.inputs.effekt_commit != '' }}"
