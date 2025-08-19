@@ -39,24 +39,24 @@ jobs:
         with:
           submodules: recursive
           token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 2
+          fetch-tags: true
           ref: master
       
-      - name: Update submodules
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          git submodule update --remote --init --recursive
-
       - name: Checkout given commit
         if: "${{ github.event.inputs.effekt_commit != '' }}"
         run: |
-          git -C effekt/ checkout ${{ github.event.inputs.effekt_commit }}
+          cd effekt/
+          git config --global submodule.recurse true
+          git checkout ${{ github.event.inputs.effekt_commit }}
 
       # get the latest tag and check out the corresponding commit
       - name: Checkout latest tag
         if: "${{ github.event.inputs.effekt_commit == '' }}"
         run: |
-          git -C effekt/ checkout $(git -C effekt/ describe --tags $(git -C effekt/ rev-list --tags --max-count=1))
+          cd effekt/
+          git config --global submodule.recurse true
+          git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 
       - name: Compile Effekt to JS
         run: |
