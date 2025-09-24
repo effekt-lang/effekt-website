@@ -18,7 +18,7 @@ Please note:
 Also, since we want to run each projection in a promise, all effects have to be handled before:
 
 ```effekt:sketch
-val p1 = do promise(box {
+val p1 = promise(box {
   with network(channels);
   with catalog;
 
@@ -199,7 +199,7 @@ The handler implementation of `Net` is a bit more involved, so we collapse it he
 }
 
 // Casts are not available in Effekt, so we need to hack it in, here.
-extern def cast[A, B](value: A): B at {} = js "${value}"
+extern def cast[A, B](value: A): B = js "${value}"
 
 type Inboxes {
   Nil()
@@ -226,11 +226,10 @@ def set[L](ch: Channels, l: Location[L], value: AnyValue): Unit = {
 }
 
 
-def network[R](channels: Channels) { prog: => R / Net }: R / Concurrent = {
-
+def network[R](channels: Channels) { prog: => R / Net }: R = {
   def tryWrite[A, L](value: A, receiver: Location[L]): Unit  = channels.get(receiver) match {
     case Filled(value) =>
-      do yield()
+      yield()
       tryWrite(value, receiver)
     case Empty() =>
       channels.set(receiver, Filled(value));
@@ -241,7 +240,7 @@ def network[R](channels: Channels) { prog: => R / Net }: R / Concurrent = {
       channels.set(receiver, Empty())
       cast(value)
     case _ =>
-      do yield()
+      yield()
       tryRead(receiver)
   }
 
@@ -268,7 +267,7 @@ def tryUnwrap[A, L2](v: Located[A, L2]): A = v match {
 def epp[A, L](ls: Locations, here: Location[L]) { p: => A / Choreo }: A / Net = {
 
   def sendAll[A](ls: Locations, value: A): Unit =
-    ls.foreach {
+    ls.list::foreach {
       case Exists(l) and l == here => ()
       case Exists(l) => do send(value, l);
     }
@@ -348,14 +347,14 @@ def report[R] { prog: => R / Log }: R =
 ## Running the Example
 To run the example, we now need to plug everything together:
 ```effekt
-def main() = eventloop(box {
+def main() = {
   val buyer = Location[Unit](1, "buyer");
   val seller = Location[Unit](2, "seller");
 
   val channels: Channels = ref(Nil())
   val budget = 40
 
-  val p1 = do promise(box {
+  val p1 = promise(box {
     with network(channels);
     with catalog;
     with input;
@@ -364,7 +363,7 @@ def main() = eventloop(box {
     epp([Exists(buyer), Exists(seller)], buyer) { bookseller(buyer, seller) }
     })
 
-  val p2 = do promise(box {
+  val p2 = promise(box {
     with network(channels);
     with catalog;
     with input;
@@ -373,9 +372,9 @@ def main() = eventloop(box {
     epp([Exists(buyer), Exists(seller)], seller) { bookseller(buyer, seller) }
   })
 
-  println("Result at buyer:" ++ genericShow(do await(p1)))
-  println("Result at buyer:" ++ genericShow(do await(p2)))
-})
+  println("Result at buyer:" ++ genericShow(await(p1)))
+  println("Result at buyer:" ++ genericShow(await(p2)))
+}
 ```
 
 
