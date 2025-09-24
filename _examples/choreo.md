@@ -199,7 +199,7 @@ The handler implementation of `Net` is a bit more involved, so we collapse it he
 }
 
 // Casts are not available in Effekt, so we need to hack it in, here.
-extern pure def cast[A, B](value: A): B = js "${value}"
+extern def cast[A, B](value: A): B at {} = js "${value}"
 
 type Inboxes {
   Nil()
@@ -313,8 +313,8 @@ extern js """
   }
 """
 
-extern io def getPriceFor(title: String): Int = js"findItem(${title}).price"
-extern io def getDeliveryFor(title: String): String = js"findItem(${title}).delivery"
+extern def getPriceFor(title: String) at io: Int = js"findItem(${title}).price"
+extern def getDeliveryFor(title: String) at io: String = js"findItem(${title}).delivery"
 
 def catalog[R] { prog: => R / Catalog }: R =
   try { prog() } with Catalog {
@@ -325,7 +325,7 @@ def catalog[R] { prog: => R / Catalog }: R =
 Now the user input:
 
 ```effekt
-extern io def prompt(title: String): String = js"window.prompt(${title})"
+extern def prompt(title: String) at io: String = js"window.prompt(${title})"
 
 def input[R] { prog: => R / Input }: R =
   try { prog() } with Input {
