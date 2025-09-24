@@ -11,7 +11,7 @@ It is a basic implementation of an asynchronous IO system that uses a `Suspend` 
 ```
 type Condition = Int
 
-effect Suspend {
+interface Suspend {
   def newCondition(): Condition
   def wait(condition: Condition): Unit
   def signal(condition: Condition): Unit
@@ -128,7 +128,7 @@ def execute[A] { f: => A / Suspend }: ExecutionResult[A] = {
   }
 }
 
-def main(): ExecutionResult[Unit] = {
+def run(): ExecutionResult[Unit] = {
   execute {
     val condition = do newCondition()
     def firstThread(): Unit / Suspend = {
@@ -157,5 +157,5 @@ def main(): ExecutionResult[Unit] = {
 ```
 
 ```effekt:repl
-main()
+run()
 ```

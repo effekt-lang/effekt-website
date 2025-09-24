@@ -22,11 +22,11 @@ type Option[A] {
   Absent()
 }
 
-effect Iterate[A] {
+interface Iterate[A] {
   def yield(element: A): Unit
 }
 
-effect Reduce[A] {
+interface Reduce[A] {
   def receive(): Option[A]
 }
 
@@ -65,11 +65,11 @@ def reduce[A, B]() { iterator: () => Unit / Iterate[A] } { reducer: () => B / Re
   }
 }
 
-def main() = {
+def run() = {
   reduce[Int,Int]() { inRange(0, 5) } { intoSum() }
 }
 ```
 
 ```effekt:repl
-main()
+run()
 ```
