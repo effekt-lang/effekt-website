@@ -47,16 +47,14 @@ jobs:
         if: "${{ github.event.inputs.effekt_commit != '' }}"
         run: |
           cd effekt/
-          git config --global submodule.recurse true
-          git checkout ${{ github.event.inputs.effekt_commit }}
+          git checkout --recurse-submodules ${{ github.event.inputs.effekt_commit }}
 
       # get the latest tag and check out the corresponding commit
       - name: Checkout latest tag
         if: "${{ github.event.inputs.effekt_commit == '' }}"
         run: |
           cd effekt/
-          git config --global submodule.recurse true
-          git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+          git checkout --recurse-submodules $(git describe --tags $(git rev-list --tags --max-count=1))
 
       - name: Compile Effekt to JS
         run: |
