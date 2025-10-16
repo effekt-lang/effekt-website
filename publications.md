@@ -22,13 +22,16 @@ Regarding the language design, there are two main references:
 > Jonathan Immanuel Brachthäuser, Philipp Schuster, and Klaus Ostermann. 2020.\
 > In _Proc. ACM Program. Lang._, 4 (OOPSLA), Article 126 ([ACM](https://doi.org/10.1145/3428194), [Extended Techreport](https://se.cs.uni-tuebingen.de/publications/brachthaeuser20effekt/)).
 
-
 > **"Effects, Capabilities, and Boxes: from scope-based reasoning to type-based reasoning and back"**.\
 > Jonathan Immanuel Brachthäuser, Philipp Schuster, Edward Lee, and Aleksander Boruch-Gruszecki.\
 > In _Proc. ACM Program. Lang._, 6 (OOPSLA), Article 76 ([ACM](https://doi.org/10.1145/3527320), [Extended Techreport](https://se.cs.uni-tuebingen.de/publications/brachthaeuser22effects/))
 
-
 ### Compilation of Effect Handlers
+
+> **"Multiple Resumptions and Local Mutable State, Directly"**.\
+> Serkan Muhcu, Philipp Schuster, Michel Steuwer, and Jonathan Brachthäuser.\
+> In _Proceedings of the International Conference on Functional Programming_ (ICFP), 2025.
+> ([ACM](https://dl.acm.org/doi/10.1145/3747529))
 
 > **"From Capabilities to Regions: Enabling Efficient Compilation of Lexical Effect Handlers"**.\
 > Marius Müller, Philipp Schuster, Jonathan Lindegaard Starup, Klaus Ostermann, and Jonathan Immanuel Brachthäuser. 2023.
@@ -46,6 +49,20 @@ Regarding the language design, there are two main references:
 > Philipp Schuster, Jonathan Immanuel Brachthäuser, and Klaus Ostermann.\
 > In _Proceedings of the International Conference on Functional Programming (ICFP 2020)_. ([Techreport](https://se.cs.uni-tuebingen.de/publications/schuster19zero/), [ACM](https://doi.org/10.1145/3408975))
 
+> **"Tracing Just-in-time Compilation for Effects and Handlers"**.\
+> Marcial Gaißert, CF Bolz-Tereick, and Jonathan Brachthäuser.\
+> In _Proceedings of the International Conference on Object-Oriented Programming, Systems, Languages and Applications_ (OOPSLA). 2025. ([Techreport](https://se.cs.uni-tuebingen.de/publications/gaissert2025tracing/), [ACM](https://dl.acm.org/doi/abs/10.1145/3763085))
+
+### General Compilation Techniques
+Compilation techniques that we developed for the implementation of the Effekt language.
+
+> **The Simple Essence of Monomorphization**.\
+> Matthew Lutze, Philipp Schuster, and Jonathan Immanuel Brachthäuser.\
+> In _Proceedings of the International Conference on Object-Oriented Programming, Systems, Languages and Applications_ (OOPSLA). 2025. ([Techreport](https://se.cs.uni-tuebingen.de/publications/lutze25simple/), [ACM](https://dl.acm.org/doi/10.1145/3720472))
+
+> **The Simple Essence of Overloading**.\
+> Jiří Beneš and Jonathan Brachthäuser.\
+> In _Proceedings of the International Conference on Object-Oriented Programming, Systems, Languages and Applications_ (OOPSLA). 2025. ([Techreport](https://se.cs.uni-tuebingen.de/publications/benes2025overloading/), [ACM](https://dl.acm.org/doi/abs/10.1145/3763168))
 
 ### Other Related Work
 The language is the result of several developments. In particular, it is the
@@ -92,3 +109,7 @@ to the Effekt language. We are happy to share author-copies on request.
 > **"Towards Naturalistic EDSLs using Algebraic Effects"**.\
 > Jonathan Immanuel Brachthäuser.\
 > Accepted for presentation at _Domain-Specific Language Design and Implementation (DSLDI 2017)_.
+
+> **"Dynamic Wind for Effect Handlers"**.\
+> David Voigt, Philipp Schuster, and Jonathan Brachthäuser.\
+> In _Proceedings of the International Conference on Object-Oriented Programming, Systems, Languages and Applications_ (OOPSLA). 2025. ([Techreport](https://se.cs.uni-tuebingen.de/publications/voigt2025dynamic/), [ACM](https://dl.acm.org/doi/10.1145/3763155))

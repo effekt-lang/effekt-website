@@ -12,6 +12,15 @@ Maybe you want to benchmark against Effekt?
 Here, we briefly describe the evolution of the language by summarizing the differences to the papers and the most important changes.
 This should hopefully help you get started. Otherwise, feel free to [reach out to us](https://se.cs.uni-tuebingen.de/team/brachthaeuser/).
 
+## 2025 Paper: Multiple Resumptions and Local Mutable State, Directly
+
+> **Multiple Resumptions and Local Mutable State, Directly**.\
+> Serkan Muhcu, Philipp Schuster, Michel Steuwer, and Jonathan Brachthäuser.\
+> In _Proceedings of the International Conference on Functional Programming_ (ICFP 2025).
+> ([ACM](https://dl.acm.org/doi/10.1145/3747529))
+
+The paper describes our new LLVM backend, which enables constant time continuation capture and resumption for the one-shot case, while still supporting multiple resumptions. The LLVM backend supersedes the now deprecated MLton backend.
+
 ## 2023 Paper: From Capabilities to Regions
 
 > **"From Capabilities to Regions: Enabling Efficient Compilation of Lexical Effect Handlers"**.\
