@@ -55,7 +55,7 @@ pre {
       background: none;
       border: none
     }
-    button.button-run:before, button.button-edit:before, button#button-share:before {
+    button.button-run:before, button.button-edit:before, button#button-share:before button#button-copy:before {
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       padding-right: 0.5em;
@@ -68,6 +68,12 @@ pre {
     }
     button#button-share:before {
       content: "\f064";
+    }
+    button#button-copy:before {
+      content: "\f328";
+    }
+    button#button-copy:focus:before {
+      content: "\f46c";
     }
     button#button-share:focus:before {
       content: "\f46c";

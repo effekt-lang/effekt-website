@@ -146,6 +146,14 @@ function processCode() {
         share.setAttribute("id", "button-share")
         share.textContent = "share"
         nav.append(share)
+        const copy = document.createElement("button")
+        copy.setAttribute("id", "button-copy")
+        copy.textContent = "copy"
+        nav.append(copy)
+        copy.onclick = () => {
+          const c = getPlaygroundContent()
+          navigator.clipboard.writeText(c)
+        }
       }
 
       const edit = document.createElement("button")
