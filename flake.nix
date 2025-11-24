@@ -71,7 +71,10 @@
                 bundixcli
                 bundleLock
                 bundleUpdate
-              ];
+              ] ++
+              (with pkgs; [
+                nodejs_24
+              ]);
           };
         };
       }
