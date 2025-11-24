@@ -1,69 +1,78 @@
 {
-  description = "Jekyll development environment";
+  # adapted from https://github.com/inscapist/ruby-nix/blob/main/examples/simple-app/flake.nix
+  description = "Jekyll Environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    ruby-nix.url = "github:inscapist/ruby-nix";
+    # a fork that supports platform dependant gem
+    bundix = {
+      url = "github:inscapist/bundix/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ruby-nix,
+      bundix,
+    }:
+    with flake-utils.lib;
+    eachDefaultSystem (
+      system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
-        ruby = pkgs.ruby_2_7;
-        
-        # Automatically generate gemset.nix if needed
-        gems = if builtins.pathExists ./gemset.nix
-          then pkgs.bundlerEnv {
-            name = "jekyll-env";
-            inherit ruby;
-            gemdir = ./.;
-          }
-          else null;
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            ruby
-            bundler
-            bundix
-            nodejs_20
-          ] ++ (if gems != null then [ gems gems.wrappedRuby ] else []);
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+        rubyNix = ruby-nix.lib pkgs;
 
-          shellHook = ''
-            echo "Jekyll development environment loaded!"
-            echo "Ruby version: $(ruby --version)"
-            echo ""
-            
-            # Check if gemset.nix exists
-            if [ ! -f gemset.nix ]; then
-              echo "⚠️  gemset.nix not found!"
-              echo "Generating Gemfile.lock and gemset.nix..."
-              echo ""
-              
-              # Generate Gemfile.lock if it doesn't exist
-              if [ ! -f Gemfile.lock ]; then
-                bundle lock
-              fi
-              
-              # Generate gemset.nix
-              bundix
-              
-              echo ""
-              echo "✅ Generated gemset.nix successfully!"
-              echo "Please exit and re-enter the shell: exit && nix develop"
-              echo ""
-            else
-              echo "Jekyll version: $(jekyll --version)"
-              echo ""
-              echo "Quick start commands:"
-              echo "  jekyll serve - Start development server"
-              echo "  jekyll build - Build the site"
-              echo ""
-              echo "To update gems after changing Gemfile:"
-              echo "  bundle lock && bundix"
-            fi
-          '';
+        # TODO generate gemset.nix with bundix
+        gemset = if builtins.pathExists ./gemset.nix then import ./gemset.nix else { };
+
+        # If you want to override gem build config, see
+        #   https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/ruby-modules/gem-config/default.nix
+        gemConfig = { };
+
+        # See available versions here: https://github.com/bobvanderlinden/nixpkgs-ruby/blob/master/ruby/versions.json
+        # ruby = pkgs."ruby-3.3.1";
+        ruby = pkgs.ruby;
+
+        # Running bundix generates the required `gemset.nix` file
+        bundixcli = bundix.packages.${system}.default;
+
+        # Use these instead of the original `bundle <mutate>` commands
+        bundleLock = pkgs.writeShellScriptBin "bundle-lock" ''
+          export BUNDLE_PATH=vendor/bundle
+          bundle lock
+        '';
+        bundleUpdate = pkgs.writeShellScriptBin "bundle-update" ''
+          export BUNDLE_PATH=vendor/bundle
+          bundle lock --update
+        '';
+      in
+      rec {
+        inherit
+          (rubyNix {
+            inherit gemset ruby;
+            name = "jekyll environment";
+            gemConfig = pkgs.defaultGemConfig // gemConfig;
+          }) env;
+
+        devShells = rec {
+          default = dev;
+          dev = pkgs.mkShell {
+            buildInputs =
+              [
+                env
+                bundixcli
+                bundleLock
+                bundleUpdate
+              ];
+          };
         };
       }
     );
