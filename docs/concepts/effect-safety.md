@@ -7,7 +7,7 @@ permalink: docs/concepts/effect-safety
 # Effect Safety
 Similar to Java's checked exceptions, Effekt features an effect system that
 allows us to track effects. As a very simple example, we can define our own
-exceptions (even though they are defined in the [stdlib](https://github.com/effekt-lang/effekt/blob/master/libraries/common/exception.effekt)):
+exceptions (even though they are defined in the [stdlib](https://github.com/effekt-lang/effekt/blob/main/libraries/common/exception.effekt)):
 ```effekt
 effect exc(msg: String): Nothing
 

@@ -74,7 +74,7 @@ pagetype: docs
               <section>{{ content }}</section>
               <!-- Use path.origin parameter if available (_config.yml) otherwise use page.path -->
               <div id="source-btn">
-                <a href="https://github.com/effekt-lang/{{ page.origin | default: 'effekt-website/blob/master' }}{% if page.origin %}/{{ page.path | split: '/' | last }}{% else %}/{{ page.path }}{% endif %}"
+                <a href="https://github.com/effekt-lang/{{ page.origin | default: 'effekt-website/blob/main' }}{% if page.origin %}/{{ page.path | split: '/' | last }}{% else %}/{{ page.path }}{% endif %}"
                 target="_blank" 
                 rel="noopener noreferrer">
                   <span class="nav-item-text">Source</span>

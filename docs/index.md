@@ -30,15 +30,15 @@ The Syntax is heavily inspired by the [Scala language](https://scala-lang.org). 
 users familiar with Scala should have no problems getting started. Right now
 the syntax is not documented very well and also subject to change. So the best
 way to learn it is by looking at
-[examples]({{ site.githuburl }}/tree/master/examples/pos),
-or even looking into the [parser implementation]({{ site.githuburl }}/blob/master/shared/src/main/scala/effekt/Parser.scala).
+[examples]({{ site.githuburl }}/tree/main/examples/pos),
+or even looking into the [parser implementation]({{ site.githuburl }}/blob/main/shared/src/main/scala/effekt/Parser.scala).
 
 One particular thing important to note: statements are semicolon _separated_.
 That is, a semicolon is required between statements, but not allowed in a
 trailing position. This will potentially change soon.
 
 ## Example: Lists
-To familiarize ourselves, let's start by reimplementing lists, similar to how they are implemented in the [standard library]({{ site.githuburl }}/blob/master/libraries/common/list.effekt).
+To familiarize ourselves, let's start by reimplementing lists, similar to how they are implemented in the [standard library]({{ site.githuburl }}/blob/main/libraries/common/list.effekt).
 
 
 #### Module Declarations
