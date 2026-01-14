@@ -49,6 +49,5 @@ npm remove -g effekt
 ```
 
 > #### Note
-> The Effekt "binary" is actually just an executable jar-file. NPM will
-> also install scripts (`effekt.sh` on Linux) and (`effekt.cmd` on Windows) to
-> start the jar-file with `java -jar`.
+> The Effekt "binary" is actually just an executable jar-file. 
+> On Windows, NPM will also install an `effekt.cmd` script to start the jar-file with `java -jar`.
