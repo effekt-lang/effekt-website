@@ -6,7 +6,7 @@ date: 2023-02-28
 The `Comefrom` effect.
 
 ```
-effect Comefrom {
+interface Comefrom {
   def label(name: String): Unit
 }
 
@@ -28,6 +28,10 @@ def main(): Unit = {
     }
   }
 }
+```
+
+```effekt:repl
+main()
 ```
 
 It is more restrictive than the actual thing because:
