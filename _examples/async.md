@@ -26,38 +26,38 @@ type ThreadStatus[T] {
 
 def combineAsync[A, B, C] {f: => A / Suspend} {g: => B / Suspend} {combiner: (A, B) => C / Suspend}
     : C / Suspend = {
- var firstComputation = fun() { Uninitialized() }
-  firstComputation = fun() {
+ var firstComputation = box { Uninitialized() }
+  firstComputation = box {
     try {
       val result = f()
-      firstComputation = fun() { Finished(result) }
+      firstComputation = box { Finished(result) }
       Finished(result)
     } with Suspend {
       def newCondition() = resume(do newCondition())
       def wait(condition) = {
-        firstComputation = fun() { resume(()) }
+        firstComputation = box { resume(()) }
         Waiting(condition)
       }
       def signal(condition) = {
-        firstComputation = fun() { resume(()) }
+        firstComputation = box { resume(()) }
         Signalling(condition)
       }
     }
   }
-  var secondComputation = fun() { Uninitialized() }
-  secondComputation = fun() {
+  var secondComputation = box { Uninitialized() }
+  secondComputation = box {
     try {
       val result = g()
-      secondComputation = fun() { Finished(result) }
+      secondComputation = box { Finished(result) }
       Finished(result)
     } with Suspend {
       def newCondition() = resume(do newCondition())
       def wait(condition) = {
-        secondComputation = fun() { resume(()) }
+        secondComputation = box { resume(()) }
         Waiting(condition)
       }
       def signal(condition) = {
-        secondComputation = fun() { resume(()) }
+        secondComputation = box { resume(()) }
         Signalling(condition)
       }
     }
