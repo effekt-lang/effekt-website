@@ -4,6 +4,7 @@ baseurl:
 githuburl: https://github.com/effekt-lang/effekt
 githuburl_website: https://github.com/effekt-lang/effekt-website
 description: A language with lexical effect handlers and lightweight effect polymorphism
+permalink: /blog/:year/:month/:day/:title/
 docs: true
 
 collections:
@@ -14,6 +15,12 @@ collections:
     output: true
 
 defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
   -
     scope:
       path: ""
