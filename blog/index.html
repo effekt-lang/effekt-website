@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: Blog
 ---
 
@@ -10,6 +10,7 @@ title: Blog
     <li>
       <span>{{ post.date | date: "%Y-%m-%d" }}</span>
       <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      <span>by <i>{{ post.author }}</i></span>
       {% if post.description %}
         <p>{{ post.description }}</p>
       {% endif %}
