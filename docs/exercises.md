@@ -2,7 +2,7 @@
 layout: docs
 title: Exercises
 permalink: docs/exercises
-origin: effekt-website/blob/master/docs
+origin: effekt-website/blob/main/docs
 ---
 
 # Exercises

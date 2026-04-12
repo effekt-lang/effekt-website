@@ -111,7 +111,7 @@ The possibility to resume to the call site allows programmers to fix error
 conditions and proceed the original program. However, it also allows to express
 many interesting advanced control-flow structures.
 
-One example is that of [parsers]({{ site.githuburl }}/blob/master/examples/pos/parser.effekt)
+One example is that of [parsers]({{ site.githuburl }}/blob/main/examples/pos/parser.effekt)
 or backtracking search.
 
 Here, we repeat a small example that performs an exhaustive search for

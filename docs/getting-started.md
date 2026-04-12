@@ -32,7 +32,7 @@ $ effekt hello.effekt
 Hello world!
 ```
 
-You can find example programs in the [examples folder]({{ site.githuburl }}/tree/master/examples).
+You can find example programs in the [examples folder]({{ site.githuburl }}/tree/main/examples).
 
 
 ### Compiling Programs with Effekt

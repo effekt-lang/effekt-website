@@ -2,14 +2,14 @@
 layout: docs
 title: Casestudies
 permalink: docs/casestudies
-origin: effekt-website/blob/master/docs
+origin: effekt-website/blob/main/docs
 ---
 
 # Case Studies
 
 This folder contains several case studies showcasing the Effekt language and how to use effects and handlers.
 
-> You can find the [source code online at Github](https://github.com/effekt-lang/effekt/tree/master/examples/casestudies).
+> You can find the [source code online at Github](https://github.com/effekt-lang/effekt/tree/main/examples/casestudies).
 
 Some of the case studies build up on each other. For those, we recommend looking at them in the following order:
 

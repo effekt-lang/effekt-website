@@ -41,7 +41,7 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 2
           fetch-tags: true
-          ref: master
+          ref: main
       
       - name: Checkout given commit
         if: "${{ github.event.inputs.effekt_commit != '' }}"
@@ -76,4 +76,4 @@ jobs:
           git config --global user.email '${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
           git add src/ dist/ effekt/
           git commit -m "Github Action: update compiler $(git -C effekt show -s --format=%h)" || echo "nothing to commit"
-          git push origin master
+          git push origin main

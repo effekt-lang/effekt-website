@@ -70,4 +70,4 @@ We had some [papers](./publications#other-related-work) describing the Scala Eff
 
 #### Since then
 - Besides implementing lexical effect handlers, the libraries have little to do with the current standalone Effekt language
-- A translation of the monadic implementation of the Scala libraries is still the operational foundation of the JavaScript backend of Effekt and can be found in [`libraries/js/effekt_runtime.js`](https://github.com/effekt-lang/effekt/blob/master/libraries/js/effekt_runtime.js).
+- A translation of the monadic implementation of the Scala libraries is still the operational foundation of the JavaScript backend of Effekt and can be found in [`libraries/js/effekt_runtime.js`](https://github.com/effekt-lang/effekt/blob/main/libraries/js/effekt_runtime.js).
