@@ -79,9 +79,9 @@ variable. The previous type `Term` then becomes
 Effekt does not support infinite types though!
 
 What Effekt *does* support, however, is effects and handlers. You can
-learn more about Effekt's use of effects [in our
-tour](http://localhost:4000/tour/effects). The refunctionalized variant
-of `Term` is then defined by the following interface:
+learn more about Effekt's use of effects [in our tour](/tour/effects).
+The refunctionalized variant of `Term` is then defined by the following
+interface:
 
 ``` effekt
 interface TermF[T, R] {
