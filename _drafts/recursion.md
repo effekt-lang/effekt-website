@@ -1,6 +1,6 @@
 ---
 author: Marvin Borner
-date: 2026-04-20
+date: 0001-01-01
 layout: post
 title: Effectful Recursion Schemes
 ---
