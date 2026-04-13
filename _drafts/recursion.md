@@ -17,7 +17,7 @@ recursion schemes that instead makes use of refunctionalizing data
 structures to effects and handlers.
 
 In fact, this post is much more about showcasing effects and handlers
-than it is about recursion schemes themself:
+than it is about recursion schemes themselves:
 
 > This is an *interactive* blog, you are encouraged to experiment with
 > the code!
