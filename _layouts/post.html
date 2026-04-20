@@ -1,0 +1,22 @@
+---
+layout: default
+pagetype: page
+---
+
+{% include header-nav.html %}
+
+{% if page.position != null %}
+    <nav class="menu-container" aria-labelledby="section-navigation">{% include menu.html %}</nav>
+{% endif %}
+
+<main id="site-main" class="page-site-main">
+    <section class="use">
+        <div class="container">
+            <h1>{{ page.title }}</h1>
+            <span><i>{{ page.author }}</i>, {{ page.date | date: "%Y-%m-%d" }}</span>
+            <div id="content">{{ content }}</div>
+        </div>
+    </section>
+</main>
+
+{% include footer.html %}

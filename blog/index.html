@@ -1,0 +1,21 @@
+---
+layout: page
+title: Blog
+---
+
+<h1>Blog</h1>
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <span>{{ post.date | date: "%Y-%m-%d" }}</span>
+      <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      <span>by <i>{{ post.author }}</i></span>
+      {% if post.description %}
+        <p>{{ post.description }}</p>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+Also check out our <a href="/docs/casestudies/">casestudies</a>!
