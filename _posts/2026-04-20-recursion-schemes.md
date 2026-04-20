@@ -377,6 +377,6 @@ paramorphism or hylomorphism? How could a *histomorphism* and
 Effekt code?
 
 Here's a link to our [interactive
-playground](https://effekt-lang.org/playground/), a [language
+playground](https://effekt-lang.org/playground), a [language
 tour](https://effekt-lang.org/tour), and the [installation
 instructions](https://effekt-lang.org/docs). Have fun!
