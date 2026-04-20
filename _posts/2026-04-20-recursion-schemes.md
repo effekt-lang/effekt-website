@@ -376,7 +376,5 @@ paramorphism or hylomorphism? How could a *histomorphism* and
 *futumorphism* be defined in Effekt? Do you have other fun ideas for
 Effekt code?
 
-Here's a link to our [interactive
-playground](https://effekt-lang.org/playground), a [language
-tour](https://effekt-lang.org/tour), and the [installation
-instructions](https://effekt-lang.org/docs). Have fun!
+Here's a link to our [interactive playground](/playground), a [language
+tour](/tour), and the [installation instructions](/docs). Have fun!
