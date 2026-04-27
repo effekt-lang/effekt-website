@@ -38,6 +38,8 @@ options:
         url: /tour/namespaces
       - title: Regions
         url: /tour/regions
+      - title: Implicits
+        url: /tour/name-based-implicits
       - title: IO
         url: /tour/io
       - title: FFI
