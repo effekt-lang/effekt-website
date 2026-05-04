@@ -28,9 +28,7 @@ def main() = try {
 }
 </code></pre>
 
-<pre><code class="language-effekt:repl" id="repl">
-main()
-</code></pre>
+<pre><code class="language-effekt:repl" id="repl">main()</code></pre>
 
 <p id="playground-warning" class="hidden">
 <b>Warning</b>: Be sure to inspect any Effekt code that is shared with you before executing it as it is possible to run arbitrary, potentially harmful, JavaScript code.
