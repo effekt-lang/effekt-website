@@ -21,7 +21,7 @@ import option
 <pre><code class="language-effekt" id="playground">
 interface Greet { def sayHello(): Unit }
 
-def helloWorld() = try {
+def main() = try {
   do sayHello()
 } with Greet {
   def sayHello() = { println("Hello!"); resume(()) }
@@ -29,7 +29,7 @@ def helloWorld() = try {
 </code></pre>
 
 <pre><code class="language-effekt:repl" id="repl">
-helloWorld()
+main()
 </code></pre>
 
 <p id="playground-warning" class="hidden">
