@@ -129,15 +129,15 @@ The source code for the VSCode extension is available in the [`effekt-vscode` re
 
 ### Visual Studio Marketplace
 
-You can install the `effekt-lang.effekt` extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=effekt-lang.effekt).
+Install the extension by its exact ID, `effekt-lang.effekt`.
+Please use one of these ways to do so:
 
-1. Select `Preferences / Extensions` in the menu
-2. Type "effekt" in the search bar
-3. Click `Install`
+- Open [`effekt-lang.effekt` in the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=effekt-lang.effekt) and click `Install`
+- Paste `ext install effekt-lang.effekt` into the VSCode "Quick Open" menu (`Ctrl+P` or `Cmd+P`) and press `Enter`
+- Run `code --install-extension effekt-lang.effekt` in a terminal
+- Search for `effekt-lang.effekt` in the Extensions view of VSCode and click `Install`
 
-Or paste the following command into the VS Code Quick Open menu (Ctrl+P):
-
-> ext install effekt-lang.effekt
+Please double-check that the publisher is "Effekt Language" with a blue verified badge for the `effekt-lang.org` domain before you install.
 
 ### Manual Installation
 
