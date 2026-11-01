@@ -13,8 +13,7 @@ If you just want to try Effekt without installing it, you can use the [online pl
 {% include install.md %}
 
 ## Your first Effekt Program
-Now let's get started. We create a file called `hello.effekt` and fill it
-with the following contents:
+Now let's get started. We create a file called `hello.effekt` and fill it with the following contents:
 
 ```effekt
 def main() = {
@@ -37,14 +36,11 @@ Hello world!
 
 You can find example programs in the [examples folder]({{ site.githuburl }}/tree/main/examples).
 
-
 ### Compiling Programs with Effekt
-Running the above command, you can
-notice that this created a `./out` directory containing the compiled
-JavaScript files.
 
-To build a program that you can run again later (without compiling it again),
-provide the `--build` flag. For example:
+Running the above command created a `./out` directory containing the compiled JavaScript files.
+
+To build a program that you can run again later (without compiling it again), provide the `--build` flag. For example:
 
 ```bash
 $ effekt --build hello.effekt
@@ -52,16 +48,17 @@ $ ./out/hello
 Hello world!
 ```
 
-To only compile Effekt sources to JavaScript without running them,
- provide the `--compile` flag. For example:
+To only compile Effekt sources to JavaScript without running them, provide the `--compile` flag. For example:
 
 ```bash
 effekt --compile hello.effekt
 ```
-Again, this will generate JavaScript files in `./out`. This output folder can
-be configured by providing arguments `--out ./otherdir`.
+
+Again, this will generate JavaScript files in `./out`.
+This output folder can be configured by providing arguments `--out ./otherdir`.
 
 ### Choosing a Backend
+
 By default, Effekt compiles to JavaScript.
 
 If you want your programs to be faster, you can compile them to native code using the LLVM backend.
@@ -76,7 +73,6 @@ Hello world!
 Effekt has more backends, for example `--backend chez-cps`.
 To see all options and backends, run `effekt --help`.
 
-
 ## Starting a Project
 
 To start a new project in Effekt, you can use the [effekt-template](https://github.com/jiribenes/effekt-template) repository.
@@ -87,14 +83,16 @@ It comes with a main file, tests, and a CI setup that keeps the Effekt version u
 3. Follow the first steps in its README
 
 ## Setting Up VSCode
+
 Effekt comes with a basic language server implementation (LSP).
+
 The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
 To install the extension, see [Install with VSCode](#install-with-vscode) above.
 
 ### Workspace Folder
-For the language services to work, you need to open the project's root-folder in VSCode.
-Similarly, we recommend to start the `effekt` command in a terminal
-in the project's root folder.
+
+For the language services to work, you need to open the project's root folder in VSCode.
+Similarly, we recommend to start the `effekt` command in a terminal in the project's root folder.
 
 ### Manual Installation
 
@@ -125,8 +123,8 @@ To set the path:
 4. Restart VSCode
 
 ## Recommended Workflow
-The recommended workflow is to open your files in VSCode and then
-run them using the Effekt REPL.
+
+The recommended workflow is to open your files in VSCode and then run them using the Effekt REPL.
 The Effekt REPL is started by just invoking `effekt` (without any arguments):
 
 ```bash
@@ -195,5 +193,4 @@ there are a few things you need to look out for:
 
 ## Getting Help
 If you run into problems or something does not work as expected, feel free to
-ask on [Discord]({{ site.discordurl }}) or open an
-[issue on Github]({{ site.githuburl }}/issues).
+ask on [Discord]({{ site.discordurl }}) or open an [issue on Github]({{ site.githuburl }}/issues).
