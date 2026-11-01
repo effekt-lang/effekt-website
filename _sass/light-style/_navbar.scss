@@ -24,6 +24,7 @@
 
     .navigation-brand {
       font-size: 18px;
+      display: flex;
 
       .brand {
         display: inline-flex;
@@ -52,6 +53,11 @@
           font-weight: 500;
           white-space: nowrap;
           left: 70px;
+
+          // on very narrow phones, the logo alone has be enough
+          @media (max-width: 359px) {
+            display: none;
+          }
         }
       }
 
@@ -74,6 +80,14 @@
     .navigation-menu {
       > ul > li:not(:first-child) {
         margin-left: ($base-point-grid * 3);
+
+        @include bp(medium) {
+          margin-left: ($base-point-grid * 2);
+        }
+
+        @include bp(small) {
+          margin-left: $base-point-grid;
+        }
       }
 
       li {
