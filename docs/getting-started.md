@@ -74,6 +74,15 @@ Effekt has more backends, for example `--backend chez-cps`.
 To see all options and backends, run `effekt --help`.
 
 
+## Starting a Project
+
+To start a new project in Effekt, you can use the [effekt-template](https://github.com/jiribenes/effekt-template) repository.
+It comes with a main file, tests, and a CI setup that keeps the Effekt version up to date.
+
+1. Open the [effekt-template](https://github.com/jiribenes/effekt-template) repository on Github
+2. Click `Use this template`
+3. Follow the first steps in its README
+
 ## Setting Up VSCode
 Effekt comes with a basic language server implementation (LSP).
 The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
