@@ -43,21 +43,11 @@ To install the latest release with npm, run:
 ```bash
 npm install -g @effekt-lang/effekt
 ```
-This will download the compiler and install the `effekt` command.
-
-### Install specific release
-
-Alternatively, you can also download a specific release on the
-[release page on Github]({{ site.githuburl }}/releases).
-And then install it with
-```bash
-npm install -g <PATH_TO_FILE>/effekt.tgz
-```
+This will download the compiler and install the `effekt` binary as a command usable in your terminal.
 
 ### Install location
 
-npm installs the `effekt` command into the `bin` folder of its global prefix
-(on Windows, directly into the prefix folder).
+npm installs the `effekt` command into the `bin` folder of its global prefix (on Windows, directly into the prefix folder).
 You can find this folder by running:
 
 ```bash
@@ -71,13 +61,50 @@ For example, depending on your configuration, on Mac OSX the `effekt` command wi
 /usr/local/bin
 ```
 
+> #### Note
+> The Effekt "binary" is actually just an executable jar-file.
+> On Windows, NPM will also install an `effekt.cmd` script to start the jar-file with `java -jar`.
+
+### Try without installing
+
+If you just want to try Effekt, you can also run it with `npx`, which comes with npm:
+```bash
+npx @effekt-lang/effekt
+```
+This downloads the compiler on first use and starts the Effekt REPL.
+Note that you still need Java and Node.js, and that the VSCode extension cannot use Effekt from `npx`.
+
+### Install with Nix
+
+If you are using [Nix](https://nixos.org), you can also install Effekt via [effekt-nix](https://github.com/jiribenes/effekt-nix), also used by the [community projects]({{ site.communityurl }}).
+
+To try Effekt via Nix without installing it, run:
+```bash
+nix run github:jiribenes/effekt-nix
+```
+To install Effekt, run:
+```bash
+nix profile install github:jiribenes/effekt-nix
+```
+Note that if your npm comes from Nix, the VSCode extension cannot install Effekt for you, so please use effekt-nix instead.
+For more ways to use effekt-nix, for example development shells or specific versions, see its [README](https://github.com/jiribenes/effekt-nix).
+
+### Install specific release
+
+To install a specific version with npm, run:
+```bash
+npm install -g @effekt-lang/effekt@<VERSION>
+```
+
+You can find all releases on the [release page on Github]({{ site.githuburl }}/releases).
+Each release also comes with an `effekt.tgz` file, which you can install manually by running:
+```bash
+npm install -g <PATH_TO_FILE>/effekt.tgz
+```
+
 ### Uninstalling
 
 You can always remove the Effekt installation by:
 ```bash
 npm remove -g @effekt-lang/effekt
 ```
-
-> #### Note
-> The Effekt "binary" is actually just an executable jar-file. 
-> On Windows, NPM will also install an `effekt.cmd` script to start the jar-file with `java -jar`.
