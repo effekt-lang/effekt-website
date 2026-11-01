@@ -24,11 +24,27 @@ See the MICROSITE-LICENSE file for the original sbt-microsite license.
 
 The website is built with [jekyll](https://jekyllrb.com/) and requires a ruby installation.
 
-Follow instructions on the Jekyll website to install jekyll (which requires Ruby). Afterwards, you are now able to locally deploy the website using the following command:
+Many pages, for example the language tour, come from the Effekt repository, which is a git submodule, so please check it out first:
 
 ```
+$ git submodule update --init
+```
+
+In order to install Jekyll, follow instructions on the Jekyll website.
+Afterwards, use the following commands to serve the website locally:
+
+```
+$ bundle install
 $ bundle exec jekyll serve
 ```
+
+If you are using Nix, you can also deploy the website locally via the included flake:
+
+```
+$ nix run .#serve
+```
+
+To get a shell with Ruby and all dependencies, run `nix develop`.
 
 ### How to Update the Effekt Compiler / LSP Server
 
