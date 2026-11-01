@@ -35,7 +35,7 @@ def main(): Unit = {
 def foo(): Int = 42
 
 def generateStuff(): Int / { Optional, Async } = {
-  val promise = do async(foo);
+  val promise = do async(box foo);
   do await(promise)
 }
 
