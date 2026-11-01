@@ -13,6 +13,7 @@ If you just want to try Effekt without installing it, you can use the [online pl
 {% include install.md %}
 
 ## Your first Effekt Program
+
 Now let's get started. We create a file called `hello.effekt` and fill it with the following contents:
 
 ```effekt
@@ -26,13 +27,14 @@ main()
 ```
 Feel free to edit the above program and try to run it again.
 
-With Effekt installed, you can also
-execute the example by compiling and running it with effekt.
+With Effekt installed, you can also execute the example by compiling and running it with `effekt`.
 
 ```bash
 $ effekt hello.effekt
 Hello world!
 ```
+
+With the VSCode extension installed and set up, you can click the `▷ Run` button above `main`.
 
 You can find example programs in the [examples folder]({{ site.githuburl }}/tree/main/examples).
 
