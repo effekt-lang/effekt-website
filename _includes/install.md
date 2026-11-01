@@ -1,4 +1,4 @@
-#### Requirements
+### Requirements
 
 Currently, the Effekt language is implemented in Scala and compiles to JavaScript (besides other backends).
 To use the Effekt compiler and run the resulting programs, you need to have
@@ -9,7 +9,7 @@ To use the Effekt compiler and run the resulting programs, you need to have
 
 installed.
 
-#### Install latest release
+### Install latest release
 
 The recommended way to install Effekt is by running:
 ```bash
@@ -17,7 +17,7 @@ npm install -g @effekt-lang/effekt
 ```
 This will download the compiler and install the `effekt` command to `npm root -g`.
 
-#### Install specific release
+### Install specific release
 
 Alternatively, you can also download a specific release on the
 [release page on Github]({{ site.githuburl }}/releases).
@@ -26,7 +26,7 @@ And then install it with
 npm install -g <PATH_TO_FILE>/effekt.tgz
 ```
 
-#### Install location
+### Install location
 
 You can find the installation location by running
 
@@ -41,7 +41,7 @@ For example, depending on you configuration, on Mac OSX the `effekt` binary will
 /usr/local/lib/node_modules/effekt/bin
 ```
 
-#### Uninstalling
+### Uninstalling
 
 You can always remove the Effekt installation by:
 ```bash

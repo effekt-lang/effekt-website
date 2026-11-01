@@ -6,7 +6,7 @@ permalink: docs
 
 # Getting Started
 
-### Installing Effekt
+## Installing Effekt
 {% include install.md %}
 
 ## Your first Effekt Program
