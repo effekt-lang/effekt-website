@@ -35,7 +35,7 @@ If it does not work for you, please install Effekt [with npm](#install-with-npm)
 
 The extension also lets you know when a new version of Effekt is available.
 You can check for updates at any time by clicking on `Ξ Effekt` in the status bar.
-For more information on VSCode, see [Setting Up VSCode](#setting-up-vscode) below.
+If the extension does not start, see [Troubleshooting](#troubleshooting) below.
 
 ### Install with npm
 
@@ -45,18 +45,9 @@ npm install -g @effekt-lang/effekt
 ```
 This will download the compiler and install the `effekt` binary as a command usable in your terminal.
 
-### Install location
+### Other ways to install
 
-npm installs the `effekt` command into the `bin` folder of its global prefix (on Windows, directly into the prefix folder).
-You can find this folder by running:
-
-```bash
-npm prefix -g
-```
-
-Please note that this folder needs to be included in your `$PATH` environment variable in order to run the `effekt` compiler from the command line.
-
-### Try without installing
+#### Try without installing
 
 If you just want to try Effekt, you can also run it with `npx`, which comes with npm:
 ```bash
@@ -65,7 +56,7 @@ npx @effekt-lang/effekt
 This downloads the compiler on first use and starts the Effekt REPL.
 Note that you still need Java and Node.js, and that the VSCode extension cannot use Effekt from `npx`.
 
-### Install with Nix
+#### Install with Nix
 
 If you are using [Nix](https://nixos.org), you can also install Effekt via [effekt-nix](https://github.com/jiribenes/effekt-nix), also used by the [community projects]({{ site.communityurl }}).
 
@@ -80,7 +71,7 @@ nix profile install github:jiribenes/effekt-nix
 Note that if your npm comes from Nix, the VSCode extension cannot install Effekt for you, so please use effekt-nix instead.
 For more ways to use effekt-nix, for example development shells or specific versions, see its [README](https://github.com/jiribenes/effekt-nix).
 
-### Install specific release
+#### Install specific release
 
 To install a specific version with npm, run:
 ```bash

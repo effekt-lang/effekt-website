@@ -75,56 +75,16 @@ Hello world!
 Effekt has more backends, for example `--backend chez-cps`.
 To see all options and backends, run `effekt --help`.
 
-## Starting a Project
-
-To start a new project in Effekt, you can use the [effekt-template](https://github.com/jiribenes/effekt-template) repository.
-It comes with a main file, tests, and a CI setup that keeps the Effekt version up to date.
-
-1. Open the [effekt-template](https://github.com/jiribenes/effekt-template) repository on Github
-2. Click `Use this template`
-3. Follow the first steps in its README
-
-## Setting Up VSCode
-
-To install the extension, see [Install with VSCode](#install-with-vscode) above.
-
-### Workspace Folder
-
-For the language services to work, you need to open the project's root folder in VSCode.
-Similarly, we recommend to start the `effekt` command in a terminal in the project's root folder.
-
-### Manual Installation
-
-You can download the extension of the latest release on Github:
-
-> <https://github.com/effekt-lang/effekt-vscode/releases/latest>
-
-In VSCode select
-
-1. `Preferences / Extensions` in the menu,
-2. `...` on the top right corner of the extensions menu, and
-3. `Install from VSIX ...` selecting the vsix-file.
-
-### If the Extension Does Not Start
-
-After installing the extension, you might be faced with the following error:
-
-> "Couldn't start client Effekt Language Server"
-
-This means that you need to set the path to the `effekt` binary manually, usually because the `effekt` or `effekt.cmd` commands were not found in your path.
-
-To set the path:
-
-1. Open the settings of VSCode
-2. Search for `effekt`
-3. Edit the `Effekt: Executable` property and enter the path to the Effekt binary (on Windows, it defaults to `effekt.cmd` which can be found in `%APPDATA%/Roaming/npm` by default)
-4. Restart VSCode
-
 ## Recommended Workflow
 
 The recommended workflow is to open your project in VSCode with the Effekt extension installed and run your program by clicking `▷ Run` above the `main` function.
 This runs the file with `effekt` in a terminal inside VSCode.
 To use a different backend than JavaScript (see [Choosing a Backend](#choosing-a-backend)), change the `Effekt: Backend` setting.
+
+### Workspace Folder
+
+For the language services to work, you need to open the project's root folder in VSCode.
+Similarly, we recommend to start the `effekt` command in a terminal in the project's root folder.
 
 ### Using the REPL
 
@@ -172,7 +132,57 @@ Hello
 ()
 ```
 
-## Effekt on Windows
+## Starting a Project
+
+To start a new project in Effekt, you can use the [effekt-template](https://github.com/jiribenes/effekt-template) repository.
+It comes with a main file, tests, and a CI setup that keeps the Effekt version up to date.
+
+1. Open the [effekt-template](https://github.com/jiribenes/effekt-template) repository on Github
+2. Click `Use this template`
+3. Follow the first steps in its README
+
+## Troubleshooting
+
+### If the Extension Does Not Start
+
+After installing the extension, you might be faced with the following error:
+
+> "Couldn't start client Effekt Language Server"
+
+This means that you need to set the path to the `effekt` binary manually, usually because the `effekt` or `effekt.cmd` commands were not found in your path.
+
+To set the path:
+
+1. Open the settings of VSCode
+2. Search for `effekt`
+3. Edit the `Effekt: Executable` property and enter the path to the Effekt binary (on Windows, it defaults to `effekt.cmd` which can be found in `%APPDATA%/Roaming/npm` by default)
+4. Restart VSCode
+
+### Install Location
+
+If your terminal cannot find the `effekt` command after installing it with npm, please check the install location.
+npm installs the `effekt` command into the `bin` folder of its global prefix (on Windows, directly into the prefix folder).
+You can find this folder by running:
+
+```bash
+npm prefix -g
+```
+
+Please note that this folder needs to be included in your `$PATH` environment variable in order to run the `effekt` compiler from the command line.
+
+### Installing the Extension Manually
+
+If you cannot install the extension from the Marketplace, you can download the extension of the latest release on Github:
+
+> <https://github.com/effekt-lang/effekt-vscode/releases/latest>
+
+In VSCode select
+
+1. `Preferences / Extensions` in the menu,
+2. `...` on the top right corner of the extensions menu, and
+3. `Install from VSIX ...` selecting the vsix-file.
+
+### Effekt on Windows
 
 Generally, we recommend using `cmd` at the moment.
 If you want to use Effekt with Microsoft's [PowerShell](https://docs.microsoft.com/en-us/powershell/), there are a few things you need to look out for:
