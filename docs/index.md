@@ -31,7 +31,7 @@ users familiar with Scala should have no problems getting started. Right now
 the syntax is not documented very well and also subject to change. So the best
 way to learn it is by looking at
 [examples]({{ site.githuburl }}/tree/main/examples/pos),
-or even looking into the [parser implementation]({{ site.githuburl }}/blob/main/shared/src/main/scala/effekt/Parser.scala).
+or even looking into the [parser implementation]({{ site.githuburl }}/blob/main/effekt/shared/src/main/scala/effekt/Parser.scala).
 
 One particular thing important to note: statements are semicolon _separated_.
 That is, a semicolon is required between statements, but not allowed in a
