@@ -12,8 +12,9 @@
   \node (core) [box, right = 1.5 of source]            {Core};
   \node (machine) [box, right = 1.5 of core]           {Machine};
   \node (llvm) [box, right = 1.5 of machine]           {LLVM};
-  \node (jit) [box, below = 0.9 of llvm]               {JIT};
-  \node (other) [box, below = 0.9 of jit]              {JavaScript\\Chez Scheme};
+  \node (cps) [box, below = 1.2 of machine]            {CPS};
+  \node (js) [box, below = 1.2 of llvm]                {JavaScript};
+  \node (chez) [box, below = 0.9 of js]                {Chez Scheme};
 
   % Translations
   \draw[implemented] (effekt) to node (tosource) [above]{} (source);
@@ -24,10 +25,12 @@
     ($(source.south) + (0.4,0.0)$);
   \draw[implemented] (source) to node (tocore) [above]{} (core);
   \draw[implemented] ($(core.south) - (0.4,0.0)$) to[out=-130, in=-50,looseness=5] node (oncore) [below]{} ($(core.south) + (0.4,0.0)$);
-  \draw[implemented] (core) to node (tomachine) [above]{} (machine);
-  \draw[implemented] (machine) to node (tollvm) [above]{} (llvm);
-  \draw[wip] (machine) to node (tojit) [above]{} (jit);
-  \draw[implemented] (core) to node (toother) [above]{} (other);
+  \draw[implemented] (core) to (machine);
+  \draw[implemented] (machine) to (llvm);
+  \draw[implemented] (core.south east) to (cps.west);
+  \draw[implemented] (cps) to (js);
+  \draw[implemented] (cps.south east) to (chez.west);
+  \draw[implemented] ($(core.south east) + (-0.2,0)$) to[out=-70, in=180] (chez.west);
 
   \node (ltosource) [label, above = 0.4 of tosource.north, anchor=south] {Parsing};
   \draw[gray] ($(tosource.north) + (0,0.1)$) -- (ltosource);
@@ -46,15 +49,6 @@
 
   \node (loncore) [label, below = 0.2 of oncore.south, anchor=north] {Optimization};
   \draw[gray] ($(oncore.north) - (0,0.1)$) -- (loncore);
-
-  %\node (ltomachine) [label, above = 0.4 of tomachine.north, anchor=south] {WIP};
-  %\draw[gray] ($(tomachine.north) + (0,0.1)$) -- (ltomachine);
-
-  %\node (ltollvm) [label, above = 0.4 of tollvm, anchor=south] {WIP};
-  %\draw[gray] ($(tollvm.north) + (0,0.1)$) -- (ltollvm);
-
-  \node (ltojit) [label, below = 0.4 of tojit, anchor=north] {WIP};
-  \draw[gray] ($(tojit.south) - (0,0.1)$) -- (ltojit);
 
   % Partitioning
   \node (front) [shape=coordinate, above = 3.0 of source.west]            {};
