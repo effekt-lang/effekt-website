@@ -24,7 +24,7 @@ main()
 ```
 Feel free to edit the above program and try to run it again.
 
-You can also install Effekt locally and then
+With Effekt installed, you can also
 execute the example by compiling and running it with effekt.
 
 ```bash
@@ -38,15 +38,14 @@ You can find example programs in the [examples folder]({{ site.githuburl }}/tree
 ### Compiling Programs with Effekt
 Running the above command, you can
 notice that this created a `./out` directory containing the compiled
-JavaScript files. We can also run the program (without compiling it again)
-by directly using `node`:
+JavaScript files.
+
+To build a program that you can run again later (without compiling it again),
+provide the `--build` flag. For example:
+
 ```bash
-$ node
-Welcome to Node.js v13.6.0.
-Type ".help" for more information.
-> hello = require('./out/hello.js')
-{ main: [Function: main] }
-> hello.main().run()
+$ effekt --build hello.effekt
+$ ./out/hello
 Hello world!
 ```
 
