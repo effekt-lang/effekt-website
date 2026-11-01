@@ -6,6 +6,9 @@ permalink: docs
 
 # Getting Started
 
+This page explains how to install Effekt, run your first program, and start a project.
+If you just want to try Effekt without installing it, you can use the [online playground](/playground) or read the [language tour](/tour).
+
 ## Installing Effekt
 {% include install.md %}
 
