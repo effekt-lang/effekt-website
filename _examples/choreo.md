@@ -331,7 +331,8 @@ def input[R] { prog: => R / Input }: R =
   try { prog() } with Input {
     def desiredBook() = resume(prompt("What is the book you want to buy?"))
     def availableBudget() = {
-      val budget = attempt { toInt(prompt("How much money do you have?")) } { panic("Wrong format.") }
+      with crash("Wrong format.")
+      val budget = prompt("How much money do you have?").toInt
       resume(budget)
     }
   }
