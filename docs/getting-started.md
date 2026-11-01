@@ -58,6 +58,20 @@ effekt --compile hello.effekt
 Again, this will generate JavaScript files in `./out`. This output folder can
 be configured by providing arguments `--out ./otherdir`.
 
+### Choosing a Backend
+By default, Effekt compiles to JavaScript.
+
+If you want your programs to be faster, you can compile them to native code using the LLVM backend.
+Note that the LLVM backend needs Clang and libuv (see [Requirements](#requirements)).
+
+```bash
+$ effekt --backend llvm --build hello.effekt
+$ ./out/hello
+Hello world!
+```
+
+Effekt has more backends, for example `--backend chez-cps`.
+To see all options and backends, run `effekt --help`.
 
 
 ## Recommended Workflow

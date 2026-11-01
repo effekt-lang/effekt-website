@@ -9,6 +9,8 @@ To use the Effekt compiler and run the resulting programs, you need to have
 
 installed.
 
+If you want to use the LLVM backend, you also need to have [Clang](https://clang.llvm.org) and [libuv](https://libuv.org) installed (see [Choosing a Backend](#choosing-a-backend) below).
+
 ### Install latest release
 
 The recommended way to install Effekt is by running:
