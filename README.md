@@ -48,32 +48,32 @@ To get a shell with Ruby and all dependencies, run `nix develop`.
 
 ### How to Update the Effekt Compiler / LSP Server
 
-The website features an interactive REPL and editor. In order to update the
-underlying compiler, run the following commands.
+The website features an interactive REPL and editor, using a JavaScript version of the Effekt compiler in `src/effekt.js`.
 
-1. In the effekt repo:
+The GitHub Actions workflow [`update-compiler.yml`](.github/workflows/update-compiler.yml) updates it every Monday to the latest release of Effekt.
+You can also start the workflow manually on GitHub, optionally selecting a specific commit of Effekt.
+
+In order to update the compiler manually, run the same steps as the workflow:
+
+1. In the `effekt/` submodule, check out the version of Effekt that you want.
+   Then build the compiler for JavaScript and copy it to the website:
     ```
     $ cd effekt/
-    $ sbt
-    sbt> project effektJS
-    effektJS> fullOptJS
-    [info] Full optimizing ./js/target/scala-2.13/effekt-opt.js
+    $ sbt assembleJS
+    $ cp out/effekt.js ../src/effekt.js
     $ cd ..
     ```
-2. Move the resulting `effekt/js/target/scala-$VERSION/effekt-opt.js` to `src/effekt.js` in the website repo:
+2. Install the necessary other dependencies with:
     ```
-    $ cp effekt/effekt/js/target/scala-$VERSION/effekt-opt.js src/effekt.js
+    $ npm install
     ```
-3. Install the neccessary other dependencies with:
+3. In the website's repo, run `webpack`:
     ```
-    $ npm install .
-    ```
-4. In the website's repo, run `webpack`:
-    ```
-    $ npm exec webpack
+    $ rm -f dist/*
+    $ npx webpack
     ```
     This will generate a bunch of packed js files.
-1. Optionally, verify that everything functions as expected by locally deploying the website:
+4. Optionally, verify that everything functions as expected by serving the website locally:
     ```
     $ bundle exec jekyll serve
     ```
