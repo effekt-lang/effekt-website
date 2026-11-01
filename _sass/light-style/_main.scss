@@ -178,6 +178,14 @@ html {
   }
 }
 
+.post-discuss {
+  margin-top: $base-point-grid * 4;
+  padding-top: $base-point-grid * 2;
+  border-top: solid 1px rgba($text-color, 0.10);
+  font-size: $footer-font-size;
+  color: rgba($text-color, 0.70);
+}
+
 #getting-started {
   div {
     background: #fff;
@@ -220,6 +228,11 @@ html {
   #start-install {
     &:before {
       content: "\f019"
+    }
+  }
+  #start-chat {
+    &:before {
+      content: "\f086"
     }
   }
   #start-read {

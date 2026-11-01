@@ -191,3 +191,8 @@ Instead of using the `effekt` command, on linux for now the shell-script
 3. Edit the `Effekt: Executable` property
 4. Enter the path to `effekt.sh`, e.g. `/usr/bin/effekt.sh`
 5. Restart VSCode
+
+## Getting Help
+If you run into problems or something does not work as expected, feel free to
+ask on [Discord]({{ site.discordurl }}) or open an
+[issue on Github]({{ site.githuburl }}/issues).
