@@ -25,7 +25,7 @@ def eachLine(file: File) { f: String => Unit / {} }: Unit / {} =
 
 val someFile = ["first line", "second line", "", "third line"]
 ```
-```
+```effekt
 def printLines(file: File) = try {
     eachLine(file) { line =>
       if (line == "") { do Break() }
@@ -96,7 +96,7 @@ Since it still has unhandled user effects, it does not type-check and we cannot 
 
 To be able to run it, we handle the user-effect at the call-site to `eachLine`, for example
 by printing to the console:
-```
+```effekt
 def printLogger[R] { prog: () => R / Logger }: R =
   try { prog() } with Logger { def log(msg) = resume(println(msg)) }
 ```

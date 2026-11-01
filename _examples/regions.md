@@ -7,7 +7,7 @@ date: 2022-08-18
 
 Simple example that shows the new region feature.
 
-```
+```effekt
 def user {r: Region} = {
   var x in r = 1;
   x = x + 1

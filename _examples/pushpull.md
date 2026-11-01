@@ -16,7 +16,7 @@ result. If you hover over `coroutine` you will see that the value stored there
 is of type `() => Option[A] at {iterator, this}`. The function closes over
 `iterator` and the mutable reference itself, which lives in `this`.
 
-```
+```effekt
 type Option[A] {
   Present(value: A);
   Absent()
@@ -44,14 +44,14 @@ def intoFold[A, S](initState: S) { f: (S, A) => S } : S / Reduce[A] =
 def intoSum(): Int / Reduce[Int] = intoFold(0) { (s, a) => s + a }
 
 def reduce[A, B]() { iterator: () => Unit / Iterate[A] } { reducer: () => B / Reduce[A] } = {
-  var coroutine = fun() { Absent() };
-  coroutine = fun() {
+  var coroutine = box { () => Absent() };
+  coroutine = box { () =>
     try {
       iterator();
       Absent()
     } with Iterate[A] {
       def yield(e) = {
-        coroutine = fun() { resume(()) };
+        coroutine = box { () => resume(()) };
         Present(e)
       }
     }

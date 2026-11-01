@@ -5,8 +5,8 @@ permalink: docs/introduction
 ---
 
 # Quick Introduction to Effekt
-In this section, you can find a few examples and some details about the
-Effekt language.
+
+In this section, you can find a few examples and some details about the Effekt language.
 
 {% for x in site.pages %}
   {% if x.section == 'docs' and x.title != page.title %}
@@ -26,16 +26,13 @@ main()
 ```
 
 ## Syntax
-The Syntax is heavily inspired by the [Scala language](https://scala-lang.org). So
-users familiar with Scala should have no problems getting started. Right now
-the syntax is not documented very well and also subject to change. So the best
-way to learn it is by looking at
-[examples]({{ site.githuburl }}/tree/main/examples/pos),
-or even looking into the [parser implementation]({{ site.githuburl }}/blob/main/shared/src/main/scala/effekt/Parser.scala).
 
-One particular thing important to note: statements are semicolon _separated_.
-That is, a semicolon is required between statements, but not allowed in a
-trailing position. This will potentially change soon.
+Effekt's syntax is heavily inspired by the syntax of [Scala](https://scala-lang.org).
+The [language tour](/tour) is a more in-depth resource that explains the syntax step by step.
+You can also look at the [examples]({{ site.githuburl }}/tree/main/examples/pos), or even into the [parser implementation]({{ site.githuburl }}/blob/main/effekt/shared/src/main/scala/effekt/Parser.scala).
+
+Statements are separated by newlines or by semicolons.
+A semicolon after the last statement is also allowed.
 
 ## Example: Lists
 To familiarize ourselves, let's start by reimplementing lists, similar to how they are implemented in the [standard library]({{ site.githuburl }}/blob/main/libraries/common/list.effekt).
@@ -61,19 +58,19 @@ type List[A] {
 ```
 It describes a closed union type of records `Nil` and `Cons`. Values of type
 `List[Int]` are constructed as follows:
-```
+```effekt
 val l: List[Int] = Cons(1, Cons(2, Cons(3, Nil())))
 ```
 
 For lists, there is syntactic sugar and the same list can also be written as
-```
+```effekt
 val l2: List[Int] = [1, 2, 3]
 ```
 
 #### Pattern Matching
 Field names need to be provided in ADTs, but can't be directly accessed.
 Instead, we need to perform pattern matching like in the definition of `size`:
-```
+```effekt
 def size[A](l: List[A]): Int = l match {
   case Nil() => 0
   case Cons(_, rest) => 1 + size(rest)
@@ -87,7 +84,7 @@ As you can see, functions like `size` are called like `size(l)`. Additionally,
 Effekt also supports uniform-function call sytax and you can
 call the same function as `l.size`. This also works if our function takes
 multiple arguments, like append:
-```
+```effekt
 def myAppend[A](self: List[A], other: List[A]): List[A] = <>
 ```
 and call it:
@@ -101,7 +98,7 @@ Here, `<>` denotes a "hole"; forcing a hole creates a runtime error.
 
 #### Records
 You can define a record as follows:
-```
+```effekt
 record Queue[A](front: List[A], back: List[A])
 val q = Queue([1, 2], [3, 4])
 ```
@@ -125,7 +122,7 @@ we sometimes call those argument functions _blocks_.
 Here is the definition of `myMap` that takes a block, which it applies to every
 element in the list:
 
-```
+```effekt
 def myMap[A, B](l: List[A]) { f: A => B } : List[B] =
   l match {
     case Nil() => Nil()
@@ -155,7 +152,7 @@ l.myMap { x => x + 1 }
 #### Variables: Local Mutable State
 While Effekt has its heritage in functional programming, it offers convient
 imperative style features like mutable variables:
-```
+```effekt
 def vars() = {
   var x = 10;
   while (x > 0) {

@@ -97,7 +97,7 @@ Afterwards, you can find the `effekt.jar` in the `bin/` directory.
 The Effekt standard library is still in its infancy. If you want to work on
 it, we recommend the following workflow: Check out the effekt repository
 and start the repl in the project directory. This will enable using the
-library in folder `lib` instead of the bundled one.
+library in folder `libraries` instead of the bundled one.
 
 You can now go ahead and create a test file in `examples` that uses
 your new / improved library module, like

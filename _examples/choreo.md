@@ -49,6 +49,7 @@ Enough discussion, here now the implementation. If you just want to run it, scro
 First, we define what it means for a value to be located on a machine:
 ```effekt:prelude:hide
 import io
+import io/promise
 ```
 
 ```effekt
@@ -246,8 +247,8 @@ def network[R](channels: Channels) { prog: => R / Net }: R = {
 
   try { prog() }
   with Net {
-    def send(value, receiver) = resume(tryWrite(value, receiver))
-    def recv(receiver) = resume(tryRead(receiver))
+    def send[A, L](value, receiver) = resume(tryWrite(value, receiver))
+    def recv[A, L](receiver) = resume(tryRead(receiver))
   }
 }
 </code></pre>
@@ -280,14 +281,14 @@ def epp[A, L](ls: Locations, here: Location[L]) { p: => A / Choreo }: A / Net = 
     def locally[B, L2](l2) = resume { {f} =>
       try {
         if (here == l2) { Local(f()) } else Remote()
-      } with Unwrap[L2] { def unwrap(v) = resume(tryUnwrap(v)) }
+      } with Unwrap[L2] { def unwrap[A](v) = resume(tryUnwrap(v)) }
     }
-    def communicate(s, r, a) = here match {
+    def communicate[A, S, R](s, r, a) = here match {
       case _ and here == s => do send(tryUnwrap(a), r); resume(Remote())
       case _ and here == r => resume(Local(do recv(r)))
       case _ => resume(Remote())
     }
-    def broadcast(s, a) =
+    def broadcast[A, L](s, a) =
       if (here == s) { sendAll(ls, tryUnwrap(a)); resume(tryUnwrap(a)) }
       else { resume(do recv(here)) }
   }
@@ -330,8 +331,9 @@ def input[R] { prog: => R / Input }: R =
   try { prog() } with Input {
     def desiredBook() = resume(prompt("What is the book you want to buy?"))
     def availableBudget() = {
-      with on[WrongFormat].panic;
-      resume(toInt(prompt("How much money do you have?")))
+      with crash("Wrong format.")
+      val budget = prompt("How much money do you have?").toInt
+      resume(budget)
     }
   }
 ```

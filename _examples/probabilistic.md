@@ -3,7 +3,7 @@ title: Probabilistic
 date: 2023-04-19
 ---
 
-```
+```effekt
 import list
 
 type Probability = Double
@@ -73,7 +73,7 @@ def uniform[A](xs: List[A]): A / { Flip, Fail } =
 def insertDistribution[A](a: A, p: Probability, xs: Distribution[A]): Distribution[A] =
   xs match {
     case Nil() => [Weighted(a, p)]
-    case Cons(Weighted(b, q), ys) => if(a == b) {
+    case Cons(Weighted(b, q), ys) => if (genericEquals(a, b)) {
       Cons(Weighted(a, p + q), ys)
     } else {
       Cons(Weighted(b, q), insertDistribution[A](a, p, ys))
