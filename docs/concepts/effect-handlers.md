@@ -123,13 +123,16 @@ record Solution(first: Int, second: Int, third: Int)
 ```
 We now use two different effect operations to express nondeterminism:
 
-```effekt
+```effekt:sketch
 effect flip(): Bool
 effect fail(): Nothing
 ```
-The first effect `Flip` returns a boolean, representing a nondeterministic
-choice. The second effect `Fail` returns a polymorphic `A` to be usable at
-all positions. It represents a failing branch in the search tree.
+```effekt:hide
+effect flip(): Bool
+```
+The first effect `flip` returns a boolean, representing a nondeterministic choice.
+The second effect `fail` returns `Nothing`, so it can be used at all positions.
+It represents a failing branch in the search tree.
 We can now write a function `choice` modelling choosing a number
 between 1 and n:
 
