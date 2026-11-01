@@ -3,7 +3,7 @@ title: Probabilistic
 date: 2023-04-19
 ---
 
-```
+```effekt
 import list
 
 type Probability = Double

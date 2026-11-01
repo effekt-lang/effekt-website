@@ -5,7 +5,7 @@ date: 2023-02-28
 
 The `Comefrom` effect.
 
-```
+```effekt
 interface Comefrom {
   def label(name: String): Unit
 }

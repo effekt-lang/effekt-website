@@ -16,7 +16,7 @@ result. If you hover over `coroutine` you will see that the value stored there
 is of type `() => Option[A] at {iterator, this}`. The function closes over
 `iterator` and the mutable reference itself, which lives in `this`.
 
-```
+```effekt
 type Option[A] {
   Present(value: A);
   Absent()

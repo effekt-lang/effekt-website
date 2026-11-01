@@ -7,7 +7,7 @@ date: 2024-03-04
 
 This example illustrates how Effekt supports multiple instances of the same effect. Due to the capability-passing style translation, this is quite natural and comes for free.
 
-```
+```effekt
 interface Cell { 
   def get(): Int
   def set(n: Int): Unit 

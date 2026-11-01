@@ -7,7 +7,7 @@ date: 2023-04-28
 
 This example illustrates user defined stack traces.
 
-```
+```effekt
 import list
 import option
 

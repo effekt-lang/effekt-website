@@ -7,7 +7,7 @@ date: 2022-08-25
 
 Based on <https://www.cs.hmc.edu/~oneill/papers/Sieve-JFP.pdf>
 
-```
+```effekt
 import list
 
 interface EmitPrime {

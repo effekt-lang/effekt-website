@@ -18,7 +18,7 @@ In particular, we can now
 import list
 import option
 ```
-```
+```effekt
 record Request(username: String)
 record User(id: Int)
 record Message(from: User, content: String)

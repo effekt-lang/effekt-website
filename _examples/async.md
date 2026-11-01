@@ -8,7 +8,7 @@ date: 2022-09-19
 This example was proposed and implemented by [Jack Firth](https://github.com/effekt-lang/effekt/issues/140).
 It is a basic implementation of an asynchronous IO system that uses a `Suspend` effect for cooperative multitasking.
 
-```
+```effekt
 type Condition = Int
 
 interface Suspend {
