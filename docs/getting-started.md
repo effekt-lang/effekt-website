@@ -145,11 +145,10 @@ In VSCode select
 >
 > and need to set the path to the `effekt` binary.
 >
-> For Mac OS users this probably works out of the box after installing `effekt`
+> For Mac OS and Linux users this probably works out of the box after installing `effekt`
 > with npm (that is, once the `effekt` command is in your path). For Windows users,
 > you might need to double check the path (it defaults to `effekt.cmd`, which can
-> be found in `%APPDATA%/Roaming/npm`). Linux users should point VSCode to the
-> `effekt.sh` shell script, located in the npm install path.
+> be found in `%APPDATA%/Roaming/npm`).
 >
 > You might need to restart VSCode after changing the settings.
 
@@ -157,8 +156,7 @@ With this setup the extension should start the server when an Effekt file is ope
 
 ### Workspace Folder
 For the language services to work, you need to open the project's root-folder in VSCode.
-In the case of this artifact, the supplementary material folder is the project-folder.
-Similarly, we recommend to start the `effekt` command (`effekt.sh` on Linux) in a terminal
+Similarly, we recommend to start the `effekt` command in a terminal
 in the project's root folder.
 
 ## Effekt on Windows
@@ -180,17 +178,6 @@ there is a few things you need to look out for.
    The easiest way is to set `VirtualTerminalLevel` in the registry to `true`.
    As always, be careful when tempering with the registry and only do it
    when you know what you are doing!
-
-## Effekt on Linux
-Instead of using the `effekt` command, on linux for now the shell-script
-`effekt.sh` has to be used. It is installed alongside `effekt` using
-`npm install ...`.
-
-1. Open the settings of VSCode
-2. Search for `effekt`
-3. Edit the `Effekt: Executable` property
-4. Enter the path to `effekt.sh`, e.g. `/usr/bin/effekt.sh`
-5. Restart VSCode
 
 ## Getting Help
 If you run into problems or something does not work as expected, feel free to
