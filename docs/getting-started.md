@@ -13,7 +13,7 @@ permalink: docs
 Now let's get started. We create a file called `hello.effekt` and fill it
 with the following contents:
 
-```
+```effekt
 def main() = {
   println("Hello world!")
 }
