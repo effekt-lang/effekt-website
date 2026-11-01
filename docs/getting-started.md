@@ -124,7 +124,13 @@ To set the path:
 
 ## Recommended Workflow
 
-The recommended workflow is to open your files in VSCode and then run them using the Effekt REPL.
+The recommended workflow is to open your project in VSCode with the Effekt extension installed and run your program by clicking `▷ Run` above the `main` function.
+This runs the file with `effekt` in a terminal inside VSCode.
+To use a different backend than JavaScript (see [Choosing a Backend](#choosing-a-backend)), change the `Effekt: Backend` setting.
+
+### Using the REPL
+
+To try out definitions and expressions interactively, you can also use the Effekt REPL.
 The Effekt REPL is started by just invoking `effekt` (without any arguments):
 
 ```bash
@@ -151,10 +157,10 @@ Hello world!
 ()
 ```
 Here, you can define functions, import modules and enter expressions to evaluate.
-Executing commands in the REPL compiles the corresponding Effekt-programs
-to Javascript (you can find them in `./out/`) and runs them with Node.js.
+Executing commands in the REPL compiles the corresponding Effekt programs to JavaScript (you can find them in `./out/`) and runs them with Node.js.
 
-If you change the contents of the `hello.effekt` file to
+If you change the contents of the `hello.effekt` file to:
+
 ```effekt:sketch
 module hello
 
@@ -162,9 +168,8 @@ def main() = {
   println("Hello")
 }
 ```
-and simply enter `main()` in the open REPL,
-you can notice that all necessary dependencies are automatically
-recompiled:
+and simply enter `main()` in the open REPL, all necessary dependencies are automatically recompiled:
+
 ```bash
 > main()
 Hello
