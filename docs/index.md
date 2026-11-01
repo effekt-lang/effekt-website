@@ -61,19 +61,19 @@ type List[A] {
 ```
 It describes a closed union type of records `Nil` and `Cons`. Values of type
 `List[Int]` are constructed as follows:
-```
+```effekt
 val l: List[Int] = Cons(1, Cons(2, Cons(3, Nil())))
 ```
 
 For lists, there is syntactic sugar and the same list can also be written as
-```
+```effekt
 val l2: List[Int] = [1, 2, 3]
 ```
 
 #### Pattern Matching
 Field names need to be provided in ADTs, but can't be directly accessed.
 Instead, we need to perform pattern matching like in the definition of `size`:
-```
+```effekt
 def size[A](l: List[A]): Int = l match {
   case Nil() => 0
   case Cons(_, rest) => 1 + size(rest)
@@ -87,7 +87,7 @@ As you can see, functions like `size` are called like `size(l)`. Additionally,
 Effekt also supports uniform-function call sytax and you can
 call the same function as `l.size`. This also works if our function takes
 multiple arguments, like append:
-```
+```effekt
 def myAppend[A](self: List[A], other: List[A]): List[A] = <>
 ```
 and call it:
@@ -101,7 +101,7 @@ Here, `<>` denotes a "hole"; forcing a hole creates a runtime error.
 
 #### Records
 You can define a record as follows:
-```
+```effekt
 record Queue[A](front: List[A], back: List[A])
 val q = Queue([1, 2], [3, 4])
 ```
@@ -125,7 +125,7 @@ we sometimes call those argument functions _blocks_.
 Here is the definition of `myMap` that takes a block, which it applies to every
 element in the list:
 
-```
+```effekt
 def myMap[A, B](l: List[A]) { f: A => B } : List[B] =
   l match {
     case Nil() => Nil()
@@ -155,7 +155,7 @@ l.myMap { x => x + 1 }
 #### Variables: Local Mutable State
 While Effekt has its heritage in functional programming, it offers convient
 imperative style features like mutable variables:
-```
+```effekt
 def vars() = {
   var x = 10;
   while (x > 0) {
