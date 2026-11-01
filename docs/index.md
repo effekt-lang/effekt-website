@@ -5,8 +5,8 @@ permalink: docs/introduction
 ---
 
 # Quick Introduction to Effekt
-In this section, you can find a few examples and some details about the
-Effekt language.
+
+In this section, you can find a few examples and some details about the Effekt language.
 
 {% for x in site.pages %}
   {% if x.section == 'docs' and x.title != page.title %}
@@ -26,16 +26,13 @@ main()
 ```
 
 ## Syntax
-The Syntax is heavily inspired by the [Scala language](https://scala-lang.org). So
-users familiar with Scala should have no problems getting started. Right now
-the syntax is not documented very well and also subject to change. So the best
-way to learn it is by looking at
-[examples]({{ site.githuburl }}/tree/main/examples/pos),
-or even looking into the [parser implementation]({{ site.githuburl }}/blob/main/effekt/shared/src/main/scala/effekt/Parser.scala).
 
-One particular thing important to note: statements are semicolon _separated_.
-That is, a semicolon is required between statements, but not allowed in a
-trailing position. This will potentially change soon.
+Effekt's syntax is heavily inspired by the syntax of [Scala](https://scala-lang.org).
+The [language tour](/tour) is a more in-depth resource that explains the syntax step by step.
+You can also look at the [examples]({{ site.githuburl }}/tree/main/examples/pos), or even into the [parser implementation]({{ site.githuburl }}/blob/main/effekt/shared/src/main/scala/effekt/Parser.scala).
+
+Statements are separated by newlines or by semicolons.
+A semicolon after the last statement is also allowed.
 
 ## Example: Lists
 To familiarize ourselves, let's start by reimplementing lists, similar to how they are implemented in the [standard library]({{ site.githuburl }}/blob/main/libraries/common/list.effekt).
