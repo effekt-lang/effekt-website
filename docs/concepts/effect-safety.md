@@ -31,7 +31,7 @@ We thus read the signature of `sayHello` as
 That is, it can only be run in contexts that allow the `exc` effect operation.
 
 For instance, we _cannot_ call it in a "pure" function:
-```effekt
+```effekt:ignore
 def pureFun(): Double / {} = div(42.0, 3.0)
 //                           ^^^^^^^^^^^^^^
 //         Effect Exc is not allowed in this context.
@@ -63,7 +63,7 @@ we are using a hole (`<>`) that allows type-checking, but will result in a
 runtime error, when forced.
 
 Maybe surprisingly, at the callsite to `each`, we actually can use other effects:
-```
+```effekt
 def meanRatios(l: List[(Double, Double)]): Double / { exc } = {
   var sum = 0.0;
   var count = 0;

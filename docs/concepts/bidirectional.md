@@ -72,7 +72,7 @@ effect exc(msg: String): Nothing
 ```
 
 First of all, the typing of `user1` would have changed to not mention the `exc` effect operation, anymore.
-```
+```effekt
 def user1(): Unit / { Config } =
   println(do port())
 ```
@@ -80,7 +80,7 @@ But can we implement `noConfig`, now that exceptions are not allowed by the inte
 
 Turns out we can. However, the exception is now raised at the handling site (that is
 implementation site of `Config`), not at the callsite to `port`:
-```
+```effekt
 //                        Now the handler of Config requires exception handling
 //                                                vvv
 def noConfig { prog: => Unit / Config }: Unit / { exc } = try {

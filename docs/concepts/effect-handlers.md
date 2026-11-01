@@ -16,7 +16,7 @@ Let us start with the simplest effect: exceptions.
 
 First, we declare our effect as follows
 
-```
+```effekt
 effect fileNotFound(path: String): Unit
 ```
 which is a shorthand notation for:
@@ -56,7 +56,7 @@ That is, it communicates that the context still needs to handle `fileNotFound`.
 Everybody familiar with exception handling knows what comes next: we call
 our function `trySomeFile` and handle the exception:
 
-```
+```effekt
 def handled() =
   try { trySomeFile("myFile.txt") }
   with fileNotFound { (path: String) => println("Error " ++ path) }
@@ -66,7 +66,7 @@ You can try running `handled`:
 handled()
 ```
 The inferred type of `handled` communicates that no effect is left:
-```
+```effekt
 def handledType(): Unit / {} = handled()
 ```
 As a side-note, the above handler is actually short-hand syntax for
@@ -118,12 +118,12 @@ Here, we repeat a small example that performs an exhaustive search for
 three distinct numbers below `n` that add up to a given number `s`.
 
 A solution is a triple of three integers:
-```
+```effekt
 record Solution(first: Int, second: Int, third: Int)
 ```
 We now use two different effect operations to express nondeterminism:
 
-```
+```effekt
 effect flip(): Bool
 effect fail(): Nothing
 ```
@@ -165,7 +165,7 @@ the `flip` and `fail` effect operations to be handled.
 To enumerate all possible solutions and collect them in a list, we can write
 the following effect handler:
 
-```
+```effekt
 def handledTriple(n: Int, s: Int): List[Solution] / {} =
   try {
     try {
