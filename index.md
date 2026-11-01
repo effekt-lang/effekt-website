@@ -57,4 +57,10 @@ If you are interested in the Effekt language, we have a few things to get you st
 <a href="publications">academic papers</a>.</p>
 </div>
 
+<div id="start-chat">
+<h3>Join the Community</h3>
+<p>To ask questions and chat with other Effekt users, you can join our <a href="{{ site.discordurl }}">Discord server</a>.
+Programs written by the community are collected in the <a href="{{ site.communityurl }}">effekt-community organization</a>.</p>
+</div>
+
 </section>

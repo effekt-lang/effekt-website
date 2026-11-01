@@ -19,6 +19,9 @@ opening an [issue]({{ site.githuburl }}/issues). Also feel free to update this
 page on [Github]({{ site.githuburl_website }}/blob/main/contributing.md)
 and subsequently open a pull request.
 
+If you have any questions along the way, feel free to ask us on
+[Discord]({{ site.discordurl }}).
+
 ### Software Requirements
 You need to have the following software installed to build and use Effekt:
 
@@ -108,3 +111,9 @@ def main() = mynewfunction()
 
 This makes sure that you are always interacting with the most up-to-date version
 of the standard library you are currently working on.
+
+## Sharing Your Effekt Projects
+Have you written something fun in Effekt? We collect programs written by the
+community in the [effekt-community]({{ site.communityurl }}) organization on Github,
+where they also help us test the compiler as part of the community build.
+If you would like to add yours, let us know on [Discord]({{ site.discordurl }})!
