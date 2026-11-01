@@ -56,15 +56,6 @@ npm prefix -g
 
 Please note that this folder needs to be included in your `$PATH` environment variable in order to run the `effekt` compiler from the command line.
 
-For example, depending on your configuration, on Mac OSX the `effekt` command will be placed in:
-```bash
-/usr/local/bin
-```
-
-> #### Note
-> The Effekt "binary" is actually just an executable jar-file.
-> On Windows, NPM will also install an `effekt.cmd` script to start the jar-file with `java -jar`.
-
 ### Try without installing
 
 If you just want to try Effekt, you can also run it with `npx`, which comes with npm:

@@ -21,7 +21,7 @@ def main() = {
   println("Hello world!")
 }
 ```
-On this page, you can execute the above example, by clicking "run" on the right:
+On this page, you can execute the above example by clicking "run" on the right:
 ```effekt:repl
 main()
 ```
@@ -40,7 +40,7 @@ You can find example programs in the [examples folder]({{ site.githuburl }}/tree
 
 ### Compiling Programs with Effekt
 
-Running the above command created a `./out` directory containing the compiled JavaScript files.
+Running `effekt hello.effekt` created a `./out` directory containing the compiled JavaScript files.
 
 To build a program that you can run again later (without compiling it again), provide the `--build` flag. For example:
 
@@ -86,9 +86,6 @@ It comes with a main file, tests, and a CI setup that keeps the Effekt version u
 
 ## Setting Up VSCode
 
-Effekt comes with a basic language server implementation (LSP).
-
-The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
 To install the extension, see [Install with VSCode](#install-with-vscode) above.
 
 ### Workspace Folder
@@ -114,8 +111,7 @@ After installing the extension, you might be faced with the following error:
 
 > "Couldn't start client Effekt Language Server"
 
-This means that you need to set the path to the `effekt` binary manually,
-usually because the `effekt` or `effekt.cmd` commands were not found in your path.
+This means that you need to set the path to the `effekt` binary manually, usually because the `effekt` or `effekt.cmd` commands were not found in your path.
 
 To set the path:
 
@@ -164,8 +160,6 @@ Executing commands in the REPL compiles the corresponding Effekt programs to Jav
 If you change the contents of the `hello.effekt` file to:
 
 ```effekt:sketch
-module hello
-
 def main() = {
   println("Hello")
 }
@@ -179,25 +173,22 @@ Hello
 ```
 
 ## Effekt on Windows
-Generally, we recommend using `cmd` at the moment.
-If you want to use Effekt with Microsoft's [PowerShell](https://docs.microsoft.com/en-us/powershell/),
-there are a few things you need to look out for:
 
-1. The Effekt executable is unsigned at the moment. So running it in PowerShell
-   raises an error. You can work around this issue by disabling the check for
-   the current sessions. Please be aware that this is a rather drastic
-   work around and should be used with care.
+Generally, we recommend using `cmd` at the moment.
+If you want to use Effekt with Microsoft's [PowerShell](https://docs.microsoft.com/en-us/powershell/), there are a few things you need to look out for:
+
+1. The Effekt executable is unsigned at the moment, so running it in PowerShell raises an error.
+   You can work around this issue by disabling the check for the current session.
+   Please be aware that this is a rather drastic workaround and should be used with care.
    ```bash
    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
    ```
-   This only works for the current session and needs to be repeated every
-   time you start a new terminal.
+   This only works for the current session and needs to be repeated every time you start a new terminal.
 
-2. Ansi colors are not enabled out of the box.
+2. ANSI colors are not enabled out of the box.
    The easiest way is to set `VirtualTerminalLevel` in the registry to `true`.
-   As always, be careful when tempering with the registry and only do it
-   when you know what you are doing!
+   As always, be careful when tampering with the registry and only do it when you know what you are doing!
 
 ## Getting Help
-If you run into problems or something does not work as expected, feel free to
-ask on [Discord]({{ site.discordurl }}) or open an [issue on Github]({{ site.githuburl }}/issues).
+
+If you run into problems or something does not work as expected, feel free to ask on [Discord]({{ site.discordurl }}) or open an [issue on Github]({{ site.githuburl }}/issues).
