@@ -74,6 +74,44 @@ Effekt has more backends, for example `--backend chez-cps`.
 To see all options and backends, run `effekt --help`.
 
 
+## Setting Up VSCode
+Effekt comes with a basic language server implementation (LSP).
+The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
+To install the extension, see [Install with VSCode](#install-with-vscode) above.
+
+### Workspace Folder
+For the language services to work, you need to open the project's root-folder in VSCode.
+Similarly, we recommend to start the `effekt` command in a terminal
+in the project's root folder.
+
+### Manual Installation
+
+You can download the extension of the latest release on Github:
+
+> <https://github.com/effekt-lang/effekt-vscode/releases/latest>
+
+In VSCode select
+
+1. `Preferences / Extensions` in the menu,
+2. `...` on the top right corner of the extensions menu, and
+3. `Install from VSIX ...` selecting the vsix-file.
+
+### If the Extension Does Not Start
+
+After installing the extension, you might be faced with the following error:
+
+> "Couldn't start client Effekt Language Server"
+
+This means that you need to set the path to the `effekt` binary manually,
+usually because the `effekt` or `effekt.cmd` commands were not found in your path.
+
+To set the path:
+
+1. Open the settings of VSCode
+2. Search for `effekt`
+3. Edit the `Effekt: Executable` property and enter the path to the Effekt binary (on Windows, it defaults to `effekt.cmd` which can be found in `%APPDATA%/Roaming/npm` by default)
+4. Restart VSCode
+
 ## Recommended Workflow
 The recommended workflow is to open your files in VSCode and then
 run them using the Effekt REPL.
@@ -123,59 +161,10 @@ Hello
 ()
 ```
 
-## Setting Up VSCode
-Effekt comes with a basic language server implementation (LSP).
-The source code for the VSCode extension is available in the [`effekt-vscode` repository](https://github.com/effekt-lang/effekt-vscode).
-
-### Visual Studio Marketplace
-
-Install the extension by its exact ID, `effekt-lang.effekt`.
-Please use one of these ways to do so:
-
-- Open [`effekt-lang.effekt` in the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=effekt-lang.effekt) and click `Install`
-- Paste `ext install effekt-lang.effekt` into the VSCode "Quick Open" menu (`Ctrl+P` or `Cmd+P`) and press `Enter`
-- Run `code --install-extension effekt-lang.effekt` in a terminal
-- Search for `effekt-lang.effekt` in the Extensions view of VSCode and click `Install`
-
-Please double-check that the publisher is "Effekt Language" with a blue verified badge for the `effekt-lang.org` domain before you install.
-
-### Manual Installation
-
-You can download the extension of the latest release on Github:
-
-> <https://github.com/effekt-lang/effekt-vscode/releases/latest>
-
-In VSCode select
-
-1. `Preferences / Extensions` in the menu,
-2. `...` on the top right corner of the extensions menu, and
-3. `Install from VSIX ...` selecting the vsix-file.
-
-> #### Note
-> After installing the `vsix` file, you might be faced with the error
->
-> "Couldn't start client Effekt Language Server"
->
-> and need to set the path to the `effekt` binary.
->
-> For Mac OS and Linux users this probably works out of the box after installing `effekt`
-> with npm (that is, once the `effekt` command is in your path). For Windows users,
-> you might need to double check the path (it defaults to `effekt.cmd`, which can
-> be found in `%APPDATA%/Roaming/npm`).
->
-> You might need to restart VSCode after changing the settings.
-
-With this setup the extension should start the server when an Effekt file is opened.
-
-### Workspace Folder
-For the language services to work, you need to open the project's root-folder in VSCode.
-Similarly, we recommend to start the `effekt` command in a terminal
-in the project's root folder.
-
 ## Effekt on Windows
 Generally, we recommend using `cmd` at the moment.
 If you want to use Effekt with Microsoft's [PowerShell](https://docs.microsoft.com/en-us/powershell/),
-there is a few things you need to look out for.
+there are a few things you need to look out for:
 
 1. The Effekt executable is unsigned at the moment. So running it in PowerShell
    raises an error. You can work around this issue by disabling the check for
