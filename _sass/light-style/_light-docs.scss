@@ -247,6 +247,28 @@
       a, a:hover {
         color: $text-color;
       }
+
+      // text on wide screens, icons on narrow ones
+      a {
+        @include bp(medium) {
+          padding: 0 $base-point-grid;
+        }
+      }
+
+      .nav-item-text {
+        @include bp(medium) {
+          display: none;
+        }
+      }
+
+      .nav-item-icon {
+        display: none;
+
+        @include bp(medium) {
+          display: inline-block;
+        }
+      }
+
       a span {
         &:focus,
         &:hover {

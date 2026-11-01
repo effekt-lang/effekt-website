@@ -3,6 +3,8 @@ url: 'https://effekt-lang.org'
 baseurl:
 githuburl: https://github.com/effekt-lang/effekt
 githuburl_website: https://github.com/effekt-lang/effekt-website
+discordurl: https://discord.gg/dWUaFX7xtr
+communityurl: https://github.com/effekt-community
 description: A language with lexical effect handlers and lightweight effect polymorphism
 docs: true
 
