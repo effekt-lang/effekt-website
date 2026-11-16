@@ -31715,11 +31715,11 @@ $p.compileFile = (function(arg) {
 $p.lastModified = (function(arg) {
   return this.acL(arg);
 });
-$p.showCore = (function(arg) {
-  return this.aft(arg);
-});
 $p.readFile = (function(arg) {
   return this.aee(arg);
+});
+$p.showCore = (function(arg) {
+  return this.aft(arg);
 });
 $p.typecheck = (function(arg) {
   return this.a6s(arg);
