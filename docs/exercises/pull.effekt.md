@@ -21,14 +21,14 @@ def tests { body: => Unit / { Test, Formatted } }: Bool = {
   // 2) Run the tests
   try { body() } with Test {
     // 2a) Handle a passing test on success
-    def success(name, duration) = {
+    def success(name, duration, sourcePosition) = {
       passed = passed + 1
       println("✓".green ++ " " ++ name)
       resume(())
     }
 
     // 2b) Handle a failing test on failure, additionally printing its message
-    def failure(name, msg, duration) = {
+    def failure(name, msg, duration, sourcePosition) = {
       failed = failed + 1
       println("✕".red ++ " " ++ name)
       println("  " ++ msg.red)
@@ -114,6 +114,8 @@ Take a closer look!
 def readPositive(base: Int): Int / { read[Char], throw[WrongFormat] } = {
   var res: Int = try char::digitValue(do read()) with stop {
     wrongFormat("Positive number should start with a digit!")
+  } with fail {
+    wrongFormat("Positive number should start with a digit!")
   }
 
   def go(): Int = try {
@@ -122,7 +124,7 @@ def readPositive(base: Int): Int / { read[Char], throw[WrongFormat] } = {
     go()
   } with stop {
     res
-  } with throw[WrongFormat] { e =>
+  } with fail {
     res
   }
 
