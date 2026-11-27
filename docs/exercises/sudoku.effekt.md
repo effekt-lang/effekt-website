@@ -36,14 +36,14 @@ def tests { body: => Unit / { Test, Formatted } }: Bool = {
   // 2) Run the tests
   try { body() } with Test {
     // 2a) Handle a passing test on success
-    def success(name, duration) = {
+    def success(name, duration, sourcePosition) = {
       passed = passed + 1
       println("✓".green ++ " " ++ name)
       resume(())
     }
 
     // 2b) Handle a failing test on failure, additionally printing its message
-    def failure(name, msg, duration) = {
+    def failure(name, msg, duration, sourcePosition) = {
       failed = failed + 1
       println("✕".red ++ " " ++ name)
       println("  " ++ msg.red)
@@ -443,6 +443,11 @@ def assertNumberOfSolutions(obtained: Int, expected: Int): Unit / { Assertion, F
   )
 }
 
+def equals(left: Board, right: Board): Bool =
+  left.size == right.size && zip(left, right).all { case (leftRow, rightRow) =>
+    leftRow.size == rightRow.size && zip(leftRow, rightRow).all { case (leftDigit, rightDigit) => leftDigit == rightDigit }
+  }
+
 def assertSolutions(obtained: List[Board], expected: List[Board]): Unit / { Assertion, Formatted } = {
   expected.foreach { expectedSolution =>
     var seen = false
@@ -451,7 +456,7 @@ def assertSolutions(obtained: List[Board], expected: List[Board]): Unit / { Asse
         seen = true
       }
     }
-    do assert(seen, "Expected to see solution " ++ expectedSolution.genericShow ++ ", but didn't find it in obtained solutions!")
+    do assert(seen, "Expected to see solution " ++ expectedSolution.show ++ ", but didn't find it in obtained solutions!")
   }
 
   obtained.foreach { obtainedSolution =>
@@ -461,7 +466,7 @@ def assertSolutions(obtained: List[Board], expected: List[Board]): Unit / { Asse
         seen = true
       }
     }
-    do assert(seen, "Unexpected solution " ++ obtainedSolution.genericShow ++ "!")
+    do assert(seen, "Unexpected solution " ++ obtainedSolution.show ++ "!")
   }
 
   do assert(true, "All solutions found")
